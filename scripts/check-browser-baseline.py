@@ -43,14 +43,15 @@ worker.onmessage = event => {
 };
 '''
     result = request(base, f'/session/{session}/execute/async', {'script': script, 'args': []})
-    if result.get('error') or not {'1:r', '1:v', '1:o4:tick', '1:d'}.issubset(result['messages']):
+    if result.get('error') or result.get('messages') != ['1:r', '1:v', '1:o4:tick', '1:d']:
         raise RuntimeError(f'worker event check failed: {result}')
     return result
 
 
 def browser(base, url, profile):
     options = {'args': ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--no-proxy-server', f'--user-data-dir={profile}']}
-    session = request(base, '/session', {'capabilities': {'alwaysMatch': {'browserName': 'chrome', 'goog:chromeOptions': options, 'goog:loggingPrefs': {'browser': 'ALL'}}}})['sessionId']
+    created = request(base, '/session', {'capabilities': {'alwaysMatch': {'browserName': 'chrome', 'goog:chromeOptions': options, 'goog:loggingPrefs': {'browser': 'ALL'}}}})
+    session = created['sessionId']
     try:
         request(base, f'/session/{session}/timeouts', {'script': 35000})
         request(base, f'/session/{session}/url', {'url': url})
@@ -65,7 +66,7 @@ def browser(base, url, profile):
         logs = request(base, f'/session/{session}/log', {'type': 'browser'})
         if any(item['level'] == 'SEVERE' for item in logs):
             raise RuntimeError(f'browser errors: {logs}')
-        return dict(result, browser_logs=logs)
+        return dict(result, browser_logs=logs, capabilities=created['capabilities'])
     finally:
         request(base, f'/session/{session}', method='DELETE')
 
@@ -90,6 +91,8 @@ def main():
                 try:
                     base = driver_address(log)
                     result = browser(base, f'http://127.0.0.1:{server.server_port}/snowflow_demo-fork/', Path(temporary) / 'profile')
+                    result['status'] = 'passed'
+                    (ROOT / 'work/browser-baseline-result.json').write_text(json.dumps(result, indent=2) + '\n')
                     print(json.dumps(result, indent=2))
                 finally:
                     driver.terminate()
@@ -98,4 +101,11 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as error:
+        result = {'status': 'failed', 'error_type': type(error).__name__, 'error': str(error)}
+        (ROOT / 'work').mkdir(exist_ok=True)
+        (ROOT / 'work/browser-baseline-result.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result, indent=2))
+        raise SystemExit(1)

@@ -1,6 +1,6 @@
 number = 3
 slug = "browser-baseline-validation"
-status = "pending"
+status = "in-progress"
 description = "Run scripts/check-browser-baseline.py on a host that permits loopback sockets..."
 role = "validation"
 context_files = []

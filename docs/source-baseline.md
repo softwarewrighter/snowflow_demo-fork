@@ -63,6 +63,10 @@ that the existing editor mounts, then starts the generated worker loader. It
 expects Ready, an event wait from `[]E_VENT`, a supplied `tick 0.016`, the output
 `tick`, and Done. The worker is terminated after the check. The JavaScript in
 this test drives the browser protocol only; it is not application code.
+The four messages must arrive in that order, without worker errors. Successful
+results include actual browser capabilities and console logs. Both successful
+and failed runs save `work/browser-baseline-result.json`; a failed attempt
+replaces an earlier success so stale results cannot be mistaken for a new pass.
 
 This environment denied socket creation before the browser test could start:
 `PermissionError: [Errno 1] Operation not permitted`. Separate Chromium attempts
