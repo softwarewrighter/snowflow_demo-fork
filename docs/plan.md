@@ -9,21 +9,22 @@ commit of the completion record. Stop after completing the active step.
 ## Saga 1 snowy world foundations
 
 Active saga: `snowy-world-foundations`. The bootstrap step establishes repository
-structure; remaining steps are registered and pending, not implemented.
+structure; completed work and pending validation are recorded below and in agentrail.
 
 | Step | Slug | Acceptance result |
 | --- | --- | --- |
 | 1 | repository-bootstrap | Original demo archived intact, new README, legal notices, instructions, components, docs and quality gate |
-| 2 | source-baseline | Exact upstream pins and tools; existing evaluator WASM and worker path reproduced |
-| 3 | typed-mesh-contract | Typed array upload, shapes, resource lifetime/reset and upstream host-binding ask |
-| 4 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
-| 5 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
-| 6 | pages-foundation | Static subdirectory build, working WASM/worker paths and reproducible browser evidence |
-| 7 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
-| 8 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
-| 9 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
-| 10 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
-| 11 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
+| 2 | source-baseline | Tested dependency bootstrap, native evaluator/runner checks and WASM build; browser harness supplied |
+| 3 | browser-baseline-validation | Real-browser editor and event-worker evidence on a host allowing loopback sockets |
+| 4 | typed-mesh-contract | Typed array upload, shapes, resource lifetime/reset and upstream host-binding ask |
+| 5 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
+| 6 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
+| 7 | pages-foundation | Static subdirectory build, working WASM/worker paths and reproducible browser evidence |
+| 8 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
+| 9 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
+| 10 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
+| 11 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
+| 12 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
 
 Work reusable across applications belongs in the appropriate X_eTaL repository,
 then reaches this app through explicit pin updates. Initial component facades
@@ -61,3 +62,11 @@ acceleration urgent. It is not a prerequisite for the first playable world.
 [development](development.md) govern application work. The detailed initial
 [world roadmap](xetal-world.md) provides representation and ownership analysis.
 Neither the roadmap nor empty Rust facades constitute a delivered browser demo.
+
+## Source baseline findings
+
+The dependency bootstrap verifies every inspected commit and each sibling core pin.
+The evaluator and runner native suites and their WASM build are checked separately
+from browser execution. This sandbox denies loopback socket creation, so browser
+execution is an explicit pending validation step before typed mesh work. See
+[source baseline](source-baseline.md) for commands, tools and evidence limits.

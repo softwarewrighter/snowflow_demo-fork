@@ -28,6 +28,8 @@ def main():
                 failures.append(f"{source['name']}: snapshot has local changes")
             pin_file = path / "XETAL_COMMIT"
             pin = pin_file.read_text().strip() if pin_file.exists() else "self"
+            if pin_file.exists() and pin != source.get("core_commit"):
+                failures.append(f"{source['name']}: core pin differs from manifest")
             print(f"{source['name']} {actual} core-pin={pin}")
         except (OSError, subprocess.CalledProcessError) as error:
             failures.append(f"{source['name']}: {error}")

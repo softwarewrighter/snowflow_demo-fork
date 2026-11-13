@@ -1,0 +1,32 @@
+{
+  "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
+  "tools": {
+    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+    "cargo": "cargo 1.100.0 (3acc79c0c 2026-11-05)",
+    "trunk": "trunk 0.21.14",
+    "python3": "Python 3.14.8",
+    "chromium": "Chromium 154.0.8037.97 Arch Linux",
+    "chromedriver": "ChromeDriver 154.0.8037.97 (b510e9d7cd3a2fbd78d0ddc42234103206c5f78d-refs/branch-heads/8037@{#1673})",
+    "wasm-bindgen": "wasm-bindgen 0.2.129"
+  },
+  "native_suites": "xetal-play and xetal-runner passed",
+  "wasm_build": "passed",
+  "browser_execution": {
+    "status": "unverified",
+    "attempt": "loopback server preflight",
+    "error": "PermissionError: [Errno 1] Operation not permitted",
+    "next_step": "browser-baseline-validation"
+  },
+  "artifacts": {
+    "xetal-runner_bg.wasm": {
+      "bytes": 11002362,
+      "sha256": "931e6fe4f8f632022e7f8705f8d337372a148f3642b1e791f4100c2701998dfe"
+    },
+    "xetal-web-d60b1875562525d5_bg.wasm": {
+      "bytes": 13783977,
+      "sha256": "bb93214d36a49005058c83f8dd4c3270179b4da4f752de0c952e260684b3351d"
+    }
+  },
+  "native_test_count": 35,
+  "bootstrap_and_edition_tests": 4
+}

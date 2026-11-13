@@ -1,0 +1,8 @@
+number = 3
+slug = "browser-baseline-validation"
+status = "pending"
+description = "Run scripts/check-browser-baseline.py on a host that permits loopback sockets..."
+role = "validation"
+context_files = []
+created_at = "2026-11-13T15:41:25"
+commits = []

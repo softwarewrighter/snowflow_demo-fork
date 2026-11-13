@@ -1,4 +1,4 @@
-number = 6
+number = 7
 slug = "pages-foundation"
 status = "pending"
 description = "Package the minimal browser demo for a repository-subpath GitHub Pages build ..."

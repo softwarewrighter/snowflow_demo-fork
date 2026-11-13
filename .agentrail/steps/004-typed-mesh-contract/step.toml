@@ -1,4 +1,4 @@
-number = 3
+number = 4
 slug = "typed-mesh-contract"
 status = "pending"
 description = "Test first a minimal typed mesh upload and resource lifecycle contract using ..."

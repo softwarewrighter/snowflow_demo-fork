@@ -1,7 +1,7 @@
 number = 2
 slug = "source-baseline"
-status = "pending"
-description = "Verify locked sibling commits and each XETAL_COMMIT. Establish a clean-checko..."
+status = "in-progress"
+description = "Verify locked sibling commits and each XETAL_COMMIT. Establish tested clean-c..."
 role = "validation"
 context_files = []
 created_at = "2026-11-13T15:26:42"

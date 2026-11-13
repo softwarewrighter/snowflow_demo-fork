@@ -1,0 +1,9 @@
+{
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "cargo": "cargo 1.100.0 (3acc79c0c 2026-11-05)",
+  "trunk": "trunk 0.21.14",
+  "python3": "Python 3.14.8",
+  "chromium": "Chromium 154.0.8037.97 Arch Linux",
+  "chromedriver": "ChromeDriver 154.0.8037.97 (b510e9d7cd3a2fbd78d0ddc42234103206c5f78d-refs/branch-heads/8037@{#1673})",
+  "wasm-bindgen": "wasm-bindgen 0.2.129"
+}

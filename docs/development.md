@@ -36,9 +36,9 @@ Run `python3 scripts/inspect-xetal.py` to check hashes and each sibling's own
 `XETAL_COMMIT`. The independent pins differ and must not be overwritten blindly.
 
 A clean build of the new facades needs Rust/Cargo and no external crates. The
-source-baseline step will pin the browser toolchain and add a network-enabled
-dependency bootstrap that verifies exact revisions and builds the existing WASM
-evaluator before integrating it. No clean-checkout browser build is claimed yet.
+[source baseline procedure](source-baseline.md) provides pinned tools, a dependency
+bootstrap with local-cache support, and an upstream evaluator/worker WASM build.
+Real-browser execution remains a separate validation gate.
 
 ## Evidence and publication
 
