@@ -1,5 +1,9 @@
 # dependencies
 node_modules/
+work/
+target/
+__pycache__/
+*.pyc
 
 # build output
 dist/

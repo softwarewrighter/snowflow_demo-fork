@@ -1,0 +1,8 @@
+number = 1
+slug = "repository-bootstrap"
+status = "in-progress"
+description = "Follow ../X_eTaL/AGENTS.md and CLAUDE.md. Archive original demo unchanged und..."
+role = "meta"
+context_files = []
+created_at = "2026-11-13T15:25:59"
+commits = []

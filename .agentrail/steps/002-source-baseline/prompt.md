@@ -1,0 +1,1 @@
+Verify locked sibling commits and each XETAL_COMMIT. Establish a clean-checkout dependency bootstrap without modifying research snapshots. Rebuild the existing evaluator WASM browser path and worker/event path; record exact toolchain and browser evidence. Reconcile docs/plan.md with findings; do not claim unsupported features. Run gate, commit then complete.

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "provenance": "Local cached origin/main snapshots; GitHub fetch failed due to DNS resolution. Freshness unverified.",
+  "reference_commit": "545039733b74eec742862f161990142c7ca7c7ec",
+  "sources": [
+    {
+      "name": "X_eTaL",
+      "path": "work/X_eTaL",
+      "url": "https://github.com/softwarewrighter/X_eTaL.git",
+      "commit": "c5750cec6af7063a90818046c7c7945db71b4a36"
+    },
+    {
+      "name": "X_eTaL-extensions",
+      "path": "work/X_eTaL-extensions",
+      "url": "https://github.com/softwarewrighter/X_eTaL-extensions.git",
+      "commit": "0d11be544dfb925e0b72dde71ab69c1c76c75710"
+    },
+    {
+      "name": "X_eTaL-gpu",
+      "path": "work/X_eTaL-gpu",
+      "url": "https://github.com/softwarewrighter/X_eTaL-gpu.git",
+      "commit": "3c22df44856b0daa8a700abd6b927e72e525a62e"
+    },
+    {
+      "name": "X_eTaL-libraries",
+      "path": "work/X_eTaL-libraries",
+      "url": "https://github.com/softwarewrighter/X_eTaL-libraries.git",
+      "commit": "9132a1c4c8b3782f3a6477729f1b969dd586c0e4"
+    },
+    {
+      "name": "X_eTaL-ML",
+      "path": "work/X_eTaL-ML",
+      "url": "https://github.com/softwarewrighter/X_eTaL-ML.git",
+      "commit": "1ffdc20201a3c91d4ac57af4a5a2d55d31742b9d"
+    }
+  ]
+}

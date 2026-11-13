@@ -1,0 +1,8 @@
+[package]
+name = "xetal-world-surface"
+description = "Smooth surface construction and mesh contracts"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true

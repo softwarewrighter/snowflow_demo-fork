@@ -1,0 +1,1 @@
+Implement spherical density edits exposing dirt and buried faceted gems, with updated surface collision and chunk regeneration. Extract reusable Endless/Play rules into host-independent X_eTaL libraries. Test border digs, replay/save-load, reveal and collection semantics. Gate, commit, complete.

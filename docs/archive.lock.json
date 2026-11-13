@@ -1,0 +1,410 @@
+{
+  "commit": "545039733b74eec742862f161990142c7ca7c7ec",
+  "root": "archive/snowflow-original",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "90e8e0e49782c0a7eb822e158cb9e32a553c3ba1c671be77b2f5e2f63b3e9a4b"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "b108a76735ab7cc0eab686fc3e85ca668bdb8866977093846d01bac5b6440453"
+    },
+    {
+      "path": "README.md",
+      "sha256": "8217cff399d8ee9b1ce8b202076efa7da1937ad8c3d388554cb239c1f3c31d13"
+    },
+    {
+      "path": "index.html",
+      "sha256": "7465b14a850f38eccfa396227ade4f7fd4586db33e98bb2c90dcdab0dc6bcb53"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "8008fbfd66e843ea700d772e260b5dfe4340f4e6cabf24cea8d1028cfbdf222f"
+    },
+    {
+      "path": "package.json",
+      "sha256": "7fd7510ace3bd43bb51abbf29169ed3876b7aefe74a7cc97a0464b067a37c698"
+    },
+    {
+      "path": "src/character/build.js",
+      "sha256": "9f7df2b8a699780196b4d6c415e5936f77f3eb8a93f9339d025127a363b4f660"
+    },
+    {
+      "path": "src/character/character.js",
+      "sha256": "b7ed99a0f96058961dee987b11f7e338155d7f14f03645d3470631a4cce1e521"
+    },
+    {
+      "path": "src/character/cloth.js",
+      "sha256": "98ebdbc429b33e74d9e9a9e197e62700e92e367b572edd0b3cbeb66e7fddda90"
+    },
+    {
+      "path": "src/character/controller.js",
+      "sha256": "8b2af416470635305b8fd1a0af3347c2cefebeb69dfb1e4e04286f0bc92ae7cd"
+    },
+    {
+      "path": "src/character/figure.js",
+      "sha256": "ebf57546fb7134aad2bc50502ec72a6fcf6966606f30fe6c0575d0e9ae887192"
+    },
+    {
+      "path": "src/character/snowContact.js",
+      "sha256": "7a55b755e32b602c2b2e02f06d11a248b911fa6bce5487e844f6ad83c36ac523"
+    },
+    {
+      "path": "src/core/camera.js",
+      "sha256": "1591c7a629a2f57bb5d30c429066b7979c9f3c492fc0ba6ee5a28aca62784133"
+    },
+    {
+      "path": "src/core/gpuUtil.js",
+      "sha256": "cbd1db3c545a16f75abef0ac97b3fa14936952d2eb881f633648856825ca1404"
+    },
+    {
+      "path": "src/core/input.js",
+      "sha256": "187a8113b9a2e92196eedb1659dd0c82f42732f70f9418db5fbd2947e2ea6b99"
+    },
+    {
+      "path": "src/core/loading.js",
+      "sha256": "58c7f5989a5c3916a544bb08aafba2cc63d17cb1c48bef670c12a68df0e07c47"
+    },
+    {
+      "path": "src/core/mat4.js",
+      "sha256": "c574474493069d947fb5e81aa379c1e8bfc0388e9e0603b53347f77b50d1c224"
+    },
+    {
+      "path": "src/core/perf.js",
+      "sha256": "9cc61e1d7217881521bde801c8729145fe312ec304afe3fc210f1fd14f9b9618"
+    },
+    {
+      "path": "src/core/settings.js",
+      "sha256": "739d1fb8e260e670b447e7811474466fa9f5b6d45a5746987a34f30714d0b07e"
+    },
+    {
+      "path": "src/main.js",
+      "sha256": "7a8220127817c00fa02fe5fbc69ce2a35b93607dda359c9068ad76f6cc14a147"
+    },
+    {
+      "path": "src/post/postChain.js",
+      "sha256": "332f30550bff658091157b6e3cea8fcb077591ad822e2d14e41f69a667544b35"
+    },
+    {
+      "path": "src/render/depthPass.js",
+      "sha256": "6534e89c4f06dfa4e4bc869237e6dd683dca7710f644db3920f9a550c1e82c8f"
+    },
+    {
+      "path": "src/render/shadows.js",
+      "sha256": "6970db9eef2e521875a20293f1a8704430ce18d4fcb29cbce64a78eeac184956"
+    },
+    {
+      "path": "src/render/sky.js",
+      "sha256": "662b41b9acdad2ad5560bf6f3254383fcc1af9faa1382e75879983d5f986d15f"
+    },
+    {
+      "path": "src/shaders/auxBake.fragment.wgsl",
+      "sha256": "952d703cc76bd0fad02987f0d955025ccfe546883fe7e26875c9ffb2f9d00ed6"
+    },
+    {
+      "path": "src/shaders/char.fragment.wgsl",
+      "sha256": "f4bbdb605ff86cfe4d0790008634731942db3c99e895957e25c6b1e978dade81"
+    },
+    {
+      "path": "src/shaders/char.vertex.wgsl",
+      "sha256": "98a452391038b1d687eee08c7073e32aaa794a752dac2e6cd088955cff71572a"
+    },
+    {
+      "path": "src/shaders/charDepth.vertex.wgsl",
+      "sha256": "3a344fb5fc3704b1af0928f5fa3001372945725d45e7a56dd80c65ece0b06056"
+    },
+    {
+      "path": "src/shaders/charPrepass.vertex.wgsl",
+      "sha256": "ed67ebbfa8ebd597f88d1a3d8a2821cba96221b1b389643004360b253d5a1388"
+    },
+    {
+      "path": "src/shaders/cloth.vertex.wgsl",
+      "sha256": "afffaec9ecc8cb12afc347e361adabd3642a485882af484d653fa65163a67926"
+    },
+    {
+      "path": "src/shaders/clothDepth.vertex.wgsl",
+      "sha256": "7026c307b3b92a73badf5f34baaa7a91ff567b5fc1c19396d52cae51672c601c"
+    },
+    {
+      "path": "src/shaders/clothPrepass.vertex.wgsl",
+      "sha256": "b25c65da4ff36d12e1e60cec50f327f0c1ef61f1fff5089f545e55749630d2eb"
+    },
+    {
+      "path": "src/shaders/crystal.fragment.wgsl",
+      "sha256": "905f78e5b038227201a21b4b7ee9c98116174d02dd2475f591367341a42322c3"
+    },
+    {
+      "path": "src/shaders/crystal.vertex.wgsl",
+      "sha256": "0708344f97cf1f3b04a14fc326d341e1348d3afa0a6980cf56c3634867d0a8bf"
+    },
+    {
+      "path": "src/shaders/crystalDepth.vertex.wgsl",
+      "sha256": "495b3615aeb46d138e51f4f79aa1696983ce60820b02a1a8066c3ee17423b14b"
+    },
+    {
+      "path": "src/shaders/crystalPrepass.vertex.wgsl",
+      "sha256": "c3976ce8414cb8ac6e5ffc05cbf90fef92a25fdc1c043ec3c81008aabd5b131f"
+    },
+    {
+      "path": "src/shaders/deformSim.fragment.wgsl",
+      "sha256": "00b827bdbd6656d3c9effc22597bbd9c0f439266830cfaf970ee65625e5a9c61"
+    },
+    {
+      "path": "src/shaders/detailBake.fragment.wgsl",
+      "sha256": "d84c8ec07c86855d516c46eb7bb872de45d307b54a84f15afba644a279043d9b"
+    },
+    {
+      "path": "src/shaders/fur.fragment.wgsl",
+      "sha256": "f263709e5cde5a24a1a3badc56f20d199f3595b69673d5724304664e644ab8be"
+    },
+    {
+      "path": "src/shaders/fur.vertex.wgsl",
+      "sha256": "9ff04c6edc6434f77e842562d1f4043edd6937ee9e1c3adb408ab862a31c3496"
+    },
+    {
+      "path": "src/shaders/heightBake.fragment.wgsl",
+      "sha256": "e38880c2ad30ab6b3e5d37079a4efbdc36ff53d2eb61db64a0e8e0ec17b12335"
+    },
+    {
+      "path": "src/shaders/lib/atmosphere.wgsl",
+      "sha256": "608f0b684b31613a2d47edd4d2adb87f3b35d228931a2f07beed2751af56b0c2"
+    },
+    {
+      "path": "src/shaders/lib/charSkin.wgsl",
+      "sha256": "48ff12ca713acd7fc7fa3a9a122464599586f9061130390bf2e54d40353b1eb3"
+    },
+    {
+      "path": "src/shaders/lib/clipmap.wgsl",
+      "sha256": "2b4f2ff64533da280ea4a16faa0bcbbede7130d83cf7abcb9d053f18700e470c"
+    },
+    {
+      "path": "src/shaders/lib/crystal.wgsl",
+      "sha256": "1b3a029b80e59a019c55c1c05c34b6fb7cc03774137b11ca86373b800cdb46be"
+    },
+    {
+      "path": "src/shaders/lib/deform.wgsl",
+      "sha256": "547b57f6dbcbe00c0abe6071bc24015cdfca09d9911f34e5d7f41d070c6f6c6d"
+    },
+    {
+      "path": "src/shaders/lib/noise.wgsl",
+      "sha256": "5a308db344aa00fc2d9ce104fa06c64118e49463a5049df5f290ebb0eb52450c"
+    },
+    {
+      "path": "src/shaders/lib/postCommon.wgsl",
+      "sha256": "8043564c12b6356cf9aa1eff1aaaaba798ea1849ef743808c7432b87f40ac135"
+    },
+    {
+      "path": "src/shaders/lib/ridge.wgsl",
+      "sha256": "66eba6bd789d4e109285dc077891d94111af6b0fabce6b20ab43ec88c5f5757d"
+    },
+    {
+      "path": "src/shaders/lib/shading.wgsl",
+      "sha256": "0e9a21815e61f3a78797f9d723840e55f7973912bd427321e71b405c38e19c21"
+    },
+    {
+      "path": "src/shaders/lib/shadowLookup.wgsl",
+      "sha256": "813bcdd7046a60a49e5cfba00fe9ae1e06cc55a2f66a0a98a8bc2497f94a6c10"
+    },
+    {
+      "path": "src/shaders/lib/spellLights.wgsl",
+      "sha256": "47aaa7e7fdf226d0505b90c026d3d62ead0e178e8fb6e523a4605e09e7c5083e"
+    },
+    {
+      "path": "src/shaders/lib/terrain.wgsl",
+      "sha256": "2927e0866c3ef2d2526e2a6d9b758457032b79fbe2aa3d876f5f516b4cc623ca"
+    },
+    {
+      "path": "src/shaders/lib/wake.wgsl",
+      "sha256": "60c209872b0cbb440e746624e3b4afe756600d5becde24d44da5f5ca861e93c9"
+    },
+    {
+      "path": "src/shaders/lib/water.wgsl",
+      "sha256": "dfe848f1b3f5993cbb743de1a3372376118ab83d278c40da0e6955a41532a7b4"
+    },
+    {
+      "path": "src/shaders/post/bloomBlur.fragment.wgsl",
+      "sha256": "aac35b9fcc08030e383d2bca21db727a2a3a7f90bd60a7438929ef907f451ff6"
+    },
+    {
+      "path": "src/shaders/post/bloomDown.fragment.wgsl",
+      "sha256": "a714886b8033154a74f407773245a1e8092469b92eacea18b6743201b62e9653"
+    },
+    {
+      "path": "src/shaders/post/dof.fragment.wgsl",
+      "sha256": "9e23357ef9af4712f5eb6b17960b8c2d25c080857ba7e541164d1d129c5ac0c0"
+    },
+    {
+      "path": "src/shaders/post/shafts.fragment.wgsl",
+      "sha256": "71e6aac0fc718d0ed4fd5fcde266ec08eaf0750814267b3b430054b8982d9137"
+    },
+    {
+      "path": "src/shaders/post/sharpen.fragment.wgsl",
+      "sha256": "b1480893c4bcc194aef9947b0d7cae4d65523f1fa9dc2f9d9a584e8335281506"
+    },
+    {
+      "path": "src/shaders/post/ssr.fragment.wgsl",
+      "sha256": "541e8b75faa7c6de337bf0925079eda74ca8346f3f278c552f2167fb532a65b7"
+    },
+    {
+      "path": "src/shaders/post/taa.fragment.wgsl",
+      "sha256": "a8e26725ea8b34fc90354d6a134e730c76ef0665dd62e04b501c193f525c3d31"
+    },
+    {
+      "path": "src/shaders/post/tonemap.fragment.wgsl",
+      "sha256": "b860d0b60100738a2678a6027ff886a63fe05041dc63052ce9453b9dfc3ad5d2"
+    },
+    {
+      "path": "src/shaders/prepass.fragment.wgsl",
+      "sha256": "90d9df5d527174dff779a1ac31210e4ccd542ab621024f2bfbb76c3d8f0c4c89"
+    },
+    {
+      "path": "src/shaders/registry.js",
+      "sha256": "4f9596bd9edaf2253daa192b8aaa890eab0916887b8818f0beb81e3d2c38531b"
+    },
+    {
+      "path": "src/shaders/sky.fragment.wgsl",
+      "sha256": "8bfe08f5b04dff033b741066773cab362a803f219d2f20f549e62a6ac06e012d"
+    },
+    {
+      "path": "src/shaders/sky.vertex.wgsl",
+      "sha256": "9f50915be6a5bd7e5eed97a7897ee2c1393ba8ebbe51128c2dea5a8c3930c9f4"
+    },
+    {
+      "path": "src/shaders/skyBake.fragment.wgsl",
+      "sha256": "c12f16433e7251aaae9e66d0cbfca3c03c7872bb29d1c0e514ed8ba1491984bd"
+    },
+    {
+      "path": "src/shaders/snow.fragment.wgsl",
+      "sha256": "6c72494570f51aed147746971daa8c5ee6f12c49b4b85b13df528bde33dc8c60"
+    },
+    {
+      "path": "src/shaders/snow.vertex.wgsl",
+      "sha256": "2a53af258f0bdbfefe667f4f38cc9521f9225d95de5a26e51c8fc84f27dba8be"
+    },
+    {
+      "path": "src/shaders/spray.fragment.wgsl",
+      "sha256": "153674e7e14b6af98884e67071ff3fb5996d32c6c5c33c551c5e07e03bd5287d"
+    },
+    {
+      "path": "src/shaders/spray.vertex.wgsl",
+      "sha256": "7b9e9ee75d655231ab71f4d84d0eef94a8b6f83c695fedd161697111454f0a04"
+    },
+    {
+      "path": "src/shaders/terrainDepth.fragment.wgsl",
+      "sha256": "6c9cae79a5c960f9a8c8d8e5d441416dfee214adb696a7c12b10f64461d1d818"
+    },
+    {
+      "path": "src/shaders/terrainDepth.vertex.wgsl",
+      "sha256": "92817a0f54fd6b6107790d53e8d916bfd1f9eed38cda5dc5444e8ab2cd142268"
+    },
+    {
+      "path": "src/shaders/terrainPrepass.vertex.wgsl",
+      "sha256": "cc3fe04678de674a724ed86aa15c67245c0aa17973bb90077d493579b44b213f"
+    },
+    {
+      "path": "src/shaders/wake.fragment.wgsl",
+      "sha256": "1f6660f3414e6fa83e8dc9ca3dd49aa2166d3e02f50e5bb18b59556cae9583b3"
+    },
+    {
+      "path": "src/shaders/wake.vertex.wgsl",
+      "sha256": "a91eba69f91a17d9dd7f8c026b94468f917caae746aae629c3a46a4a3bad6c51"
+    },
+    {
+      "path": "src/shaders/wakeDepth.fragment.wgsl",
+      "sha256": "4c92e59601152f72b5a718b5651fc904c5c4871f1e57f226f2942fc9813b643c"
+    },
+    {
+      "path": "src/shaders/wakeDepth.vertex.wgsl",
+      "sha256": "d049cd79efb68eb14658ae97d9544149a21e4f1e398f5d44d83ad2e8b27997e8"
+    },
+    {
+      "path": "src/shaders/wakePrepass.fragment.wgsl",
+      "sha256": "5725f7831868ea3b47bf1ec4eba82ebc0532c878a8625091e08599cc1104bc38"
+    },
+    {
+      "path": "src/shaders/wakePrepass.vertex.wgsl",
+      "sha256": "c2d1fb33e9c692c13159a596cec51bb81853a46d70d2814f6b1b4a6408d37d70"
+    },
+    {
+      "path": "src/shaders/water.fragment.wgsl",
+      "sha256": "b4398cbdfe6a52e028b11df66970c4d7fcacda01177ea1230dbf11bdd164f6ec"
+    },
+    {
+      "path": "src/shaders/water.vertex.wgsl",
+      "sha256": "c16b7b0b0d6a60496adf2bce921379bb2b3cd43086c151c4cc4dd9d7cb26b121"
+    },
+    {
+      "path": "src/spells/bending.js",
+      "sha256": "cb630e7ae1538e9ada18d775cde6d19a2ea8579162a9aad96234932186e6ad33"
+    },
+    {
+      "path": "src/spells/bloom.js",
+      "sha256": "a2cef896799b00d9ae5143bae2220da0a6f620ccacb935d401078ba655612e41"
+    },
+    {
+      "path": "src/spells/crystallize.js",
+      "sha256": "85b5e6e5bf00bc31177cf615c3f8cb05b276a349f190a52cfdb68c701f7f34e2"
+    },
+    {
+      "path": "src/spells/crystals.js",
+      "sha256": "f928d65a15ebaddb254ef357f6322e9c5f01c2ced24f9a8a11ccabf4e43416f1"
+    },
+    {
+      "path": "src/spells/ribbon.js",
+      "sha256": "6ff8e52bf7b84e2c3cdc43557b1759734987cc9e24455c30cba8bca775f35d1f"
+    },
+    {
+      "path": "src/spells/spellLights.js",
+      "sha256": "c4e49b51d820e6948223e13fb3d5db9851940ff1dadf22ce3138132a625cd5e0"
+    },
+    {
+      "path": "src/spells/spellSystem.js",
+      "sha256": "010a2a8f078f70f2878d601c602f540adc04f934a8e1ca468d68991edf0fa277"
+    },
+    {
+      "path": "src/spells/sweep.js",
+      "sha256": "8283a53257267463dd88f4a3f8fe0f8ea4b99d671bdb0838c8f2109236b865ed"
+    },
+    {
+      "path": "src/spells/vortex.js",
+      "sha256": "875d562f6b777be9a4b111238eff42b28184e93984edc2ad3bfa49663b57832c"
+    },
+    {
+      "path": "src/spells/waterBody.js",
+      "sha256": "5923d0e6297dbb710e0d80924bab60c2841fb31b44b16145d871c6f7ae4ddd70"
+    },
+    {
+      "path": "src/terrain/clipmapMesh.js",
+      "sha256": "ab72aa51aad542b3aa5030ecc8b1062a4b5199e1cdc620b07570eb05ff6413f7"
+    },
+    {
+      "path": "src/terrain/deformation.js",
+      "sha256": "caa36652e3be43cdc478344580fc13d182b602b9dd24ce31facbab0b4f8e5d5b"
+    },
+    {
+      "path": "src/terrain/heightfield.js",
+      "sha256": "baf79e3119f3dfdb6bfeefe25e1b9d6ff56fab9df94d71d07231c27de9588b8f"
+    },
+    {
+      "path": "src/terrain/terrain.js",
+      "sha256": "2c9b11bfd9d92622b98be480eb8fc0abeec11ca75d8dba9df14f7e2030cbd465"
+    },
+    {
+      "path": "src/ui/overlay.js",
+      "sha256": "f17b05cd5bcc787629fc86bd6cc9965e46d41c41c75fce53cf3de2766f047bf2"
+    },
+    {
+      "path": "src/vfx/particles.js",
+      "sha256": "26cc20da51e02384f51934ece5278cc2ed3b12c4f4e4b7090e30afcafeca596f"
+    },
+    {
+      "path": "src/vfx/surfWake.js",
+      "sha256": "8967983cb87f77883c5ee9e17f155901dba8cc70b094153b27c1d4b7ebd0cb73"
+    },
+    {
+      "path": "vite.config.js",
+      "sha256": "e8b0893a441111d2e4e94b8ee65941a63a57087616e998c5958e80a894dbdffa"
+    }
+  ]
+}

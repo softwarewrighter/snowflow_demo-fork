@@ -1,0 +1,1 @@
+Package the minimal browser demo for a repository-subpath GitHub Pages build with pinned tools and dependency commits. Test worker/WASM URLs and capability feedback in a real browser. Capture commands and evidence; distinguish local build from actual publication. Gate, commit, complete.

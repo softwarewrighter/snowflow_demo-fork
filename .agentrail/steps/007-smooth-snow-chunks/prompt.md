@@ -1,0 +1,1 @@
+Implement test-first X_eTaL density/material generation and a reference smooth mesher. Reuse Vector3, Random and Scene. Render continuous snowy chunks with ice boulders, no cube surfaces. Check halos, boundary positions/normals, negative coordinates and bounded chunk residency on an endless walk. Gate, commit, complete.

@@ -1,0 +1,1 @@
+Build the smallest X_eTaL-controlled procedural triangle mesh rendered by Rust wgpu in the browser, with a persistent sliced evaluator and events. Generated loader glue only; no hand-authored application JS or WASM. Check native oracle, WASM build, real-browser render, input, reset and error feedback. Gate, commit, complete.

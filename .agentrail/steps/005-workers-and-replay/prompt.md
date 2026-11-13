@@ -1,0 +1,1 @@
+Add bounded generation/meshing jobs in a WASM worker with transferable buffers, cancellation and chunk versioning. Preserve one GPU resource owner. Define fixed-step event replays and deterministic seeds; stale jobs must not overwrite newer edits. Base profile requires no shared memory. Gate, commit, complete.

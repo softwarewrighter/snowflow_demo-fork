@@ -1,0 +1,1 @@
+Restore torch placement, local lighting, day/night and gem hunt over the smooth world. Use fixed simulation ticks instead of assuming render frames are seconds. Replay placement, digging and collection with timing and resource counters. Gate, commit, complete.

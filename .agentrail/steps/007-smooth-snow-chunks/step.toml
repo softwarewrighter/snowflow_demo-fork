@@ -1,0 +1,8 @@
+number = 7
+slug = "smooth-snow-chunks"
+status = "pending"
+description = "Implement test-first X_eTaL density/material generation and a reference smoot..."
+role = "production"
+context_files = []
+created_at = "2026-11-13T15:26:42"
+commits = []

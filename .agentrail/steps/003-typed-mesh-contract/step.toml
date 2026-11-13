@@ -1,0 +1,8 @@
+number = 3
+slug = "typed-mesh-contract"
+status = "pending"
+description = "Test first a minimal typed mesh upload and resource lifecycle contract using ..."
+role = "production"
+context_files = []
+created_at = "2026-11-13T15:26:42"
+commits = []

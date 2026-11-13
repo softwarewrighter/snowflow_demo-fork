@@ -1,0 +1,8 @@
+number = 8
+slug = "digging-and-gems"
+status = "pending"
+description = "Implement spherical density edits exposing dirt and buried faceted gems, with..."
+role = "production"
+context_files = []
+created_at = "2026-11-13T15:26:42"
+commits = []

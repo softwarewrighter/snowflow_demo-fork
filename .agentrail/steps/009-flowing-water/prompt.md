@@ -1,0 +1,1 @@
+Adapt existing Endless cellular water to edited smooth terrain and render connected water surfaces and falling streams. State source behavior explicitly; check finite-volume behavior separately without claiming the legacy model conserves volume. Replay a lake breach and compare small reference states. Gate, commit, complete.

@@ -1,0 +1,8 @@
+[package]
+name = "xetal-snow-app"
+description = "Browser application composition and inspection"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
