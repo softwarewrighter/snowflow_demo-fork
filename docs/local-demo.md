@@ -14,8 +14,21 @@ python3 scripts/serve-demo.py --no-build
 ```
 
 Open [the local demo](http://127.0.0.1:8475/snowflow_demo-fork/). The command must
-run in a normal terminal that permits local server sockets. It serves only on
-127.0.0.1. Use Ctrl-C to stop it or `--port` to select another port.
+run in a normal terminal that permits local server sockets. By default it binds
+to 0.0.0.0 and prints a Network demo URL, preferring the 192.168.x.x interface.
+Use that printed address from another machine. Use Ctrl-C to stop the server,
+`--port` to select another port, or `--bind 127.0.0.1` for loopback-only serving.
+
+WebGPU needs a secure browser context. For a LAN HTTP preview, use trusted HTTPS
+or a development browser scoped to the preview origin. For example, on the
+browser machine:
+
+```sh
+chromium --user-data-dir=/tmp/xetal-lan-preview --unsafely-treat-insecure-origin-as-secure=http://192.168.1.178:8475 http://192.168.1.178:8475/snowflow_demo-fork/
+```
+
+Replace the IP with the launcher's printed address. This does not change the
+default browser profile. See [Chromium's secure-origin development guidance](https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/).
 
 Click the surface or Change ridge to change its height. Pause stops simulation
 ticks while keeping the camera responsive. Reset restores the initial surface.

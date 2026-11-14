@@ -17,6 +17,8 @@ reproducible build tooling and an intact archived reference.
 
 Run `python3 scripts/serve-demo.py --no-build` to serve the existing build at
 [localhost:8475](http://127.0.0.1:8475/snowflow_demo-fork/).
+For a browser on another machine, use the printed Network demo URL; the launcher
+binds to all interfaces by default.
 See [local demo](docs/local-demo.md) for a clean build and browser validation.
 
 ## Repository
