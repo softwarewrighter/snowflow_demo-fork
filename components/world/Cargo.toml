@@ -17,3 +17,4 @@ xetal-types = { path = "../../work/deps/X_eTaL/components/types/crates/xetal-typ
 xetal-step = { path = "../../work/deps/X_eTaL/components/step/crates/xetal-step" }
 xetal-arith = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-arith" }
 xetal-value = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-value" }
+xetal-render = { path = "../../work/deps/X_eTaL/components/render/crates/xetal-render" }

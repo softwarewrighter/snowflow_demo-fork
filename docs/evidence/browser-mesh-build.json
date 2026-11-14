@@ -3,7 +3,7 @@
   "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
   "wgpu": "24.0.5",
   "rustc": "1.100.0",
-  "native_rust_tests": 17,
+  "native_rust_tests": 18,
   "python_tests": 18,
   "wasm_build": "passed",
   "wasm_clippy": "passed",
@@ -12,15 +12,16 @@
   "shader_sha256": "cbf6166e18022df7cde50c9e865eb51dad11a0807f6a3b1a7bdf4e386b5e34ad",
   "artifacts": {
     "favicon-4e963492c77e259d.ico": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
-    "index.html": "5333ed49c79d285fa7136bd652eabec543706c12515abc485654116e716df266",
-    "style-9710401d3e16e195.css": "cf92c5ff7b2ae67c97099c0bc741b2fdedef980359d69b4c9fb7d4dcede872d0",
-    "xetal-snow-app-a42c2b0405a8b957.js": "aa53c9aed8cce49298f99bb956b1fa34d138ce870c29955531bc050510275a96",
-    "xetal-snow-app-a42c2b0405a8b957_bg.wasm": "89e7fe023c3d44d64935cff400d59e6ec47b9d311609050764dd087d7d972f37"
+    "index.html": "e2c74f4945e13cec8e2fe4784331bcb3f807bef11f85b9289c8134cd4b23a7ad",
+    "style-ae8b94fc99f5253e.css": "0ee58e5bcf6fdc6c8d76a17340da825e64674d4611ada899b7aed30721c3fd8a",
+    "xetal-snow-app-eab1f7995b9b3a49.js": "e80c60ef4c750a567516d5fc7ec92d91a95baebaccd991245ff0f92f7cdd48de",
+    "xetal-snow-app-eab1f7995b9b3a49_bg.wasm": "07a309520aabec48d3ad80c724d2a8ee288e7cf190a01333dd59d221a410e4d9"
   },
   "local_url": "http://127.0.0.1:8475/snowflow_demo-fork/",
   "browser_report": "work/demo-browser-result.json",
   "screenshot": "work/demo-screenshot.png",
   "triangles": 2048,
   "preview": "finite walkable snowfield; Rust host navigation",
-  "browser_attempt": "Sandbox socket creation denied with PermissionError; no rendering result."
+  "browser_attempt": "Sandbox socket creation denied with PermissionError; no rendering result.",
+  "source_views": "typed ASCII and upstream decorated Unicode; JuliaMono Regular 0.63.2 CDN with monospace fallback"
 }

@@ -5,3 +5,8 @@ mod snapshot;
 
 pub use runtime::{Demo, Progress};
 pub const SOURCE: &str = include_str!("../../../demos/snowfield.xtl");
+
+/// Decorate the shipped source using the pinned language renderer.
+pub fn rendered_source() -> Result<String, String> {
+    xetal_render::decorate(SOURCE).map_err(|error| error.to_string())
+}

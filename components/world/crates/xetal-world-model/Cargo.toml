@@ -15,3 +15,4 @@ xetal-types.workspace = true
 xetal-step.workspace = true
 xetal-arith.workspace = true
 xetal-value.workspace = true
+xetal-render.workspace = true

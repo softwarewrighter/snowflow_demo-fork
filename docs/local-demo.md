@@ -122,3 +122,15 @@ The native movement oracle checks frame-rate independence, bounds and eye
 clearance on a sloped triangle. The browser harness additionally checks walking
 and reset through the rendered application. Hardware browser acceptance remains
 pending until that harness is run successfully on a host with WebGPU.
+
+## Source views
+
+Expand See the X_eTaL program to compare As typed and As rendered side by side
+(stacked on narrow screens). The typed pane preserves the shipped ASCII source.
+The rendered pane uses xetal-render from the same pinned core checkout, including
+its function decorations and mathematical glyphs. Both are selectable text,
+inserted as text rather than HTML, and use JuliaMono Regular 0.63.2 from cdnjs.
+The font uses swap loading with a local monospace fallback if the CDN is offline.
+See https://cormullion.github.io/pages/2020-07-26-JuliaMono/ for upstream web-font
+guidance. Source display is initialized before WebGPU checks so it remains
+available on unsupported devices.

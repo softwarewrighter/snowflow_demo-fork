@@ -1094,6 +1094,7 @@ dependencies = [
  "xetal-arith",
  "xetal-macro",
  "xetal-program",
+ "xetal-render",
  "xetal-step",
  "xetal-types",
  "xetal-value",

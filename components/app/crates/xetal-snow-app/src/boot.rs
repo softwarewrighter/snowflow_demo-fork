@@ -6,12 +6,13 @@ use xetal_world_model::Demo;
 use xetal_world_render::Renderer;
 
 pub(crate) async fn start() -> Result<(), String> {
+    status::text("source", crate::SOURCE);
+    status::text("source-rendered", &xetal_world_model::rendered_source()?);
     let window = web_sys::window().ok_or("no browser window")?;
     let gpu = js_sys::Reflect::get(&window.navigator(), &"gpu".into()).unwrap_or_default();
     if gpu.is_undefined() || gpu.is_null() {
         return Err("WebGPU is unavailable. Use a supported browser and GPU.".into());
     }
-    status::text("source", crate::SOURCE);
     let canvas = canvas()?;
     status::text("status", "Creating WebGPU device...");
     let renderer = Renderer::new(canvas.clone(), status::error).await?;

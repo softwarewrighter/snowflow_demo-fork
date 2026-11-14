@@ -1,7 +1,7 @@
 number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
-description = "The finite walkable preview is implemented and published at https://softwarew..."
+description = "The walkable preview is published; browser hardware acceptance remains pendin..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T15:26:42"
