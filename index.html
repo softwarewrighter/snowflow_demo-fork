@@ -7,8 +7,8 @@
   <title>X_eTaL snow field</title>
   
 <script type="module">
-import init, * as bindings from '/snowflow_demo-fork/xetal-snow-app-a42c2b0405a8b957.js';
-const wasm = await init({ module_or_path: '/snowflow_demo-fork/xetal-snow-app-a42c2b0405a8b957_bg.wasm' });
+import init, * as bindings from '/snowflow_demo-fork/xetal-snow-app-eab1f7995b9b3a49.js';
+const wasm = await init({ module_or_path: '/snowflow_demo-fork/xetal-snow-app-eab1f7995b9b3a49_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -17,9 +17,9 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-  <link rel="stylesheet" href="/snowflow_demo-fork/style-9710401d3e16e195.css" integrity="sha384-Yd1zxsnBOAtTUOMPB9Og0WE66Wq7Jn0RvV8kV4GQqs/ivSWwu+MILD0mPAYIBWe8"/>
+  <link rel="stylesheet" href="/snowflow_demo-fork/style-ae8b94fc99f5253e.css" integrity="sha384-DYuAiHR9gKP2jJTnVNLM+2pmvoFMkLYnYt3WuVbzWbWnABzQ6zPvQYayC7+S83jZ"/>
   <link rel="icon" href="/snowflow_demo-fork/favicon-4e963492c77e259d.ico" integrity="sha384-NKMCH4BuN/1NVAgSqToQwJnP5xgiqUIJiOJ1eG5AC6sa/wf8wrswuP51hKKyrw4+"/>
-<link rel="modulepreload" href="/snowflow_demo-fork/xetal-snow-app-a42c2b0405a8b957.js" crossorigin="anonymous" integrity="sha384-pO0ax0BS7KWYkqW5Y5rAGOih8kOnK4ZAVdxpayjp+mhwuOZql+FZGW6DXMJcKTZ6"><link rel="preload" href="/snowflow_demo-fork/xetal-snow-app-a42c2b0405a8b957_bg.wasm" crossorigin="anonymous" integrity="sha384-fzSh80wEy5L/u77brpcnyTirkfHiPSoS4ZTfUSVaCB4t23wdxrUlD4uTdI43h/xj" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/snowflow_demo-fork/xetal-snow-app-eab1f7995b9b3a49.js" crossorigin="anonymous" integrity="sha384-GbRvpqSjil9Bk/RxvEYNYTud+yVVnQSQYC3HoVSGgmEgZOPultOmyjZGaD26k/2u"><link rel="preload" href="/snowflow_demo-fork/xetal-snow-app-eab1f7995b9b3a49_bg.wasm" crossorigin="anonymous" integrity="sha384-rVZVAja/Aehw0MbgRR01sh9cAwHfF0Wupe1UcGrY1bigMbQgwa39HAK1pUqR6C5D" as="fetch" type="application/wasm"></head>
 <body>
 <div id="app" data-state="loading">
   <header><a class="brand" href="https://github.com/softwarewrighter/snowflow_demo-fork">X_eTaL <span>/ world lab</span></a><span class="badge">Rust + WASM + WebGPU</span></header>
@@ -31,7 +31,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
       <div class="canvas-footer"><span>WASD: walk / Arrow keys: look</span><span id="updates">Waiting for geometry</span></div>
     </section>
     <section class="controls" aria-label="Demo controls"><div><button id="pause" type="button">Pause</button><button id="raise" type="button">Change ridge</button><button id="reset" type="button">Reset</button></div><p>WASD: walk / Arrow keys: look <span>R: reset</span></p></section>
-    <details><summary>See the X_eTaL program <span>Geometry and behavior live here</span></summary><pre id="source"></pre></details>
+    <details><summary>See the X_eTaL program <span>Geometry and behavior live here</span></summary><div class="source-views"><section aria-labelledby="typed-heading"><h2 id="typed-heading">As typed</h2><pre id="source" tabindex="0" aria-label="X_eTaL source as typed"></pre></section><section aria-labelledby="rendered-heading"><h2 id="rendered-heading">As rendered</h2><pre id="source-rendered" tabindex="0" aria-label="X_eTaL source as rendered"></pre></section></div></details>
   </main>
   <footer><span>Copyright (c) 2026 Michael A Wright</span><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/main/LICENSE">MIT License</a><a href="https://github.com/softwarewrighter/X_eTaL">Built with X_eTaL</a></footer>
 </div>
