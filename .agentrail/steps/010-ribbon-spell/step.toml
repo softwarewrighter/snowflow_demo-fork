@@ -1,8 +1,9 @@
 number = 10
 slug = "ribbon-spell"
-status = "in-progress"
+status = "completed"
 description = "Port original spell 2 Ribbon: held aim-tracking stream, curved motion and rel..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T11:55:55"
-commits = []
+completed_at = "2026-11-14T13:31:11"
+commits = ["55fd9b22d51a6b3b2f61a3821cb3f5666e70f9a6"]
