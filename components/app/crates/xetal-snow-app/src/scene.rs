@@ -13,12 +13,14 @@ pub struct Scene {
     pub steps: u64,
     pub wind: f32,
     player: Player,
+    pub spells: xetal_world_spells::Spells,
     terrain: Vec<f32>,
     track_revision: u64,
 }
 pub struct Update {
     pub terrain: Option<xetal_world_surface::Mesh>,
     pub tracks: Option<Vec<f32>>,
+    pub objects: Option<xetal_world_surface::Mesh>,
     pub step: bool,
     pub landing: f32,
     pub moving: bool,
@@ -36,6 +38,7 @@ impl Scene {
             steps: 0,
             wind: 0.3,
             player: Player::new()?,
+            spells: xetal_world_spells::Spells::new()?,
             track_revision: u64::MAX,
         })
     }
@@ -69,6 +72,7 @@ impl Scene {
         Ok(Update {
             terrain,
             tracks,
+            objects: self.spells.tick(if paused { 0.0 } else { dt })?,
             step,
             landing,
             moving,
@@ -107,6 +111,7 @@ impl Scene {
         )
     }
     pub fn reset(&mut self) -> Result<(), String> {
+        self.spells.clear()?;
         self.walker = Walker::default();
         self.clear_tracks()
     }

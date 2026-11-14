@@ -80,3 +80,29 @@ Core primitives such as reshape, select, transpose, arithmetic and Event
 access come from the pinned X_eTaL runtime, not additional app libraries.
 Their declarations are in the [pinned builtin catalog](https://github.com/softwarewrighter/X_eTaL/blob/c5750cec6af7063a90818046c7c7945db71b4a36/components/base/crates/xetal-catalog/builtins.toml).
 Source pins are recorded in [sources.lock.json](sources.lock.json).
+
+## Crystallise spell
+
+[Crystallise.xtl](../components/world/libs/Crystallise.xtl) exports `l:s_tart`,
+`l:c_ast`, `l:t_ick`, `l:g_rowing` and `l:m_esh`. The immutable state contains
+simulation time and the latest four casts. Each cast grows twelve tapered
+hexagonal prisms in a golden-angle spiral four meters ahead of the caster.
+Growth is staggered and settles within 1.8 seconds. Formations persist until
+replaced by the fifth cast or cleared by Reset; collision is not implemented.
+
+The [spell program](../components/world/demos/crystallise.xtl) composes this
+library with SnowHost. Its single mutable mesh publication is the host boundary;
+spell state is passed through pure updates. The live demo displays this program
+as typed and as rendered, with links to the generated API/source reference.
+
+[xetal-world-spells](../components/world/crates/xetal-world-spells/src/lib.rs)
+transports pose/cast/tick events, validates the typed mesh and coalesces uploads.
+[xetal-world-objects](../components/render/crates/xetal-world-objects/src/lib.rs)
+provides a bounded triangle buffer and faceted cyan ice shader. Maximum capacity
+is 48 crystals, 864 triangles and 31,104 vertex bytes, in one extra draw call.
+The material blends with depth writes; refraction, crystal shadows, spell
+lights and original-demo visual parity are not implemented.
+
+Native tests cover deterministic geometry, growth, aim, replacement budget,
+reset uploads, invalid inputs, shader validation and upload rejection. The
+`cost` example measures CPU transport/evaluation separately from browser FPS.

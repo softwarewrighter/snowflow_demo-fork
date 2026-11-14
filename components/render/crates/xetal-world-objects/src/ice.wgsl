@@ -1,0 +1,19 @@
+struct IceVertex { @builtin(position) clip: vec4f, @location(0) world: vec3f }
+@vertex fn ice_vertex(@location(0) p: vec3f) -> IceVertex {
+    var out: IceVertex;
+    out.clip = project(p);
+    out.world = p;
+    return out;
+}
+@fragment fn ice_fragment(v: IceVertex) -> @location(0) vec4f {
+    let n = normalize(cross(dpdx(v.world), dpdy(v.world)));
+    let view = normalize(camera.eye.xyz - v.world);
+    let sun = normalize(vec3f(0.4, 1.0, 0.3));
+    let rim = pow(1.0 - abs(dot(n, view)), 3.0);
+    let diffuse = 0.45 + 0.55 * abs(dot(n, sun));
+    let sparkle = pow(abs(dot(n, normalize(sun + view))), 72.0);
+    let ice = mix(vec3f(0.12, 0.48, 0.65), vec3f(0.65, 0.91, 1.0), rim);
+    let color = ice * diffuse + vec3f(sparkle * 0.65);
+    let fog = max(1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world)), smoothstep(40.0, 60.0, distance(camera.eye.xz, v.world.xz)));
+    return vec4f(mix(color, vec3f(0.47, 0.65, 0.78), fog), 0.82 + 0.16 * rim);
+}

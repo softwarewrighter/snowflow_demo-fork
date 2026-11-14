@@ -1107,6 +1107,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-objects"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "naga",
+ "wgpu",
+ "xetal-world-camera",
+]
+
+[[package]]
 name = "xetal-world-render"
 version = "0.1.0"
 dependencies = [
@@ -1116,6 +1126,7 @@ dependencies = [
  "wgpu",
  "xetal-world-camera",
  "xetal-world-decals",
+ "xetal-world-objects",
  "xetal-world-shadow",
  "xetal-world-surface",
 ]

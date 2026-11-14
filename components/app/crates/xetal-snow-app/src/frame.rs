@@ -82,6 +82,9 @@ impl App {
         if let Some(vertices) = update.tracks {
             self.renderer.upload_tracks(&vertices)?;
         }
+        if let Some(mesh) = update.objects {
+            self.renderer.upload_objects(mesh.positions())?;
+        }
         let sound = match update.sound[0] {
             1.0 => self
                 .audio
@@ -128,7 +131,7 @@ impl App {
         if chunks > 0 {
             status::progress(self.frames, self.updates, scene.mesh_hash);
         }
-        status::text("triangles", &format!("{}", chunks * 512));
+        status::text("triangles", &format!("{}", chunks * 512 + scene.spells.positions().len() / 9));
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
         if let Ok(element) = status::element("app") {
             for (key, value) in [
@@ -142,6 +145,7 @@ impl App {
                 ("data-steps", scene.steps.to_string()),
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
+                ("data-crystals", (scene.spells.positions().len() / 162).to_string()),
                 ("data-audio", self.audio.state().to_string()),
                 ("data-grounded", scene.walker.motion.grounded.to_string()),
             ] {

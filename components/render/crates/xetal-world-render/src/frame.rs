@@ -98,6 +98,7 @@ impl Renderer {
             pass.set_index_buffer(mesh.indices.slice(..), wgpu::IndexFormat::Uint32);
             pass.draw_indexed(0..mesh.count, 0, 0..1);
             self.decals.draw(&mut pass);
+            self.objects.draw(&mut pass);
         }
     }
 }

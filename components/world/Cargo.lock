@@ -1181,6 +1181,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-spells"
+version = "0.1.0"
+dependencies = [
+ "xetal-linter",
+ "xetal-world-model",
+ "xetal-world-surface",
+]
+
+[[package]]
 name = "xetal-world-stream"
 version = "0.1.0"
 dependencies = [

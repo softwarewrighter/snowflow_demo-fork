@@ -1,0 +1,67 @@
+## Crystallise: original spell 4, bounded golden-angle hexagonal ice growth.
+## Public API: l:s_tart @, l:c_ast (point, yaw) state, l:t_ick dt state, l:m_esh state.
+## State: (time, N by 4 casts [x z yaw birth]); latest four formations persist.
+## Reference: library-reference.html#crystallise
+"snow:" u_se< "SnowTerrain.xtl"
+l:s_tart := { @ -> (0.0, 0 4 r_eshape 0.0) }
+l:c_ast := { (point, yaw) (time, casts) ->
+  next := casts c_at 1 4 r_eshape point c_at yaw c_at time
+  (f_irst s_hape next) > 4 ? (time, -4 t_ake next)
+  (time, next)
+}
+l:t_ick := { dt (time, casts) -> (time + dt, casts) }
+l:g_rowing := { (time, casts) ->
+  (f_irst s_hape casts) = 0 ? 0
+  birth := 4 s_elect ((f_irst s_hape casts) s_elect casts)
+  time < (birth + 1.8)
+}
+h:c_lamp := { x ->
+  positive := (x + a_bs x) / 2.0
+  (positive + 1.0 - a_bs (positive - 1.0)) / 2.0
+}
+h:f_rames := { (time, casts) ->
+  n := f_irst s_hape casts
+  k := (r_ange (n * 12)) - 1
+  rows := (1 + (k d_iv 12)) s_elect casts
+  columns := 2 1 t_ranspose rows
+  crystal := k m_od 12
+  spiral := 2.3999632297 * f_loat crystal
+  yaw := 3 s_elect columns
+  radius := 0.43 * ((1.0 + f_loat crystal) ^ 0.5)
+  x := (1 s_elect columns) + (4.0 * s_in yaw) + (radius * c_os spiral)
+  z := (2 s_elect columns) - (4.0 * c_os yaw) + (radius * s_in spiral)
+  age := time - 4 s_elect columns
+  growth := h:c_lamp ((age - (0.045 * f_loat crystal)) / 0.9)
+  smooth := growth * growth * (3.0 - (2.0 * growth))
+  (x, z, (snow:h_eight (x, z)) - 0.35, growth,
+    (1.1 + (0.11 * f_loat crystal)) * smooth, spiral)
+}
+h:p_oints := { state ->
+  (_, casts) := state
+  n := f_irst s_hape casts
+  k := (r_ange (n * 648)) - 1
+  ids := 1 + (k d_iv 54)
+  (cx, cz, ground, growing, heights, spirals) := h:f_rames state
+  x := ids s_elect cx
+  z := ids s_elect cz
+  growth := ids s_elect growing
+  spiral := ids s_elect spirals
+  crystal := (k d_iv 54) m_od 12
+  local := 1 + (k m_od 9)
+  corner := local s_elect 0 1 0 1 1 0 0 1 0
+  angle := (1.0471975512 * f_loat (((k d_iv 9) m_od 6) + corner)) + spiral
+  width := (0.18 + (0.018 * f_loat crystal)) * growth
+  taper := local s_elect 1.0 1.0 0.65 1.0 0.65 0.65 0.65 0.65 0.0
+  vertical := local s_elect 0.0 0.0 1.0 0.0 1.0 1.0 1.0 1.0 1.06
+  height := ids s_elect heights
+  y := (ids s_elect ground) + (height * vertical)
+  px := x + (width * taper * c_os angle)
+  pz := z + (width * taper * s_in angle)
+  2 1 t_ranspose ((3 c_at (n * 648)) r_eshape px c_at y c_at pz)
+}
+l:m_esh := { state ->
+  (_, casts) := state
+  n := f_irst s_hape casts
+  n = 0 ? 0 3 3 r_eshape 0.0
+  ((n * 216) c_at 3 3) r_eshape h:p_oints state
+}

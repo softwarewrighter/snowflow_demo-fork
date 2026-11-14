@@ -1,0 +1,31 @@
+#!/usr/bin/env xetal
+## Spell host: immutable library state, one typed mesh publication slot.
+"ice:" u_se< "../libs/Crystallise.xtl"
+"host:" u_se< "../libs/SnowHost.xtl"
+mesh! := 0 3 3 r_eshape 0.0
+u:w_atch := { @ -> mesh! }
+'u:w_atch
+u:u_pdate := { (spell, point, yaw) event ->
+  kind := []E_KIND event
+  kind m_atch "move" ? (spell, []E_AT event, yaw)
+  kind m_atch "down" ? (spell, point, f_irst []E_AT event)
+  kind m_atch "click" ? ((point, yaw) ice:c_ast spell, point, yaw)
+  kind m_atch "tick" ? ((f_irst []E_AT event) ice:t_ick spell, point, yaw)
+  kind m_atch "key" ? (ice:s_tart @, point, yaw)
+  (spell, point, yaw)
+}
+u:l_oop! := { state ->
+  event := host:n_ext! @
+  ([]E_KIND event) m_atch "end" ? @
+  (before, _, _) := state
+  next := state u:u_pdate event
+  (spell, _, _) := next
+  kind := []E_KIND event
+  refresh := ((kind m_atch "click") + (kind m_atch "key") + ice:g_rowing before) > 0
+  refresh ? { @ ->
+    mesh! := ice:m_esh spell
+    u:l_oop! next
+  } @
+  u:l_oop! next
+}
+u:l_oop! (ice:s_tart @, 0.0 8.0, 0.0)

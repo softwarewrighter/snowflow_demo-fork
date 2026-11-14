@@ -8,6 +8,7 @@ authors.workspace = true
 repository.workspace = true
 
 [dependencies]
+xetal-world-objects = { path = "../xetal-world-objects" }
 xetal-world-camera = { path = "../xetal-world-camera" }
 xetal-world-surface.workspace = true
 

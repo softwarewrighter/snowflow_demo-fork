@@ -1,0 +1,8 @@
+number = 7
+slug = "crystallise-spell"
+status = "in-progress"
+description = "Port the first original spell: key 4 grows bounded procedural hexagonal ice c..."
+role = "production"
+context_files = []
+created_at = "2026-11-14T11:47:30"
+commits = []

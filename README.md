@@ -61,3 +61,12 @@ The preview also includes procedural material detail, a cached sun shadow map
 and Space-to-jump player physics. Textures and Shadows can be disabled separately.
 [Effects and performance checks](docs/lightweight-effects.md) describe their cost
 bounds and pending hardware-browser measurements.
+
+## Ice spell
+
+Press **4** or use **4: Crystallise** to grow twelve ice crystals ahead of you.
+The latest four formations remain; Reset clears them. The spell source is
+shown as typed and as rendered below the demo, and its library functions link
+to the API/source cross-reference. Geometry and growth run in X_eTaL; Rust
+provides input transport and a bounded WebGPU ice renderer. Crystals are visual
+objects and do not yet block movement.

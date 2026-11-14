@@ -28,7 +28,7 @@ def main():
     reference = subprocess.check_output(['cargo', 'run', '--offline', '--quiet', '--manifest-path', 'components/world/Cargo.toml', '-p', 'xetal-world-model', '--example', 'library_reference', '--', revision], cwd=ROOT, env=env, text=True)
     (ROOT / 'components/app/web/library-reference.html').write_text(reference)
     target = ROOT / 'work/demo-site/snowflow_demo-fork'
-    command = ['trunk', 'build', '--offline', '--locked', '--public-url', '/snowflow_demo-fork/', '--dist', str(target)]
+    command = ['trunk', 'build', '--release', '--offline', '--locked', '--public-url', '/snowflow_demo-fork/', '--dist', str(target)]
     subprocess.run(command, cwd=ROOT / 'components/app/web', env=env, check=True)
     print(f'Demo built: {target}')
 
