@@ -30,28 +30,7 @@ pub(crate) fn install(state: State) -> Result<(), String> {
     button("crystallise", state.clone(), |app| cast(app, "4"))?;
     button("sweep", state.clone(), |app| cast(app, "1"))?;
     button("bloom", state.clone(), |app| cast(app, "3"))?;
-    button("textures", state.clone(), |app| {
-        app.effects[0] = !app.effects[0];
-        status::text(
-            "textures",
-            if app.effects[0] {
-                "Textures: on"
-            } else {
-                "Textures: off"
-            },
-        );
-    })?;
-    button("shadows", state.clone(), |app| {
-        app.effects[1] = !app.effects[1];
-        status::text(
-            "shadows",
-            if app.effects[1] {
-                "Shadows: on"
-            } else {
-                "Shadows: off"
-            },
-        );
-    })?;
+    effect_buttons(state.clone())?;
     keys(state.clone(), true)?;
     keys(state.clone(), false)?;
     blur(state)
@@ -159,4 +138,30 @@ fn cast(app: &mut App, spell: &str) {
     if let Err(error) = result {
         status::error(error);
     }
+}
+
+fn effect_buttons(state: State) -> Result<(), String> {
+    button("textures", state.clone(), |app| {
+        app.effects[0] = !app.effects[0];
+        status::text(
+            "textures",
+            if app.effects[0] {
+                "Textures: on"
+            } else {
+                "Textures: off"
+            },
+        );
+    })?;
+    button("shadows", state.clone(), |app| {
+        app.effects[1] = !app.effects[1];
+        status::text(
+            "shadows",
+            if app.effects[1] {
+                "Shadows: on"
+            } else {
+                "Shadows: off"
+            },
+        );
+    })?;
+    Ok(())
 }

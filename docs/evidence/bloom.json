@@ -1,0 +1,46 @@
+{
+  "status": "initial preview published; full post-publication gate passed; gate-clean publication pending",
+  "initial_source": "f9cbbb113e6c0bc0a30fb51dccebb78e79de0249",
+  "initial_pages": "e036fd3a11569696cbb6ad96e58cf3236d829fab",
+  "native_rust_tests": 70,
+  "python_tests": 18,
+  "shader_validation": "passed Naga 24",
+  "wasm_clippy": "passed",
+  "release_wasm_build": "passed",
+  "budgets": {
+    "active_columns": 1,
+    "column_triangles": 480,
+    "bloom_particles": 512,
+    "renderer_particle_capacity": 1024,
+    "particle_gpu_bytes": 24576,
+    "particle_upload_bytes": 12288,
+    "extra_particle_draws": 1,
+    "retained_craters": 4,
+    "retained_sweep_cuts": 8
+  },
+  "cpu_native_release": {
+    "scope": "Scene update CPU, one Bloom, loaded 25-chunk world, no footprints; excludes GPU/audio/browser frame pacing and initial ray query",
+    "command": "cargo run --release --manifest-path components/app/Cargo.toml -p xetal-snow-app --example bloom_cost",
+    "raw": [
+      "eruption including crater rebuild: median 3.529 ms, p95 4.839 ms, worst 10.610 ms",
+      "fallout: median 2.881 ms, p95 4.440 ms, worst 4.593 ms",
+      "settled: median 0.144 ms, p95 0.257 ms, worst 0.282 ms"
+    ]
+  },
+  "browser": "pending; sandbox local sockets denied; no appearance/FPS acceptance inferred",
+  "libraries": {
+    "SnowHost.xtl": "a2e83d01a1138ea5f1295f161bbae2e713f3a8dfa5e6ab241cb7fa7858062088",
+    "SweepBrush.xtl": "2eabd1784d80f928287209ccfa18f683f9cffd2312f81380fc58252639ee6a42",
+    "BloomBrush.xtl": "ab65956d44a2304c68c17ae51b0edd229aca47b2d5c668b25e72a5f232bb3c4d",
+    "TerrainBrush.xtl": "10bf2c0f0af3e057024d3ead5bd06a0ee123217b33fd4ec0accb0e35f4ceca47",
+    "SnowTerrain.xtl": "ce6986fd7e67ea7b48da9ae270a2ee31c95d7959a14bf01abc94da8fc6ce1844",
+    "Crystallise.xtl": "ced8c41d9920141bc2d020cc2bc455c5ed44f1b76502fc4d3b33a3a7e30bc069",
+    "SnowParticles.xtl": "481fb6deb271a952c909ebb8140d0c8652a294a3ab30ee4d3b59028c77d4d0fe",
+    "SnowWind.xtl": "78f555580326d40f744d024352a60b5f25ce7154c96b04c0dee6a4d7fa59b903",
+    "Sweep.xtl": "6c5133350f22d6f9ceee269d38670e0cd14f15bc6b8abdcf1d8571480d4c09db",
+    "Bloom.xtl": "5380c590eb10c25de3dd262a51e4d2ad5c6ec16d3635e79e0285ad1d4cf22944",
+    "SweptSurface.xtl": "3c01c962cf5cf2acdc16543daf93b05ad84191ae2414abbc771c5997a9746bc2",
+    "SnowAudio.xtl": "cba46cfb11e421913c986bf7c157369945ac6c2402cf7eb76d4f23dfb798e759",
+    "Footsteps.xtl": "3e224cfb5fdbe438b78c5fa531cf857b229e0dfb38665344dc82acb3a4a1cea2"
+  }
+}

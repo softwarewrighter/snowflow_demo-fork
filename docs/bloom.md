@@ -58,3 +58,17 @@ occlude particles through the depth buffer. The material does not reproduce the
 original refraction, dynamic spell lights or full water/foam quality. Bloom has
 no dedicated sound. Ambient snowfall is still queued; this renderer and the
 SnowParticles library are the reusable foundation for snowfall and Vortex.
+
+## Native CPU sample
+
+The release `bloom_cost` example runs one aimed Bloom in a loaded 25-chunk Scene
+without footprints. Median Scene update CPU time was 3.529 ms during eruption,
+2.881 ms during fallout and 0.144 ms after settling. The eruption sample includes
+the crater rebuild; its worst update was 10.610 ms. GPU work, WebAudio, the initial
+ray query and browser frame pacing are excluded. Reproduce with:
+
+```sh
+cargo run --release --manifest-path components/app/Cargo.toml -p xetal-snow-app --example bloom_cost
+```
+
+[Raw phase measurements](evidence/bloom.json) accompany the implementation.
