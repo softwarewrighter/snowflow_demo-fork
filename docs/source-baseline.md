@@ -71,8 +71,12 @@ replaces an earlier success so stale results cannot be mistaken for a new pass.
 This environment denied socket creation before the browser test could start:
 `PermissionError: [Errno 1] Operation not permitted`. Separate Chromium attempts
 also encountered crash-handler/socket restrictions. These are failed environment
-preflights, not successful browser results. Browser mount, worker loading and
-event delivery remain unverified until the explicit validation step passes.
+preflights, not successful browser results. The terminal-host run subsequently passed editor mount, worker loading and event
+delivery in Chromium 154.0.8037.97. Its four expected messages arrived in order,
+with no severe console errors. The report includes nonfatal upstream preload,
+mobile-meta and wasm-bindgen initialization warnings. Raw messages, capabilities
+and artifact hashes are preserved in [browser evidence](evidence/browser-baseline.json).
+The agent sandbox still cannot independently rerun that browser session.
 
 ## Reproducibility limits
 

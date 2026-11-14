@@ -14,6 +14,7 @@ or from inside a component; `.cargo/config.toml` selects the shared `target/`.
 | app | Browser composition, input wiring and inspection UI |
 | evidence | Replays, captures and performance evidence |
 
-The initial Rust facades are intentionally empty and have no dependencies.
+The host and surface components implement the application mesh contract; host
+depends on surface. The other Rust facades remain empty.
 X_eTaL library space is under `world/libs/`. Reusable ecosystem features must
 land in their owning sibling repository, then be consumed through pinned commits.

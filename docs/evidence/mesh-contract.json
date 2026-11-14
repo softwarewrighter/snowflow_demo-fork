@@ -1,0 +1,18 @@
+{
+  "scope": "Native application payload microbenchmark; not ext: FFI, evaluator, browser, worker or GPU timing",
+  "cpu": "Intel Xeon W-2135 @ 3.70GHz",
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "profile": "release",
+  "sample_count": 1,
+  "typed_input_preparation": "owned-f32 batches prepared outside timer; f64 conversion included in other cases",
+  "native_integration_tests": 9,
+  "wasm_build": "surface and host libraries built for wasm32-unknown-unknown",
+  "browser_validation": "Upstream editor and event worker passed on terminal host; no application renderer exists.",
+  "measurement": {
+    "triangles": 4096,
+    "rounds": 32,
+    "owned_f32_ms": 3.19448,
+    "checked_f64_ms": 7.817572,
+    "text_roundtrip_ms": 199.188329
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "messages": [
+    "1:r",
+    "1:v",
+    "1:o4:tick",
+    "1:d"
+  ],
+  "browser_logs": [
+    {
+      "level": "WARNING",
+      "message": "http://127.0.0.1:33475/snowflow_demo-fork/ 33 The `integrity` attribute is currently ignored for preload destinations that do not support subresource integrity. See https://crbug.com/981419 for more information",
+      "source": "other",
+      "timestamp": 1794614313358
+    },
+    {
+      "level": "WARNING",
+      "message": "http://127.0.0.1:33475/snowflow_demo-fork/ - <meta name=\"apple-mobile-web-app-capable\" content=\"yes\"> is deprecated. Please include <meta name=\"mobile-web-app-capable\" content=\"yes\">",
+      "source": "other",
+      "timestamp": 1794614314585
+    },
+    {
+      "level": "WARNING",
+      "message": "http://127.0.0.1:33475/snowflow_demo-fork/xetal-runner.js 338 using deprecated parameters for the initialization function; pass a single object instead",
+      "source": "worker",
+      "timestamp": 1794614314672
+    }
+  ],
+  "capabilities": {
+    "acceptInsecureCerts": false,
+    "browserName": "chrome",
+    "browserVersion": "154.0.8037.97",
+    "chrome": {
+      "chromedriverVersion": "154.0.8037.97 (b510e9d7cd3a2fbd78d0ddc42234103206c5f78d-refs/branch-heads/8037@{#1673})",
+      "userDataDir": "/disk1/tmp/snow-browser-2buc01ai/profile"
+    },
+    "fedcm:accounts": true,
+    "goog:chromeOptions": {
+      "debuggerAddress": "localhost:44663"
+    },
+    "goog:processID": 2088419,
+    "networkConnectionEnabled": false,
+    "pageLoadStrategy": "normal",
+    "platformName": "linux",
+    "proxy": {},
+    "setWindowRect": true,
+    "strictFileInteractability": false,
+    "timeouts": {
+      "implicit": 0,
+      "pageLoad": 300000,
+      "script": 30000
+    },
+    "unhandledPromptBehavior": "dismiss and notify",
+    "webauthn:extension:cmtgKey": true,
+    "webauthn:extension:credBlob": true,
+    "webauthn:extension:largeBlob": true,
+    "webauthn:extension:minPinLength": true,
+    "webauthn:extension:prf": true,
+    "webauthn:virtualAuthenticators": true
+  },
+  "status": "passed",
+  "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
+  "artifacts": {
+    "xetal-runner_bg.wasm": {
+      "bytes": 11002362,
+      "sha256": "931e6fe4f8f632022e7f8705f8d337372a148f3642b1e791f4100c2701998dfe"
+    },
+    "xetal-web-d60b1875562525d5_bg.wasm": {
+      "bytes": 13783977,
+      "sha256": "bb93214d36a49005058c83f8dd4c3270179b4da4f752de0c952e260684b3351d"
+    }
+  },
+  "execution_context": "Terminal host run; this agent sandbox cannot create loopback sockets."
+}

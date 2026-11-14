@@ -1,3 +1,11 @@
-//! Typed host boundary, events, worker messages and resource lifecycle.
-//!
-//! Bootstrap facade only; no runtime behavior is implemented yet.
+//! Application mesh ownership and bounded resource lifetime, independent of a GPU.
+
+mod error;
+mod handle;
+mod stats;
+mod store;
+
+pub use error::HostError;
+pub use handle::MeshHandle;
+pub use stats::{Limits, Stats};
+pub use store::MeshStore;

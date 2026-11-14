@@ -12,10 +12,15 @@
   "native_suites": "xetal-play and xetal-runner passed",
   "wasm_build": "passed",
   "browser_execution": {
-    "status": "unverified",
-    "attempt": "loopback server preflight",
-    "error": "PermissionError: [Errno 1] Operation not permitted",
-    "next_step": "browser-baseline-validation"
+    "status": "passed",
+    "context": "terminal host",
+    "evidence": "docs/evidence/browser-baseline.json",
+    "sandbox_attempt": {
+      "status": "unverified",
+      "attempt": "loopback server preflight",
+      "error": "PermissionError: [Errno 1] Operation not permitted",
+      "next_step": "browser-baseline-validation"
+    }
   },
   "artifacts": {
     "xetal-runner_bg.wasm": {

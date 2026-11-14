@@ -15,6 +15,12 @@ features require an upstream ask and test-first implementation in their owner.
 | D7 | Generated browser glue is acceptable; no handwritten application JS or WASM | Keep application development in X_eTaL and Rust |
 | D8 | Base browser profile uses message workers without shared memory | Keep the first Pages build independent of cross-origin isolation |
 | D9 | Evolve from small visible milestones toward Snowflow quality | Establish correctness and budgets before advanced rendering |
+| D10 | Typed owned f32/u32 payloads with checked f64/i64 adapters | Keep serialization outside the Rust upload boundary and make narrowing explicit |
+| D11 | Instance-scoped mesh handles never wrap or alias disposed resources | Preserve ownership through disposal/reset; keep scene IDs separate |
+
+The native mesh contract can be developed independently of browser execution.
+Browser-baseline validation remains mandatory before the browser mesh demo;
+its unavailable environment must not prevent native contract work.
 
 ## Upstream feature requests
 

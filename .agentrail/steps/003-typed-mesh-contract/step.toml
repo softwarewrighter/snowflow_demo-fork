@@ -1,6 +1,6 @@
-number = 4
+number = 3
 slug = "typed-mesh-contract"
-status = "pending"
+status = "in-progress"
 description = "Test first a minimal typed mesh upload and resource lifecycle contract using ..."
 role = "production"
 context_files = []

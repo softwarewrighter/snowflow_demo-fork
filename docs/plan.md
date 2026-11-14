@@ -15,8 +15,8 @@ structure; completed work and pending validation are recorded below and in agent
 | --- | --- | --- |
 | 1 | repository-bootstrap | Original demo archived intact, new README, legal notices, instructions, components, docs and quality gate |
 | 2 | source-baseline | Tested dependency bootstrap, native evaluator/runner checks and WASM build; browser harness supplied |
-| 3 | browser-baseline-validation | Real-browser editor and event-worker evidence on a host allowing loopback sockets |
-| 4 | typed-mesh-contract | Typed array upload, shapes, resource lifetime/reset and upstream host-binding ask |
+| 3 | typed-mesh-contract | Validated application payloads, checked adapters, bounded resources and existing E1 requirements |
+| 4 | browser-baseline-validation | Real-browser editor and event-worker evidence before the browser mesh demo |
 | 5 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
 | 6 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
 | 7 | pages-foundation | Static subdirectory build, working WASM/worker paths and reproducible browser evidence |
@@ -68,5 +68,16 @@ Neither the roadmap nor empty Rust facades constitute a delivered browser demo.
 The dependency bootstrap verifies every inspected commit and each sibling core pin.
 The evaluator and runner native suites and their WASM build are checked separately
 from browser execution. This sandbox denies loopback socket creation, so browser
-execution is an explicit pending validation step before typed mesh work. See
+execution was kept separate while the native mesh contract proceeded.
+A terminal-host result now verifies the upstream editor and event worker. Raw
+messages, browser capabilities and matching WASM hashes are committed as evidence;
+this validates the existing evaluator path, not a new application renderer. See
 [source baseline](source-baseline.md) for commands, tools and evidence limits.
+
+## Typed mesh contract evidence
+
+The application surface and host crates implement checked payload conversion and
+bounded resource ownership. They compile for native and WASM targets. No renderer,
+GPU upload or evaluator host hook is claimed. Existing E1 remains the upstream
+integration requirement. Native payload timings describe serialization stages
+only; see [mesh contract](mesh-contract.md) and [host binding requirements](xetal-asks.md).

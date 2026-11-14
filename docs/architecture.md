@@ -2,8 +2,9 @@
 
 X_eTaL owns procedural world algorithms and gameplay. Rust owns platform access
 and execution mechanisms. The application composes those reusable facilities.
-The component facades are scaffolding; the following dependency boundaries guide
-implementation and do not claim an existing renderer.
+Host and surface implement mesh payloads and resource lifetime. The remaining
+component facades are scaffolding; the following boundaries guide implementation
+and do not claim an existing renderer.
 
 ```text
 X_eTaL generation and gameplay libraries

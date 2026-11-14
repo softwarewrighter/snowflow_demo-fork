@@ -15,7 +15,8 @@ the next implementation step in the same handoff.
 - `agentrail status`: durable step state.
 - `agentrail audit`: saga and git history comparison.
 
-The bootstrap facades have no behavior and therefore no application tests yet.
+Host and surface have integration tests for mesh data and resource lifetime.
+The remaining bootstrap facades have no behavior or application tests yet.
 New behavior needs a failing test, implementation, refactor and relevant gate.
 Tests belong in integration-test files by concern. CLI output uses reg-rs when
 an application CLI exists; no CLI or baseline is fabricated for empty facades.
@@ -38,7 +39,7 @@ Run `python3 scripts/inspect-xetal.py` to check hashes and each sibling's own
 A clean build of the new facades needs Rust/Cargo and no external crates. The
 [source baseline procedure](source-baseline.md) provides pinned tools, a dependency
 bootstrap with local-cache support, and an upstream evaluator/worker WASM build.
-Real-browser execution remains a separate validation gate.
+Real-browser execution has separate terminal-host evidence; see the baseline procedure.
 
 ## Evidence and publication
 

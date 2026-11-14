@@ -10,14 +10,17 @@ integration, workers, typed data transfer and reusable execution mechanisms.
 The browser build uses generated loader glue, with no handwritten application
 JavaScript or WebAssembly.
 
-The repository currently contains component scaffolding, design documentation,
-source inspection tooling and an intact archived reference. There is no new
-playable browser application yet.
+The repository contains validated mesh payloads, a bounded mesh resource store,
+component scaffolding, reproducible source/build tooling and an intact archived
+reference. The existing X_eTaL evaluator and worker compile to WASM and have
+terminal-host browser validation. There is no
+new playable browser application yet.
 
 ## Repository
 
 - [Components](components/README.md): independent Rust workspaces and X_eTaL libraries.
 - [Architecture](docs/architecture.md): ownership and execution boundaries.
+- [Mesh contract](docs/mesh-contract.md): arrays, precision and resource lifetime.
 - [Development](docs/development.md): checks, source pins and reproducible evidence.
 - [Design](docs/design.md): application decisions and upstream language asks.
 - [Plan](docs/plan.md): milestones and agentrail execution.

@@ -5,3 +5,10 @@ version = 4
 [[package]]
 name = "xetal-world-host"
 version = "0.1.0"
+dependencies = [
+ "xetal-world-surface",
+]
+
+[[package]]
+name = "xetal-world-surface"
+version = "0.1.0"
