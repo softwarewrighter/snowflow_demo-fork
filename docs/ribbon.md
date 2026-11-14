@@ -37,3 +37,12 @@ Native tests cover hold/aim history, frozen release aim, flight and retirement,
 contact scoring, reset, replay/recast, resource bounds and shared edited terrain.
 Run the regular post-publication gate and the browser harness for actual device
 rendering, held-key/button input, focus loss and FPS acceptance.
+
+## Native CPU sample
+
+A release native Scene sample measured held updates at median 2.049 ms and
+p95 3.109 ms. The four-second release/drain/settled phase measured median
+0.613 ms, p95 2.150 ms and worst 9.316 ms, including one terrain score. These
+samples exclude GPU, audio and browser frame pacing, and contain no footprints.
+They are not browser FPS measurements. See [raw evidence](evidence/ribbon.json)
+and the reproducible `ribbon_cost` example in the app crate.

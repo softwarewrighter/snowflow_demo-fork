@@ -88,6 +88,17 @@ def interactions(base, session):
     (ROOT / 'work/demo-bloom-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
     wait(base, session, "return Number(document.getElementById('app').dataset.bloom)===0 && Number(document.getElementById('app').dataset.particles)>0")
     wait(base, session, "return Number(document.getElementById('app').dataset.particles)===0")
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keydown',{key:'2'}))")
+    wait(base, session, "return Number(document.getElementById('app').dataset.ribbon)>0 && document.getElementById('app').dataset.ribbonMode==='1'")
+    time.sleep(0.4)
+    (ROOT / 'work/demo-ribbon-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keyup',{key:'2'}))")
+    wait(base, session, "return document.getElementById('app').dataset.ribbonMode!=='1'")
+    wait(base, session, "return document.getElementById('app').dataset.ribbonMode==='0'")
+    click(base, session, 'ribbon')
+    wait(base, session, "return document.getElementById('app').dataset.ribbonMode==='1'")
+    evaluate(base, session, "window.dispatchEvent(new Event('blur'))")
+    wait(base, session, "return document.getElementById('app').dataset.ribbonMode!=='1'")
     click(base, session, 'clear-tracks')
     wait(base, session, "return Number(document.getElementById('app').dataset.footprints)===0")
     click(base, session, 'reset')
@@ -96,7 +107,7 @@ def interactions(base, session):
     wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===0")
     assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
-    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','ribbon_hold_release_blur':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):

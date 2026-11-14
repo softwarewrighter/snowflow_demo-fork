@@ -22,7 +22,7 @@ structure; completed work and pending validation are recorded below and in agent
 | 7 | crystallise-spell | Port spell 4 with bounded X_eTaL crystal growth and a native ice renderer |
 | 8 | sweep-spell | X_eTaL moving slush crescent, signed terrain brushes, exact edited chunk seams and shared collision payload; published preview and 60-test native gate |
 | 9 | bloom-spell | Published targeted X_eTaL eruption, crater/rim and reusable particle library/renderer; 70-test native gate passes |
-| 10 | ribbon-spell | Held aim-controlled water stream with release trajectory |
+| 10 | ribbon-spell | Published held path-history water stream, captured-aim release and shallow scoring; 76-test native gate passes |
 | 11 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
 | 12 | deformable-snow-layer | Planned fine local layer, actual boot depressions/edges, shared collision and bounded buffers |
 | 13 | snow-compaction-contact | Planned packed trails, depth/pressure response, movement and depth-sensitive sound |
