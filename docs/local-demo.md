@@ -3,7 +3,7 @@
 The first application renders a procedural 2,048-triangle snowfield. X_eTaL
 generates its geometry and responds to events; Rust runs the persistent sliced
 evaluator, reads typed arrays and submits them to wgpu. There are no model or
-texture files. The favicon comes from the pinned X_eTaL editor.
+texture files. The favicon is a small snowflake SVG matching the preview colors.
 
 ## Open the built demo
 

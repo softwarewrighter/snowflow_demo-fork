@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def stage(source, destination, revision):
     files = list(source.iterdir())
-    allowed = {'.html', '.js', '.wasm', '.css', '.ico'}
+    allowed = {'.html', '.js', '.wasm', '.css', '.ico', '.svg'}
     if not (source / 'index.html').is_file():
         raise ValueError('built index.html is missing')
     if any(p.is_symlink() or not p.is_file() or p.suffix not in allowed for p in files):

@@ -24,7 +24,7 @@ URL. On later runs fetch and fast-forward that branch before preparing a new
 artifact. Commit its generated files and push gh-pages without force. Push main
 as well so the build identity resolves to published source.
 
-The packaging allowlist accepts HTML, CSS, generated JS, WASM and the favicon.
+The packaging allowlist accepts HTML, CSS, generated JS, WASM and the SVG snowflake favicon.
 It adds the project notices and .nojekyll. Unexpected files and symlinks fail
 before copying; private keys under work/tls are never a packaging input.
 
