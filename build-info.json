@@ -1,11 +1,11 @@
 {
-  "source_commit": "d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9",
+  "source_commit": "5b2d57bf5ed068023efdf2ccfde8d3c5eb45d5f6",
   "artifacts": {
-    "style-5b802c37dae26239.css": "7e0bae1f766299fdd751a8bb958d1535bc17de92131b2b53fe47668a3c264312",
+    "style-4c186e7bf37a063a.css": "261c549cd11aed0afde9d79fd38e8a563225b8c3e84a39543f340041f56f2333",
     "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
-    "library-reference.html": "167c49d7ad651db95fa6839abee03bcdde36d238d3d5cf7977dc669f2ed6c158",
-    "xetal-snow-app-37f8675d83752784_bg.wasm": "4001899773d222a6ad431a6d5fd90f63b348f88f166926743a125742f3326af4",
-    "index.html": "8934bc35d02e6857b3238acbf91d407a6a11031531c5fdde84f7d76abe382873",
-    "xetal-snow-app-37f8675d83752784.js": "6b1ecdf4b56bdbf609dd55687829dfd1616ee574f20279417f13b1956696d29b"
+    "library-reference.html": "971457d736ceccebbeeacf90e3fb7c4bf36ec2f2ea612ace41a25e75a8b9a495",
+    "xetal-snow-app-16aa7ae6ab76c00c_bg.wasm": "51dc2689c85c5894272cd335428ecc74a1ede04d374734117b9078ab7fa14c81",
+    "index.html": "eaacbca241f3d22d3fbaedcce12d476a0cfd1bc33c1a0f42c7d63115c4769480",
+    "xetal-snow-app-16aa7ae6ab76c00c.js": "6b1ecdf4b56bdbf609dd55687829dfd1616ee574f20279417f13b1956696d29b"
   }
 }
