@@ -1,7 +1,7 @@
 number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
-description = "The walkable preview is published; browser hardware acceptance remains pendin..."
+description = "Walkable preview plus typed/rendered source views using upstream xetal-render..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T15:26:42"

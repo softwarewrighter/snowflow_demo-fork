@@ -2,16 +2,17 @@
   "url": "https://softwarewrighter.github.io/snowflow_demo-fork/",
   "pages_status": "built",
   "https_enforced": true,
-  "source_commit": "6f78fb55885a8dfec8707a4ded803ac599c4f5e6",
-  "gh_pages_commit": "f68e7445e642a197c487720e99b1192856009690",
+  "source_commit": "0d432dbf5fb9d6f9792014d31cac5ecc157c6629",
+  "gh_pages_commit": "a3d22b5a00730787dab93f4ee7b3b9a90c7a7a6e",
   "artifact_sha256": {
-    "xetal-snow-app-a42c2b0405a8b957.js": "aa53c9aed8cce49298f99bb956b1fa34d138ce870c29955531bc050510275a96",
-    "xetal-snow-app-a42c2b0405a8b957_bg.wasm": "89e7fe023c3d44d64935cff400d59e6ec47b9d311609050764dd087d7d972f37",
+    "style-ae8b94fc99f5253e.css": "0ee58e5bcf6fdc6c8d76a17340da825e64674d4611ada899b7aed30721c3fd8a",
+    "xetal-snow-app-eab1f7995b9b3a49.js": "e80c60ef4c750a567516d5fc7ec92d91a95baebaccd991245ff0f92f7cdd48de",
     "favicon-4e963492c77e259d.ico": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
-    "index.html": "5333ed49c79d285fa7136bd652eabec543706c12515abc485654116e716df266",
-    "style-9710401d3e16e195.css": "cf92c5ff7b2ae67c97099c0bc741b2fdedef980359d69b4c9fb7d4dcede872d0"
+    "xetal-snow-app-eab1f7995b9b3a49_bg.wasm": "07a309520aabec48d3ad80c724d2a8ee288e7cf190a01333dd59d221a410e4d9",
+    "index.html": "e2c74f4945e13cec8e2fe4784331bcb3f807bef11f85b9289c8134cd4b23a7ad"
   },
   "all_five_assets": "HTTP 200; downloaded hashes match packaged artifact",
   "wasm_content_type": "application/wasm",
-  "browser_rendering": "pending; sandbox local socket creation denied; HTTP verification is not rendering acceptance"
+  "browser_rendering": "pending; sandbox local socket creation denied; HTTP verification is not rendering acceptance",
+  "source_views": "Live HTML and CSS verified; JuliaMono CDN font downloaded successfully; browser appearance pending."
 }
