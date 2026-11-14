@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Snowfield library reference</title><style>@font-face{font-family:JuliaMono;src:url(https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/JuliaMono-Regular.woff2)}body{max-width:1100px;margin:32px auto;padding:0 20px;background:#0b1421;color:#dce8f5;font:15px system-ui;line-height:1.6}a{color:#87cbe5}pre{overflow:auto;padding:20px;background:#08101a;font:13px/1.7 JuliaMono,monospace}section{padding:20px 0;border-top:1px solid #294258}code{font-family:JuliaMono,monospace}.c-builtin{color:#82b4ff}.c-userfunc,.c-libfunc{color:#7cdb95}.c-number,.c-exponent{color:#f0ce72}.c-string{color:#e8d89b}.c-comment,.c-doc{color:#9fc3ad}.c-symbol{color:#a1cfff}.c-error{color:#ff9999}</style><body><a href="./">Back to demo</a><h1>X_eTaL libraries used by the snowfield</h1><p>This page is generated from the exact imported modules. The program owns pure state updates and emits typed render/audio data; Rust supplies physics facts, execution scheduling, WebAudio and GPU resources.</p><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/docs/libraries.md">Architecture and native backend cross-reference</a></p><nav>
+<a href="#snow-terrain">SnowTerrain</a> &middot; 
+<a href="#footsteps">Footsteps</a> &middot; 
+<a href="#snow-audio">SnowAudio</a> &middot; 
+<a href="#snow-host">SnowHost</a> &middot; 
+<a href="#snow-wind">SnowWind</a> &middot; 
+</nav>
+<section id="snow-terrain"><h2>SnowTerrain</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowTerrain.xtl">X_eTaL source</a> &middot; alias <code>snow:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowTerrain.xtl#L21"><code>snow:h_eight</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowTerrain.xtl#L28"><code>snow:m_esh</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowTerrain: deterministic stationary world-space snow and ice chunks.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Public API: l:h_eight (x, z), l:m_esh (chunkX, chunkZ).</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-terrain</span>
+<span class="c-libfunc">ʰh̲ash</span> ← { (x, z) →
+  k ← (<span class="c-builtin">a̲bs</span> ((x <span class="c-symbol">×</span> <span class="c-number">73856093</span>) <span class="c-symbol">+</span> (z <span class="c-symbol">×</span> <span class="c-number">19349663</span>))) <span class="c-builtin">m̲od</span> <span class="c-number">104729</span>
+  (<span class="c-builtin">f̲loat</span> (((k <span class="c-symbol">×</span> k) <span class="c-symbol">+</span> <span class="c-number">17389</span>) <span class="c-builtin">m̲od</span> <span class="c-number">104729</span>)) <span class="c-symbol">÷</span> <span class="c-number">104729.0</span>
+}
+<span class="c-libfunc">ʰn̲oise</span> ← { (x, z) →
+  ix ← <span class="c-builtin">f̲loor</span> x
+  iz ← <span class="c-builtin">f̲loor</span> z
+  fx ← x <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> ix
+  fz ← z <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> iz
+  sx ← fx <span class="c-symbol">×</span> fx <span class="c-symbol">×</span> (<span class="c-number">3.0</span> <span class="c-symbol">−</span> (<span class="c-number">2.0</span> <span class="c-symbol">×</span> fx))
+  sz ← fz <span class="c-symbol">×</span> fz <span class="c-symbol">×</span> (<span class="c-number">3.0</span> <span class="c-symbol">−</span> (<span class="c-number">2.0</span> <span class="c-symbol">×</span> fz))
+  a ← <span class="c-libfunc">ʰh̲ash</span> (ix, iz)
+  b ← <span class="c-libfunc">ʰh̲ash</span> (ix <span class="c-symbol">+</span> <span class="c-number">1</span>, iz)
+  c ← <span class="c-libfunc">ʰh̲ash</span> (ix, iz <span class="c-symbol">+</span> <span class="c-number">1</span>)
+  d ← <span class="c-libfunc">ʰh̲ash</span> (ix <span class="c-symbol">+</span> <span class="c-number">1</span>, iz <span class="c-symbol">+</span> <span class="c-number">1</span>)
+  (((a <span class="c-symbol">×</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> sx)) <span class="c-symbol">+</span> (b <span class="c-symbol">×</span> sx)) <span class="c-symbol">×</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> sz)) <span class="c-symbol">+</span> (((c <span class="c-symbol">×</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> sx)) <span class="c-symbol">+</span> (d <span class="c-symbol">×</span> sx)) <span class="c-symbol">×</span> sz)
+}
+<span class="c-libfunc">ˡh̲eight</span> ← { (x, z) →
+  lx ← (x <span class="c-symbol">−</span> (<span class="c-number">24.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> <span class="c-builtin">f̲loor</span> (x <span class="c-symbol">÷</span> <span class="c-number">24.0</span>))) <span class="c-symbol">−</span> <span class="c-number">12.0</span>
+  lz ← (z <span class="c-symbol">−</span> (<span class="c-number">24.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> <span class="c-builtin">f̲loor</span> (z <span class="c-symbol">÷</span> <span class="c-number">24.0</span>))) <span class="c-symbol">−</span> <span class="c-number">12.0</span>
+  r ← <span class="c-number">1.0</span> <span class="c-symbol">−</span> (((lx <span class="c-symbol">×</span> lx) <span class="c-symbol">÷</span> <span class="c-number">16.0</span>) <span class="c-symbol">+</span> ((lz <span class="c-symbol">×</span> lz) <span class="c-symbol">÷</span> <span class="c-number">9.0</span>))
+  cap ← (r <span class="c-symbol">+</span> <span class="c-builtin">a̲bs</span> r) <span class="c-symbol">÷</span> <span class="c-number">2.0</span>
+  (<span class="c-number">4.0</span> <span class="c-symbol">×</span> <span class="c-libfunc">ʰn̲oise</span> (x <span class="c-symbol">÷</span> <span class="c-number">40.0</span>, z <span class="c-symbol">÷</span> <span class="c-number">40.0</span>)) <span class="c-symbol">+</span> (<span class="c-number">1.2</span> <span class="c-symbol">×</span> <span class="c-libfunc">ʰn̲oise</span> (x <span class="c-symbol">÷</span> <span class="c-number">13.0</span>, z <span class="c-symbol">÷</span> <span class="c-number">13.0</span>)) <span class="c-symbol">+</span> (<span class="c-number">3.5</span> <span class="c-symbol">×</span> cap <span class="c-symbol">×</span> cap)
+}
+<span class="c-libfunc">ˡm̲esh</span> ← { (cx, cz) →
+  k ← (<span class="c-builtin">r̲ange</span> <span class="c-number">289</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>
+  x ← (<span class="c-number">2.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (k <span class="c-builtin">d̲iv</span> <span class="c-number">17</span>)) <span class="c-symbol">+</span> (<span class="c-number">32.0</span> <span class="c-symbol">×</span> cx)
+  z ← (<span class="c-number">2.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (k <span class="c-builtin">m̲od</span> <span class="c-number">17</span>)) <span class="c-symbol">+</span> (<span class="c-number">32.0</span> <span class="c-symbol">×</span> cz)
+  y ← <span class="c-libfunc">ˡh̲eight</span> (x, z)
+  points ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (<span class="c-number">3</span> <span class="c-number">289</span> <span class="c-builtin">r̲eshape</span> x <span class="c-builtin">c̲at</span> y <span class="c-builtin">c̲at</span> z)
+  cell ← (<span class="c-builtin">r̲ange</span> <span class="c-number">256</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>
+  base ← ((cell <span class="c-builtin">d̲iv</span> <span class="c-number">16</span>) <span class="c-symbol">×</span> <span class="c-number">17</span>) <span class="c-symbol">+</span> (cell <span class="c-builtin">m̲od</span> <span class="c-number">16</span>)
+  ids ← <span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-builtin">r̲avel</span> base <span class="c-symbol">'</span><span class="c-symbol">+</span> <span class="c-builtin">t̲able</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">17</span> <span class="c-number">1</span> <span class="c-number">18</span> <span class="c-number">17</span>
+  <span class="c-number">512</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> ids <span class="c-builtin">s̲elect</span> points
+}
+
+</pre></section>
+<section id="footsteps"><h2>Footsteps</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl">X_eTaL source</a> &middot; alias <code>feet:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L6"><code>feet:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L7"><code>feet:c_ount</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L8"><code>feet:l_ands</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L9"><code>feet:w_ind</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L10"><code>feet:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L18"><code>feet:u_pdate</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/Footsteps.xtl#L36"><code>feet:v_iew</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Footsteps: pure boot placement, walking/landing events and wind-driven aging.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> State: (last point, travel, side, steps, landings, time, snow exposure, marks).</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Stored marks: N by 5 [x z yaw side birthExposure]; view adds opacity column.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#footsteps</span>
+<span class="c-libfunc">ʷⁱⁿᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;SnowWind.xtl&quot;</span>
+<span class="c-libfunc">ˡs̲tart</span> ← { point → (point, <span class="c-number">0.0</span>, <span class="c-number">1.0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span>) }
+<span class="c-libfunc">ˡc̲ount</span> ← { (_, _, _, count, _, _, _, _) → count }
+<span class="c-libfunc">ˡl̲ands</span> ← { (_, _, _, _, count, _, _, _) → count }
+<span class="c-libfunc">ˡw̲ind</span> ← { (_, _, _, _, _, time, _, _) → <a href="library-reference.html#snow-wind" title="SnowWind API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ʷⁱⁿᵈs̲trength</span></a> time }
+<span class="c-libfunc">ˡt̲ick</span> ← { dt state →
+  (point, travel, side, steps, lands, time, snow, marks) ← state
+  (point, travel, side, steps, lands, time <span class="c-symbol">+</span> dt, snow <span class="c-symbol">+</span> (dt <span class="c-symbol">×</span> <span class="c-libfunc">ˡw̲ind</span> state), marks)
+}
+<span class="c-libfunc">ʰb̲ound</span> ← { marks →
+  (<span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> marks) <span class="c-symbol">&gt;</span> <span class="c-number">256</span> ? <span class="c-number">-256</span> <span class="c-builtin">t̲ake</span> marks
+  marks
+}
+<span class="c-libfunc">ˡu̲pdate</span> ← { (point, yaw, grounded, impact) state →
+  (last, walked, side, count, lands, time, snow, marks) ← state
+  delta ← point <span class="c-symbol">−</span> last
+  dx ← <span class="c-builtin">f̲irst</span> delta
+  dz ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> delta
+  distance ← ((dx <span class="c-symbol">×</span> dx) <span class="c-symbol">+</span> (dz <span class="c-symbol">×</span> dz)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>
+  grounded <span class="c-symbol">=</span> <span class="c-number">0</span> ? ((point, <span class="c-number">0.0</span>, side, count, lands, time, snow, marks), (<span class="c-number">0</span>, <span class="c-number">0.0</span>))
+  distance <span class="c-symbol">&gt;</span> <span class="c-number">2.0</span> ? ((point, <span class="c-number">0.0</span>, side, count, lands, time, snow, marks), (<span class="c-number">0</span>, <span class="c-number">0.0</span>))
+  impact <span class="c-symbol">&gt;</span> <span class="c-number">1.0</span> ? (
+    (point, <span class="c-number">0.0</span>, side, count, lands <span class="c-symbol">+</span> <span class="c-number">1</span>, time, snow,
+      <span class="c-libfunc">ʰb̲ound</span> marks <span class="c-builtin">c̲at</span> <span class="c-number">2</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> ((point <span class="c-builtin">c̲at</span> yaw <span class="c-builtin">c̲at</span> <span class="c-number">-1.0</span> <span class="c-builtin">c̲at</span> snow) <span class="c-builtin">c̲at</span> (point <span class="c-builtin">c̲at</span> yaw <span class="c-builtin">c̲at</span> <span class="c-number">1.0</span> <span class="c-builtin">c̲at</span> snow))),
+    (<span class="c-number">2</span>, impact)
+  )
+  total ← walked <span class="c-symbol">+</span> distance
+  total <span class="c-symbol">&lt;</span> <span class="c-number">0.9</span> ? ((point, total, side, count, lands, time, snow, marks), (<span class="c-number">0</span>, <span class="c-number">0.0</span>))
+  ((point, total <span class="c-symbol">−</span> <span class="c-number">0.9</span>, <span class="c-builtin">n̲eg</span> side, count <span class="c-symbol">+</span> <span class="c-number">1</span>, lands, time, snow,
+    <span class="c-libfunc">ʰb̲ound</span> marks <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> point <span class="c-builtin">c̲at</span> yaw <span class="c-builtin">c̲at</span> side <span class="c-builtin">c̲at</span> snow), (<span class="c-number">1</span>, <span class="c-number">1.0</span>))
+}
+<span class="c-libfunc">ˡv̲iew</span> ← { (_, _, _, _, _, _, snow, marks) →
+  n ← <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> marks
+  columns ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> marks
+  age ← snow <span class="c-symbol">−</span> <span class="c-number">5</span> <span class="c-builtin">s̲elect</span> columns
+  alpha ← <a href="library-reference.html#snow-wind" title="SnowWind API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ʷⁱⁿᵈo̲pacity</span></a> age
+  <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> ((<span class="c-number">6</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> (<span class="c-builtin">r̲avel</span> columns) <span class="c-builtin">c̲at</span> alpha)
+}
+</pre></section>
+<section id="snow-audio"><h2>SnowAudio</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowAudio.xtl">X_eTaL source</a> &middot; alias <code>sfx:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowAudio.xtl#L9"><code>sfx:s_ilent</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowAudio.xtl#L10"><code>sfx:c_ommand</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowAudio: semantic snow events to WebAudio host commands [buffer gain rate].</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> 0 is silence, 1 a walking crunch, 2 a landing thud. The host executes commands.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-audio</span>
+<span class="c-libfunc">ʰc̲lamp</span> ← { value →
+  value <span class="c-symbol">&lt;</span> <span class="c-number">0.15</span> ? <span class="c-number">0.15</span>
+  value <span class="c-symbol">&gt;</span> <span class="c-number">1.0</span> ? <span class="c-number">1.0</span>
+  value
+}
+<span class="c-libfunc">ˡs̲ilent</span> ← { @ → <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span> }
+<span class="c-libfunc">ˡc̲ommand</span> ← { ((kind, impact), step) →
+  rate ← <span class="c-number">0.92</span> <span class="c-symbol">+</span> (<span class="c-number">0.04</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (step <span class="c-builtin">m̲od</span> <span class="c-number">5</span>))
+  kind <span class="c-symbol">=</span> <span class="c-number">1</span> ? <span class="c-number">1.0</span> <span class="c-number">0.17</span> <span class="c-builtin">c̲at</span> rate
+  kind <span class="c-symbol">=</span> <span class="c-number">2</span> ? <span class="c-number">2.0</span> <span class="c-builtin">c̲at</span> (<span class="c-number">0.3</span> <span class="c-symbol">×</span> <span class="c-libfunc">ʰc̲lamp</span> (impact <span class="c-symbol">÷</span> <span class="c-number">8.0</span>)) <span class="c-builtin">c̲at</span> rate
+  <span class="c-libfunc">ˡs̲ilent</span> @
+}
+</pre></section>
+<section id="snow-host"><h2>SnowHost</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowHost.xtl">X_eTaL source</a> &middot; alias <code>host:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowHost.xtl#L5"><code>host:n_ext!</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowHost.xtl#L6"><code>host:c_hunk</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowHost.xtl#L7"><code>host:p_ose</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowHost: facade for the current Rust host's queued Event transport.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> move carries world x/z; down/up carries yaw/impact with grounded 1/0.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> choose requests chunk coordinates. Dense output stays in the typed frame.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-host</span>
+<span class="c-libfunc">ˡn̲ext!</span> ← { @ → <span class="c-builtin">⎕E̲VENT</span> @ }
+<span class="c-libfunc">ˡc̲hunk</span> ← { event → (<span class="c-builtin">f̲irst</span> <span class="c-builtin">⎕E̲AT</span> event, <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> <span class="c-builtin">⎕E̲AT</span> event) }
+<span class="c-libfunc">ˡp̲ose</span> ← { (point, grounded, event) →
+  at ← <span class="c-builtin">⎕E̲AT</span> event
+  (point, <span class="c-builtin">f̲irst</span> at, grounded, <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> at)
+}
+</pre></section>
+<section id="snow-wind"><h2>SnowWind</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowWind.xtl">X_eTaL source</a> &middot; alias <code>wind:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowWind.xtl#L4"><code>wind:s_trength</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9/components/world/libs/SnowWind.xtl#L11"><code>wind:o_pacity</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowWind: deterministic gust strength and snow-fill opacity, both pure.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Gusts repeat every 12 seconds. Marks vanish after 25 units of wind exposure.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-wind</span>
+<span class="c-libfunc">ˡs̲trength</span> ← { time →
+  f ← (time <span class="c-symbol">÷</span> <span class="c-number">12.0</span>) <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> <span class="c-builtin">f̲loor</span> (time <span class="c-symbol">÷</span> <span class="c-number">12.0</span>)
+  wave ← <span class="c-number">1.0</span> <span class="c-symbol">−</span> <span class="c-builtin">a̲bs</span> ((<span class="c-number">2.0</span> <span class="c-symbol">×</span> f) <span class="c-symbol">−</span> <span class="c-number">1.0</span>)
+  peak ← (wave <span class="c-symbol">−</span> <span class="c-number">0.6</span>) <span class="c-symbol">÷</span> <span class="c-number">0.4</span>
+  gust ← (peak <span class="c-symbol">+</span> <span class="c-builtin">a̲bs</span> peak) <span class="c-symbol">÷</span> <span class="c-number">2.0</span>
+  <span class="c-number">0.3</span> <span class="c-symbol">+</span> (<span class="c-number">2.5</span> <span class="c-symbol">×</span> gust <span class="c-symbol">×</span> gust)
+}
+<span class="c-libfunc">ˡo̲pacity</span> ← { exposure →
+  remaining ← <span class="c-number">1.0</span> <span class="c-symbol">−</span> (exposure <span class="c-symbol">÷</span> <span class="c-number">25.0</span>)
+  cap ← (remaining <span class="c-symbol">+</span> <span class="c-builtin">a̲bs</span> remaining) <span class="c-symbol">÷</span> <span class="c-number">2.0</span>
+  cap <span class="c-symbol">×</span> cap
+}
+</pre></section>
+<footer>Copyright (c) 2026 Michael A Wright &middot; MIT License &middot; <a href="https://github.com/softwarewrighter/snowflow_demo-fork">Repository</a> &middot; Source 334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9</footer></body></html>
