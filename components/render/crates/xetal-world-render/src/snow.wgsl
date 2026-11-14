@@ -1,7 +1,6 @@
-struct Camera { angle: f32, tilt: f32, aspect: f32, pad: f32, eye: vec4f }
-@group(0) @binding(0) var<uniform> camera: Camera;
 @group(1) @binding(0) var sun_depth: texture_depth_2d;
 @group(1) @binding(1) var sun_sampler: sampler_comparison;
+@group(1) @binding(2) var<uniform> sun_origin: vec4f;
 
 fn grain(p: vec3f) -> f32 {
     var q = fract(p * vec3f(0.1031, 0.1030, 0.0973));
@@ -11,7 +10,7 @@ fn grain(p: vec3f) -> f32 {
 
 fn visibility(p: vec3f, n: vec3f) -> f32 {
     if camera.eye.w < 0.5 { return 1.0; }
-    let light = light_position(p);
+    let light = light_position(p - sun_origin.xyz);
     let uv = vec2f(0.5 + 0.5 * light.x, 0.5 - 0.5 * light.y);
     if any(uv < vec2f(0.0)) || any(uv > vec2f(1.0)) { return 1.0; }
     let bias = 0.0004 + 0.001 * (1.0 - abs(n.y));
@@ -20,14 +19,8 @@ fn visibility(p: vec3f, n: vec3f) -> f32 {
 
 struct Vertex { @builtin(position) clip: vec4f, @location(0) world: vec3f }
 @vertex fn vertex(@location(0) p: vec3f) -> Vertex {
-    let q = p - camera.eye.xyz;
-    let c = cos(camera.angle); let s = sin(camera.angle);
-    let r = vec3f(c * q.x + s * q.z, q.y, -s * q.x + c * q.z);
-    let t = cos(camera.tilt); let u = sin(camera.tilt);
-    let v = vec3f(r.x, t * r.y + u * r.z, -u * r.y + t * r.z);
-    let depth = -v.z;
     var out: Vertex;
-    out.clip = vec4f(1.9 * v.x / camera.aspect, 1.9 * v.y, 1.0005 * depth - 0.050025, depth);
+    out.clip = project(p);
     out.world = p;
     return out;
 }
@@ -46,6 +39,6 @@ struct Vertex { @builtin(position) clip: vec4f, @location(0) world: vec3f }
         snow *= mix(0.8 + 0.2 * cracks, 0.93 + 0.05 * wind + 0.08 * fine, coverage);
     }
     let shade = 0.45 + 0.55 * visibility(v.world, n);
-    let fog = 1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world));
+    let fog = max(1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world)), smoothstep(40.0, 60.0, distance(camera.eye.xz, v.world.xz)));
     return vec4f(mix(snow * light * shade, vec3f(0.47, 0.65, 0.78), fog), 1.0);
 }

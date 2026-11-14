@@ -6,7 +6,7 @@ The preview adds three independent building blocks.
 | --- | --- | --- |
 | Material detail | Procedural snow grain, wind bands and ice striations in the fragment shader | No image assets or extra draw calls; a few arithmetic/sine operations per pixel, with grain faded by pixel footprint |
 | Player physics | Pure vertical-motion function with gravity, jump impulse and terrain contact, scheduled at 120 Hz | At most 12 catch-up steps per displayed frame; one existing triangle-floor query per frame |
-| Sun shadows | One 512 by 512 Depth32Float map, one shared orthographic light projection, comparison filtering | 1 MiB depth allocation; one extra 2,048-triangle draw when uploaded geometry changes, one comparison lookup per visible fragment |
+| Sun shadows | One 512 by 512 Depth32Float map, one shared orthographic light projection, comparison filtering | 1 MiB depth allocation; one extra draw of up to 12,800 triangles when geometry or the local light origin changes, one comparison lookup per visible fragment |
 
 Use Space to jump. Holding Space does not repeatedly jump, and a second jump
 in midair is ignored. Pause freezes motion. WASD and arrow-key controls remain.
@@ -15,9 +15,9 @@ shadows off skips both depth-map updates and fragment shadow lookups; turning
 textures off skips procedural detail. Depth resources stay allocated so
 toggling does not allocate every time.
 
-The shadow map is cached while the camera moves. The current terrain animates
-at an 80 ms interval, so it invalidates the map as geometry updates arrive.
-The sun is fixed, and depth projection code is shared by both rendering passes.
+Terrain is stationary. The shadow map is cached until chunks change or the
+local shadow origin moves to follow the player on a 16-meter grid. The sun
+direction is fixed, and projection code is shared by both rendering passes.
 Depth bias reduces self-shadow artifacts; the small map trades detail for cost.
 This is a single directional light, without cascades, screen-space ambient
 occlusion, reflections, texture downloads or a general rigid-body engine.
@@ -54,8 +54,8 @@ python3 scripts/check-demo.py --performance
 The harness checks jump and visual toggles, preserves earlier render/source/
 reset/error checks and measures three seconds of animation-frame intervals
 with effects off, textures only, shadows only and both. The result includes
-mean and 95th-percentile intervals, FPS and frames longer than 25 ms. Terrain
-animation stays active in each case. Compare the same device, browser, viewport
+mean and 95th-percentile intervals, FPS and frames longer than 25 ms. Each mode walks
+the same three-second path from reset across a chunk boundary. Compare the same device, browser, viewport
 and pixel ratio. Animation-frame intervals are not GPU timestamp measurements;
 headless results may differ from the user's visible browser.
 

@@ -10,6 +10,7 @@ pub struct Renderer {
     pub(crate) uniform: wgpu::Buffer,
     pub(crate) group: wgpu::BindGroup,
     pub(crate) depth: wgpu::TextureView,
+    pub(crate) decals: xetal_world_decals::Decals,
     pub(crate) shadow: xetal_world_shadow::Shadow,
     pub(crate) mesh: Option<resources::GpuMesh>,
 }
@@ -21,6 +22,7 @@ impl Renderer {
         let (uniform, group, layout) = resources::uniforms(&device);
         let shadow = xetal_world_shadow::Shadow::new(&device);
         let pipeline = pipeline::create(&device, config.format, &layout, &shadow.layout);
+        let decals = xetal_world_decals::Decals::new(&device, config.format, &layout);
         let depth = resources::depth(&device, &config);
         Ok(Self {
             device,
@@ -32,6 +34,7 @@ impl Renderer {
             group,
             depth,
             shadow,
+            decals,
             mesh: None,
         })
     }

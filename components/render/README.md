@@ -13,3 +13,8 @@ Its shared light projection is compiled into the depth and visible shaders.
 The visible pass adds procedural material detail and comparison-filtered
 shadows, independently disabled by application controls. See
 [effects and costs](../../docs/lightweight-effects.md).
+
+The xetal-world-camera crate shares the WGSL camera ABI. The small
+xetal-world-decals crate draws bounded procedural boot prints in one extra
+draw, using stored terrain-draped vertices. Sun depth origin follows the player
+without changing the fixed light direction.

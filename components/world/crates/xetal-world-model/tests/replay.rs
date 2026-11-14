@@ -1,5 +1,6 @@
 use xetal_world_model::{Demo, Progress};
 
+const AFTER: &str = include_str!("fixtures/snowfield-functional-finite.xtl");
 const BEFORE: &str = include_str!("fixtures/snowfield-mutable.xtl");
 
 fn settle(demo: &mut Demo) -> Progress {
@@ -15,7 +16,7 @@ fn settle(demo: &mut Demo) -> Progress {
 #[test]
 fn immutable_state_replays_the_legacy_geometry_exactly() {
     let mut before = Demo::from_source(BEFORE).unwrap();
-    let mut after = Demo::new().unwrap();
+    let mut after = Demo::from_source(AFTER).unwrap();
     assert_eq!(settle(&mut before), settle(&mut after));
     assert_eq!(before.mesh().unwrap(), after.mesh().unwrap());
     for event in [

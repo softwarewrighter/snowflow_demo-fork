@@ -33,7 +33,9 @@ fn shader(device: &wgpu::Device) -> wgpu::ShaderModule {
     device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("procedural snow"),
         source: wgpu::ShaderSource::Wgsl(
-            concat!(
+            format!(
+                "{}{}{}",
+                xetal_world_camera::SHADER,
                 include_str!("../../xetal-world-shadow/src/light.wgsl"),
                 include_str!("snow.wgsl")
             )

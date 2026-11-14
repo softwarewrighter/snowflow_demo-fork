@@ -1780,9 +1780,13 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
+ "xetal-world-audio",
  "xetal-world-model",
  "xetal-world-navigation",
  "xetal-world-render",
+ "xetal-world-stream",
+ "xetal-world-surface",
+ "xetal-world-trail",
 ]
 
 [[package]]
@@ -1944,6 +1948,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-audio"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
+name = "xetal-world-camera"
+version = "0.1.0"
+
+[[package]]
+name = "xetal-world-decals"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "wgpu",
+ "xetal-world-camera",
+]
+
+[[package]]
 name = "xetal-world-model"
 version = "0.1.0"
 dependencies = [
@@ -1969,6 +1995,8 @@ dependencies = [
  "bytemuck",
  "web-sys",
  "wgpu",
+ "xetal-world-camera",
+ "xetal-world-decals",
  "xetal-world-shadow",
  "xetal-world-surface",
 ]
@@ -1977,12 +2005,28 @@ dependencies = [
 name = "xetal-world-shadow"
 version = "0.1.0"
 dependencies = [
+ "bytemuck",
  "wgpu",
+]
+
+[[package]]
+name = "xetal-world-stream"
+version = "0.1.0"
+dependencies = [
+ "xetal-world-model",
+ "xetal-world-surface",
 ]
 
 [[package]]
 name = "xetal-world-surface"
 version = "0.1.0"
+
+[[package]]
+name = "xetal-world-trail"
+version = "0.1.0"
+dependencies = [
+ "xetal-world-navigation",
+]
 
 [[package]]
 name = "xml-rs"

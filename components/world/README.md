@@ -13,3 +13,9 @@ mesh publication slot connects the effect loop to the current Rust host API.
 Tests include legacy/new replay equivalence, upstream X_eTaL linting and an AST
 guard for that boundary. The compare_state example measures the legacy and pure
 variants with identical traces; see [performance](../../docs/functional-state.md).
+
+The xetal-world-stream crate schedules nearest-first 32-meter chunks, maintains
+a bounded 5 by 5 window and merges typed meshes for rendering. Terrain is
+stationary and derived entirely from world coordinates. Native tests cover
+negative coordinates, exact shared edges, eviction and deterministic revisits.
+The historical functional-state comparison uses frozen finite fixtures.

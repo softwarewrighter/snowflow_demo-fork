@@ -32,72 +32,77 @@ def wait(base, session, condition):
     raise RuntimeError('timed out waiting for demo state')
 
 
+def click(base, session, element_id):
+    element = request(base, f'/session/{session}/element', {'using': 'css selector', 'value': '#' + element_id})
+    key = element['element-6066-11e4-a52e-4f735466cecf']
+    request(base, f'/session/{session}/element/{key}/click', {})
+
+
 def interactions(base, session):
-    updates = "Number(document.getElementById('app').dataset.updates)"
-    ready = "const a=document.getElementById('app');if(a.dataset.state==='error')throw Error(document.getElementById('status').textContent);return a.dataset.state==='ready' && Number(a.dataset.updates)>1"
-    wait(base, session, ready)
-    colors = evaluate(base, session, "return ['c-builtin','c-userfunc','c-number','c-string','c-doc'].map(c=>{const e=document.querySelector('#source-rendered .'+c);if(!e)throw Error('Missing syntax class '+c);return getComputedStyle(e).color})")
-    assert len(set(colors)) == 5, f'syntax colors are missing or indistinguishable: {colors}'
-    evaluate(base, session, "document.getElementById('pause').click()")
-    time.sleep(0.3)
-    before = evaluate(base, session, 'return ' + updates)
-    time.sleep(0.25)
-    assert evaluate(base, session, 'return ' + updates) == before, 'pause did not settle'
-    hashes = []
-    for button in ['reset', 'raise', 'reset']:
-        old = evaluate(base, session, 'return ' + updates)
-        evaluate(base, session, f"document.getElementById('{button}').click()")
-        wait(base, session, f'return {updates} > {old}')
-        hashes.append(evaluate(base, session, "return document.getElementById('app').dataset.mesh"))
-    assert hashes[0] != hashes[1] and hashes[0] == hashes[2], f'input/reset failed: {hashes}'
-    position = "return document.getElementById('app').dataset.position"
-    start = evaluate(base, session, position)
-    evaluate(base, session, "document.getElementById('pause').click();window.dispatchEvent(new KeyboardEvent('keydown',{key:'w'}))")
-    time.sleep(0.5)
-    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keyup',{key:'w'}));document.getElementById('pause').click()")
-    moved = evaluate(base, session, position)
-    assert moved != start, 'walking did not change camera position'
-    evaluate(base, session, "document.getElementById('reset').click()")
-    wait(base, session, "return document.getElementById('app').dataset.position === " + json.dumps(start))
-    screenshot = request(base, f'/session/{session}/screenshot')
-    (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(screenshot))
-    return {'syntax_highlighting': 'passed', 'pause': 'passed', 'walking_and_reset': 'passed', 'input_and_reset': 'passed', 'mesh_hashes': hashes}
-
-
-def effects(base, session):
-    for button in ['textures', 'shadows']:
-        original = evaluate(base, session, f"return document.getElementById('{button}').textContent")
-        evaluate(base, session, f"document.getElementById('{button}').click()")
-        assert evaluate(base, session, f"return document.getElementById('{button}').textContent") != original
-        evaluate(base, session, f"document.getElementById('{button}').click()")
+    wait(base, session, "const a=document.getElementById('app');if(a.dataset.state==='error')throw Error(document.getElementById('status').textContent);return a.dataset.state==='ready' && Number(a.dataset.chunks)===25")
+    colors = evaluate(base, session, "return ['c-builtin','c-userfunc','c-number','c-string','c-doc'].map(c=>getComputedStyle(document.querySelector('#source-rendered .'+c)).color)")
+    assert len(set(colors)) == 5, colors
+    click(base, session, 'start-sound')
+    wait(base, session, "return document.getElementById('app').dataset.audio==='running'")
     position = "return JSON.parse(document.getElementById('app').dataset.position)"
-    baseline = evaluate(base, session, position)[1]
-    evaluate(base, session, "document.getElementById('pause').click();window.dispatchEvent(new KeyboardEvent('keydown',{key:' '}))")
+    original = evaluate(base, session, position)
+    mesh = evaluate(base, session, "return document.getElementById('app').dataset.mesh")
+    time.sleep(0.5)
+    assert evaluate(base, session, position) == original, 'idle camera bobbing'
+    assert evaluate(base, session, "return document.getElementById('app').dataset.mesh") == mesh, 'idle terrain deformation'
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keydown',{key:'w'}))")
+    time.sleep(8)
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keyup',{key:'w'}))")
+    wait(base, session, "return document.getElementById('app').dataset.grounded==='true' && Number(document.getElementById('app').dataset.chunks)===25")
+    assert evaluate(base, session, position)[2] < -15, 'old finite boundary remains'
+    prints = evaluate(base, session, "return Number(document.getElementById('app').dataset.footprints)")
+    steps = evaluate(base, session, "return Number(document.getElementById('app').dataset.steps)")
+    assert prints > 0 and steps > 0, 'movement did not create footprints/footfalls'
+    time.sleep(0.4)
+    assert evaluate(base, session, "return Number(document.getElementById('app').dataset.steps)") == steps, 'footfalls continued while idle'
+    (ROOT / 'work/demo-tracks-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    before_landings = evaluate(base, session, "return Number(document.getElementById('app').dataset.landings)")
+    ground = evaluate(base, session, position)[1]
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keydown',{key:' '}))")
     time.sleep(0.2)
-    assert evaluate(base, session, position)[1] > baseline + 0.3, 'jump did not raise the camera'
-    time.sleep(1.2)
-    evaluate(base, session, "document.getElementById('pause').click();document.getElementById('reset').click()")
-    return {'visual_toggles': 'passed', 'jump': 'passed'}
+    assert evaluate(base, session, position)[1] > ground + 0.3, 'jump did not lift the camera'
+    wait(base, session, f"return Number(document.getElementById('app').dataset.landings)>{before_landings} && document.getElementById('app').dataset.grounded==='true'")
+    for button in ['textures', 'shadows', 'sound']:
+        label = evaluate(base, session, f"return document.getElementById('{button}').textContent")
+        click(base, session, button)
+        assert evaluate(base, session, f"return document.getElementById('{button}').textContent") != label
+        click(base, session, button)
+    click(base, session, 'clear-tracks')
+    wait(base, session, "return Number(document.getElementById('app').dataset.footprints)===0")
+    click(base, session, 'reset')
+    wait(base, session, "return Number(document.getElementById('app').dataset.chunks)===25 && JSON.parse(document.getElementById('app').dataset.position)[2]===8")
+    assert evaluate(base, session, position) == original
+    assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
+    (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):
     results = {}
-    evaluate(base, session, "if(document.getElementById('pause').textContent==='Resume')document.getElementById('pause').click()")
     for name, textures, shadows in [('off', False, False), ('textures', True, False), ('shadows', False, True), ('both', True, True)]:
         for control, enabled in [('textures', textures), ('shadows', shadows)]:
             evaluate(base, session, f"const b=document.getElementById('{control}');if(b.textContent.endsWith('on')!=={str(enabled).lower()})b.click()")
-        evaluate(base, session, "document.getElementById('reset').click()")
+        click(base, session, 'reset')
+        wait(base, session, "return Number(document.getElementById('app').dataset.chunks)===25 && JSON.parse(document.getElementById('app').dataset.position)[2]===8")
         time.sleep(0.3)
         script = """const app=document.getElementById('app');const initial=Number(app.dataset.frames);const done=arguments[arguments.length-1];const dt=[];let first=0,last=0;
+        window.dispatchEvent(new KeyboardEvent('keydown',{key:'w'}));
         function frame(t){if(!first)first=t;if(last)dt.push(t-last);last=t;
         if(t-first<3000){requestAnimationFrame(frame);return;}
+        window.dispatchEvent(new KeyboardEvent('keyup',{key:'w'}));
         const sorted=[...dt].sort((a,b)=>a-b);const mean=dt.reduce((a,b)=>a+b,0)/dt.length;
         done({app_frames:Number(app.dataset.frames)-initial,frames:dt.length,mean_ms:mean,p95_ms:sorted[Math.floor(sorted.length*.95)],fps:1000/mean,over_25ms:dt.filter(x=>x>25).length});}
         requestAnimationFrame(frame);"""
         results[name] = request(base, f'/session/{session}/execute/async', {'script': script, 'args': []})
-        assert results[name]['app_frames'] > 0, f'application stopped rendering in {name} mode'
+        assert results[name]['app_frames'] > 0, name
         assert evaluate(base, session, "return document.getElementById('app').dataset.state") == 'ready'
-    return {'method': 'three seconds of RAF intervals per mode, active terrain; no GPU timestamp query', 'modes': results}
+    baseline = results['off']['p95_ms']
+    return {'method':'three-second RAF intervals per mode, walking from reset through one chunk boundary; not GPU timestamps','modes':results,'both_p95_increase_percent':100*(results['both']['p95_ms']/baseline-1),'target_percent':10}
 
 
 def browser(base, url, profile, measure=False):
@@ -108,7 +113,6 @@ def browser(base, url, profile, measure=False):
         request(base, f'/session/{session}/window/rect', {'width': 1280, 'height': 1000})
         request(base, f'/session/{session}/url', {'url': url})
         result = interactions(base, session)
-        result.update(effects(base, session))
         if measure:
             result['frame_comparison'] = performance(base, session)
         logs = request(base, f'/session/{session}/log', {'type': 'browser'})

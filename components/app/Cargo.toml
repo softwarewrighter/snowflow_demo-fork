@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/xetal-snow-app", "crates/xetal-world-navigation"]
+members = ["crates/xetal-snow-app", "crates/xetal-world-navigation", "crates/xetal-world-trail", "crates/xetal-world-audio"]
 
 [workspace.package]
 version = "0.1.0"

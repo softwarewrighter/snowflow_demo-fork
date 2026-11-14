@@ -1093,6 +1093,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
+name = "xetal-world-camera"
+version = "0.1.0"
+
+[[package]]
+name = "xetal-world-decals"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "naga",
+ "wgpu",
+ "xetal-world-camera",
+]
+
+[[package]]
 name = "xetal-world-render"
 version = "0.1.0"
 dependencies = [
@@ -1100,6 +1114,8 @@ dependencies = [
  "naga",
  "web-sys",
  "wgpu",
+ "xetal-world-camera",
+ "xetal-world-decals",
  "xetal-world-shadow",
  "xetal-world-surface",
 ]
@@ -1108,6 +1124,7 @@ dependencies = [
 name = "xetal-world-shadow"
 version = "0.1.0"
 dependencies = [
+ "bytemuck",
  "naga",
  "wgpu",
 ]

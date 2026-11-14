@@ -10,16 +10,17 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         app.paused = !app.paused;
         status::text("pause", if app.paused { "Resume" } else { "Pause" });
     })?;
-    button("reset", state.clone(), |app| {
-        app.walker = Default::default();
-        app.pending = Some("key Home".into())
+    button("reset", state.clone(), |app| app.scene.reset())?;
+    button("clear-tracks", state.clone(), |app| {
+        app.scene.clear_tracks()
     })?;
-    button("raise", state.clone(), |app| {
-        app.pending = Some("down 0 0".into())
+    button("start-sound", state.clone(), |app| {
+        crate::boot::enter(app, true)
     })?;
-    button("scene", state.clone(), |app| {
-        app.pending = Some("down 0 0".into())
+    button("start-muted", state.clone(), |app| {
+        crate::boot::enter(app, false)
     })?;
+    button("sound", state.clone(), crate::boot::sound)?;
     button("textures", state.clone(), |app| {
         app.effects[0] = !app.effects[0];
         status::text(
@@ -60,11 +61,22 @@ fn button(id: &str, state: State, action: fn(&mut App)) -> Result<(), String> {
 fn keys(state: State, pressed: bool) -> Result<(), String> {
     let handler =
         Closure::<dyn FnMut(web_sys::KeyboardEvent)>::new(move |event: web_sys::KeyboardEvent| {
+            let target = event
+                .target()
+                .and_then(|node| node.dyn_into::<web_sys::Element>().ok());
+            if target.is_some_and(|node| {
+                node.tag_name() == "PRE" || (node.tag_name() == "BUTTON" && event.key() == " ")
+            }) {
+                return;
+            }
             if event.key() == " " && event.repeat() {
                 event.prevent_default();
                 return;
             }
             let mut app = state.borrow_mut();
+            if !app.started {
+                return;
+            }
             if !command(&mut app, &event.key(), pressed) {
                 return;
             }
@@ -100,13 +112,14 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
         "s" | "S" => app.held[1] = pressed,
         "a" | "A" => app.held[2] = pressed,
         "d" | "D" => app.held[3] = pressed,
-        "ArrowLeft" if pressed => app.walker.yaw -= 0.10,
-        "ArrowRight" if pressed => app.walker.yaw += 0.10,
-        "ArrowUp" if pressed => app.walker.pitch = (app.walker.pitch + 0.06).min(1.2),
-        "ArrowDown" if pressed => app.walker.pitch = (app.walker.pitch - 0.06).max(-1.2),
+        "ArrowLeft" if pressed => app.scene.walker.yaw -= 0.10,
+        "ArrowRight" if pressed => app.scene.walker.yaw += 0.10,
+        "ArrowUp" if pressed => app.scene.walker.pitch = (app.scene.walker.pitch + 0.06).min(1.2),
+        "ArrowDown" if pressed => {
+            app.scene.walker.pitch = (app.scene.walker.pitch - 0.06).max(-1.2)
+        }
         "r" | "Home" if pressed => {
-            app.walker = Default::default();
-            app.pending = Some("key Home".into());
+            app.scene.reset();
         }
         _ => return false,
     }

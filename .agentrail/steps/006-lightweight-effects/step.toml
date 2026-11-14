@@ -1,8 +1,0 @@
-number = 6
-slug = "lightweight-effects"
-status = "in-progress"
-description = "Lightweight effects remain published with native 27 Rust/18 Python tests, bot..."
-role = "production"
-context_files = []
-created_at = "2026-11-14T08:25:01"
-commits = []

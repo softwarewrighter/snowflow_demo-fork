@@ -1,8 +1,0 @@
-number = 12
-slug = "torches-and-gem-hunt"
-status = "pending"
-description = "Restore torch placement, local lighting, day/night and gem hunt over the smoo..."
-role = "production"
-context_files = []
-created_at = "2026-11-13T15:26:42"
-commits = []

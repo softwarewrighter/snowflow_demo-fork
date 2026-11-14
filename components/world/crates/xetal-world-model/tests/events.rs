@@ -14,13 +14,17 @@ fn terrain_is_generated_by_the_persistent_program_and_reset_by_an_event() {
     let mut demo = Demo::new().unwrap();
     settle(&mut demo);
     let original = demo.mesh().unwrap();
-    assert_eq!(original.indices().len(), 2048 * 3);
+    assert_eq!(original.indices().len(), 512 * 3);
     let p = original.positions();
-    assert!(p.as_chunks::<3>().0.iter().any(|p| p[0] == -16.0));
-    assert!(p.as_chunks::<3>().0.iter().any(|p| p[1] > 2.0));
+    assert!(p.as_chunks::<3>().0.iter().any(|p| p[0] == 32.0));
+    assert!(
+        p.as_chunks::<3>().0.iter().any(|p| p[1] > 2.0),
+        "max {:?}",
+        p.as_chunks::<3>().0.iter().map(|p| p[1]).reduce(f32::max)
+    );
     let normal_y = (p[5] - p[2]) * (p[6] - p[0]) - (p[3] - p[0]) * (p[8] - p[2]);
     assert!(normal_y > 0.0, "terrain triangles must face upward");
-    demo.event("tick 0.25").unwrap();
+    demo.event("choose 1 0").unwrap();
     settle(&mut demo);
     assert_ne!(demo.mesh().unwrap().positions(), original.positions());
     demo.event("key Home").unwrap();
@@ -33,8 +37,20 @@ fn input_changes_the_program_geometry_and_bad_source_is_reported() {
     let mut demo = Demo::new().unwrap();
     settle(&mut demo);
     let original = demo.mesh().unwrap();
-    demo.event("down 0 0").unwrap();
+    demo.event("choose -1 0").unwrap();
     settle(&mut demo);
     assert_ne!(demo.mesh().unwrap().positions(), original.positions());
     assert!(Demo::from_source("1 + \"wrong\"").is_err());
+}
+
+#[test]
+fn time_and_pointer_events_do_not_deform_stationary_ground() {
+    let mut demo = Demo::new().unwrap();
+    settle(&mut demo);
+    let original = demo.mesh().unwrap();
+    for event in ["tick 0.25", "tick 10.0", "down 0 0"] {
+        demo.event(event).unwrap();
+        settle(&mut demo);
+        assert_eq!(demo.mesh().unwrap(), original);
+    }
 }

@@ -27,7 +27,7 @@ fn separate_programs_do_not_share_published_meshes() {
     settle(&mut first);
     settle(&mut second);
     let original = second.mesh().unwrap();
-    first.event("down 0 0").unwrap();
+    first.event("choose 1 0").unwrap();
     settle(&mut first);
     assert_ne!(first.mesh().unwrap(), original);
     assert_eq!(second.mesh().unwrap(), original);

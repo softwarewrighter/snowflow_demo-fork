@@ -1,7 +1,41 @@
-pub(crate) fn create(
-    device: &wgpu::Device,
-) -> (wgpu::TextureView, wgpu::BindGroup, wgpu::BindGroupLayout) {
-    let view = device
+pub(crate) struct Pack {
+    pub view: wgpu::TextureView,
+    pub group: wgpu::BindGroup,
+    pub layout: wgpu::BindGroupLayout,
+    pub origin: wgpu::Buffer,
+    pub depth_group: wgpu::BindGroup,
+    pub depth_layout: wgpu::BindGroupLayout,
+}
+
+pub(crate) fn create(device: &wgpu::Device) -> Pack {
+    let view = view(device);
+    let layout = layout(device);
+    let origin = device.create_buffer(&wgpu::BufferDescriptor {
+        label: Some("sun origin"),
+        size: 16,
+        usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+        mapped_at_creation: false,
+    });
+    let sampler = device.create_sampler(&wgpu::SamplerDescriptor {
+        compare: Some(wgpu::CompareFunction::LessEqual),
+        mag_filter: wgpu::FilterMode::Linear,
+        min_filter: wgpu::FilterMode::Linear,
+        ..Default::default()
+    });
+    let group = bind(device, &layout, &view, &sampler, &origin);
+    let (depth_group, depth_layout) = depth(device, &origin);
+    Pack {
+        view,
+        group,
+        layout,
+        origin,
+        depth_group,
+        depth_layout,
+    }
+}
+
+fn view(device: &wgpu::Device) -> wgpu::TextureView {
+    device
         .create_texture(&wgpu::TextureDescriptor {
             label: Some("512 sun depth"),
             size: wgpu::Extent3d {
@@ -16,16 +50,7 @@ pub(crate) fn create(
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
             view_formats: &[],
         })
-        .create_view(&Default::default());
-    let layout = layout(device);
-    let sampler = device.create_sampler(&wgpu::SamplerDescriptor {
-        compare: Some(wgpu::CompareFunction::LessEqual),
-        mag_filter: wgpu::FilterMode::Linear,
-        min_filter: wgpu::FilterMode::Linear,
-        ..Default::default()
-    });
-    let group = bind(device, &layout, &view, &sampler);
-    (view, group, layout)
+        .create_view(&Default::default())
 }
 
 fn bind(
@@ -33,6 +58,7 @@ fn bind(
     layout: &wgpu::BindGroupLayout,
     view: &wgpu::TextureView,
     sampler: &wgpu::Sampler,
+    origin: &wgpu::Buffer,
 ) -> wgpu::BindGroup {
     device.create_bind_group(&wgpu::BindGroupDescriptor {
         label: Some("sun shadow sampling"),
@@ -45,6 +71,10 @@ fn bind(
             wgpu::BindGroupEntry {
                 binding: 1,
                 resource: wgpu::BindingResource::Sampler(sampler),
+            },
+            wgpu::BindGroupEntry {
+                binding: 2,
+                resource: origin.as_entire_binding(),
             },
         ],
     })
@@ -70,6 +100,41 @@ fn layout(device: &wgpu::Device) -> wgpu::BindGroupLayout {
                 ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Comparison),
                 count: None,
             },
+            wgpu::BindGroupLayoutEntry {
+                binding: 2,
+                visibility: wgpu::ShaderStages::FRAGMENT,
+                ty: wgpu::BindingType::Buffer {
+                    ty: wgpu::BufferBindingType::Uniform,
+                    has_dynamic_offset: false,
+                    min_binding_size: None,
+                },
+                count: None,
+            },
         ],
     })
+}
+
+fn depth(device: &wgpu::Device, origin: &wgpu::Buffer) -> (wgpu::BindGroup, wgpu::BindGroupLayout) {
+    let layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+        label: Some("depth origin layout"),
+        entries: &[wgpu::BindGroupLayoutEntry {
+            binding: 0,
+            visibility: wgpu::ShaderStages::VERTEX,
+            ty: wgpu::BindingType::Buffer {
+                ty: wgpu::BufferBindingType::Uniform,
+                has_dynamic_offset: false,
+                min_binding_size: None,
+            },
+            count: None,
+        }],
+    });
+    let group = device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("depth origin"),
+        layout: &layout,
+        entries: &[wgpu::BindGroupEntry {
+            binding: 0,
+            resource: origin.as_entire_binding(),
+        }],
+    });
+    (group, layout)
 }

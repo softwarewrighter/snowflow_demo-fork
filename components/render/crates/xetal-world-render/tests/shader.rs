@@ -1,10 +1,12 @@
 #[test]
 fn snow_shader_parses_and_validates_without_a_gpu() {
-    let source = concat!(
+    let source = format!(
+        "{}{}{}",
+        xetal_world_camera::SHADER,
         include_str!("../../xetal-world-shadow/src/light.wgsl"),
         include_str!("../src/snow.wgsl")
     );
-    let module = naga::front::wgsl::parse_str(source).expect("WGSL parses");
+    let module = naga::front::wgsl::parse_str(&source).expect("WGSL parses");
     naga::valid::Validator::new(
         naga::valid::ValidationFlags::all(),
         naga::valid::Capabilities::empty(),

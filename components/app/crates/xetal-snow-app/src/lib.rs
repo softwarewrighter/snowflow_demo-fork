@@ -19,3 +19,6 @@ pub fn start() {
         }
     });
 }
+
+mod scene;
+pub use scene::Scene;

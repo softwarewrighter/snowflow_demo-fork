@@ -36,6 +36,7 @@ impl Renderer {
         eye: [f32; 3],
         effects: [bool; 2],
     ) -> Result<(), String> {
+        self.shadow.anchor(&self.queue, eye);
         let frame = match self.surface.get_current_texture() {
             Ok(frame) => frame,
             Err(wgpu::SurfaceError::Timeout) => return Ok(()),
@@ -96,6 +97,7 @@ impl Renderer {
             pass.set_vertex_buffer(0, mesh.vertices.slice(..));
             pass.set_index_buffer(mesh.indices.slice(..), wgpu::IndexFormat::Uint32);
             pass.draw_indexed(0..mesh.count, 0, 0..1);
+            self.decals.draw(&mut pass);
         }
     }
 }

@@ -1,7 +1,8 @@
 //! Repeatable native evaluator comparison; excludes compilation and startup.
 use std::time::Instant;
-use xetal_world_model::{Demo, Progress, SOURCE};
+use xetal_world_model::{Demo, Progress};
 
+const AFTER: &str = include_str!("../tests/fixtures/snowfield-functional-finite.xtl");
 const BEFORE: &str = include_str!("../tests/fixtures/snowfield-mutable.xtl");
 
 fn settle(demo: &mut Demo, budget: usize) -> usize {
@@ -56,7 +57,7 @@ fn transitions(source: &str, events: &[&str]) -> usize {
 fn main() {
     let events = trace();
     let mut before = Demo::from_source(BEFORE).unwrap();
-    let mut after = Demo::new().unwrap();
+    let mut after = Demo::from_source(AFTER).unwrap();
     settle(&mut before, 8_000);
     settle(&mut after, 8_000);
     let mut old = Vec::new();
@@ -74,6 +75,6 @@ fn main() {
         "{{\"events_per_sample\":{},\"before_us_per_event\":{old:?},\"after_us_per_event\":{new:?},\"before_transitions\":{},\"after_transitions\":{}}}",
         events.len(),
         transitions(BEFORE, &events),
-        transitions(SOURCE, &events)
+        transitions(AFTER, &events)
     );
 }

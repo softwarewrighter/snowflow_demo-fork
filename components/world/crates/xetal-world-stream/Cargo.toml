@@ -1,0 +1,9 @@
+[package]
+name = "xetal-world-stream"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+xetal-world-model = { path = "../xetal-world-model" }
+xetal-world-surface.workspace = true

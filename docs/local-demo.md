@@ -1,167 +1,112 @@
-# Local snow surface demo
+# Local and hosted snowfield
 
-The first application renders a procedural 2,048-triangle snowfield. X_eTaL
-generates its geometry and responds to events; Rust runs the persistent sliced
-evaluator, reads typed arrays and submits them to wgpu. There are no model or
-texture files. The favicon is a small snowflake SVG matching the preview colors.
+Open https://softwarewrighter.github.io/snowflow_demo-fork/ for the hosted HTTPS
+preview. The snowflake favicon identifies this demo. The start screen waits
+for the nearby terrain to load, then offers Enter with sound or Enter muted.
+Sound is synthesized locally; it needs that browser gesture to start.
 
-## Open the built demo
+## Controls
 
-From the repository root, run:
+- W/A/S/D: walk; arrow keys: look; Space: jump.
+- R or Reset: return to the start and clear tracks.
+- Clear tracks: erase the footprint trail without moving.
+- Pause: freeze player movement and physics while rendering continues.
+- Textures and Shadows: toggle optional visual effects independently.
+- Sound: enable or mute audio after entering.
+
+Terrain stays stationary at rest. Walking on the ground creates alternating
+footprints and short crunches. Airborne movement creates neither. Landing
+creates a pair of prints and a soft thud, scaled by impact speed. The latest
+256 prints are retained.
+
+## Serve locally
+
+From the repository root:
 
 ```sh
 python3 scripts/serve-demo.py --no-build
 ```
 
-Open [the local demo](http://127.0.0.1:8475/snowflow_demo-fork/). The command must
-run in a normal terminal that permits local server sockets. By default it binds
-to 0.0.0.0 and prints a Network demo URL, preferring the 192.168.x.x interface.
-Use that printed address from another machine. Use Ctrl-C to stop the server,
-`--port` to select another port, or `--bind 127.0.0.1` for loopback-only serving.
-
-WebGPU needs a secure browser context. For local HTTPS, run:
+The launcher defaults to 0.0.0.0:8475 and prints localhost and LAN URLs. The
+observed LAN address is 192.168.1.178; use the launcher's detected address on
+your host. Localhost HTTP is usable for WebGPU. For another machine's browser:
 
 ```sh
 python3 scripts/serve-demo.py --no-build --https
 ```
 
-Open the printed HTTPS address and accept the self-signed certificate warning.
-OpenSSL generates a 30-day certificate for the detected LAN IP, localhost and
-127.0.0.1. It and its private key are kept in ignored `work/tls/` and reused;
-the key has mode 0600. No trust store is changed. Stop the HTTP server before
-restarting with HTTPS on the same port. A browser that refuses a certificate
-exception needs a trusted development certificate or the GitHub Pages URL.
-
-For LAN HTTP, a development browser can instead be scoped to the preview origin:
+This creates/reuses a self-signed certificate under ignored work/tls. Accept
+the browser certificate exception for development, or use the trusted GitHub
+Pages URL. Restart the server when switching protocols on the same port.
+For scoped LAN HTTP development, Chromium can instead be started with:
 
 ```sh
 chromium --user-data-dir=/tmp/xetal-lan-preview --unsafely-treat-insecure-origin-as-secure=http://192.168.1.178:8475 http://192.168.1.178:8475/snowflow_demo-fork/
 ```
 
-Replace the IP with the launcher's printed address. This does not change the
-default browser profile. See [Chromium's secure-origin development guidance](https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/).
-
-Click the surface or Change ridge to change its height. Pause stops simulation
-ticks while keeping the camera responsive. Reset restores the initial surface.
-WASD walks, arrow keys look around, and R resets. Expand the source panel to inspect
-the actual X_eTaL program. A supported WebGPU browser and device are required;
-an unavailable adapter or device produces status feedback.
+See [Chromium's secure-origin development guidance](https://www.chromium.org/Home/chromium-security/deprecating-powerful-features-on-insecure-origins/).
 
 ## Build from pinned sources
 
-Bootstrap the sources as described in [source baseline](source-baseline.md),
-then populate the locked dependency cache in a network-enabled terminal:
+Bootstrap dependencies using [source baseline](source-baseline.md). In a
+network-enabled terminal populate the locked cache, then build:
 
 ```sh
 cargo fetch --locked --manifest-path components/app/Cargo.toml
-python3 scripts/serve-demo.py
+python3 scripts/build-demo.py
 ```
 
-The launcher builds before serving unless `--no-build` is supplied. Build alone
-with `python3 scripts/build-demo.py`. Static output goes to
-`work/demo-site/snowflow_demo-fork/`. The URL prefix is already compatible with
-the intended repository Pages path; no deployment is performed by these commands.
-
-The build reuses cached packages through a writable project-local Cargo home,
-so extracting new dependencies does not require writing to the shared cache.
-New archives must already be cached: the build runs offline, including Cargo
-metadata. Trunk metadata may inspect packages for other platforms, so use the
-fetch command without a target filter. Tools remain pinned by the recorded
-baseline; wasm-bindgen 0.2.129 must match the application lockfile.
-
-## Validate in a browser
-
-Run `python3 scripts/check-demo.py` from a terminal with local sockets and
-ChromeDriver. It checks live geometry updates, pause, ridge input, reset and
-the unsupported-WebGPU message. It saves `work/demo-browser-result.json` and
-`work/demo-screenshot.png`. The screenshot is for visual review; a compiled
-WASM artifact alone does not establish that pixels rendered correctly.
-
-The native gate also runs the X_eTaL event oracle and validates the WGSL shader
-with Naga. The WASM application is checked with clippy. The headless browser
-driver uses WebGPU test flags; the served application does not change browser
-security settings. A desktop browser may have different GPU availability from
-headless Chromium, so preserve the actual capabilities with each result.
-
-## Current boundaries
-
-This is the first surface, not the endless world. Chunk streaming, digging,
-water, torches, gems and worker scheduling are separate milestones. The evaluator
-and renderer currently share the main thread; transition slices limit work units,
-not elapsed time inside an individual primitive.
-
-The application reads the public evaluator output hook and a captured lexical
-mesh binding from the pinned runtime. It avoids numeric text serialization but
-still copies and narrows values into GPU buffers. This is an application-specific
-adapter, not the generic host-registration feature requested by upstream E1.
-The loaded program and keeper are retained for the page lifetime, consistent
-with the existing interactive runner. Reset sends an event to that same runtime;
-it does not repeatedly parse or leak another program.
-
-The WGSL shader is handwritten GPU code. Browser loader JavaScript and WASM are
-generated by the Rust toolchain; there is no handwritten application JavaScript
-or WebAssembly. The procedural world algorithm is in
-`components/world/demos/snowfield.xtl`.
-
-## Walkable snowfield preview
-
-Use W/A/S/D to walk and the arrow keys to look. R or Reset returns to the
-starting position. Pause stops walking and terrain animation; Change ridge
-changes the X_eTaL terrain height. The preview covers a finite 32-meter square.
-The two ice formations are rounded heightfield mounds with slope-based ice
-coloring, not separate overhanging boulder meshes.
-
-X_eTaL produces all 2,048 terrain triangles. Rust supplies the camera and
-triangle-interpolated eye height in the small xetal-world-navigation crate.
-This is an intermediate application adapter: reusable movement rules and terrain
-queries should become an X_eTaL library once the event/state interface is settled.
-The Rust extension boundary should retain browser input, GPU resources, workers
-and other platform capabilities. There is no hand-authored application JavaScript.
-
-The native movement oracle checks frame-rate independence, bounds and eye
-clearance on a sloped triangle. The browser harness additionally checks walking
-and reset through the rendered application. Hardware browser acceptance remains
-pending until that harness is run successfully on a host with WebGPU.
+Static output is work/demo-site/snowflow_demo-fork. The launcher builds unless
+--no-build is supplied. Builds are offline and use a writable project-local
+Cargo home overlay. Trunk metadata may inspect other platforms, so fetch
+without a target filter. The recorded wasm-bindgen version is 0.2.129.
 
 ## Source views
 
-Expand See the X_eTaL program to compare As typed and As rendered side by side
-(stacked on narrow screens). The typed pane preserves the shipped ASCII source.
-The rendered pane uses xetal-render from the same pinned core checkout, including
-its function decorations and mathematical glyphs. Both are selectable text and use JuliaMono Regular 0.63.2 from cdnjs.
-The rendered pane uses xetal-view semantic token classes and its HTML formatter,
-which escapes source text before wrapping colored spans. The typed pane is plain
-text. Highlight colors distinguish functions, numbers, strings and comments.
-The font uses swap loading with a local monospace fallback if the CDN is offline.
-See https://cormullion.github.io/pages/2020-07-26-JuliaMono/ for upstream web-font
-guidance. Source display is initialized before WebGPU checks so it remains
-available on unsupported devices.
+Expand See the X_eTaL program for As typed and As rendered. The typed pane
+preserves the shipped ASCII program. The rendered pane uses upstream xetal-view
+semantic classes and its escaped HTML formatter for colored glyphs. Both use
+JuliaMono Regular 0.63.2 from cdnjs with a monospace fallback. They are side by
+side on wide screens and stacked on narrow ones. Source display initializes
+before WebGPU capability checks.
 
-## Functional state and the publication boundary
+## Validate in a browser
 
-The world state is an immutable (phase, boost) tuple. Pure functions update that
-state from an event, derive height and terrain, and return (next state, mesh).
-The event loop threads that pair through recursive calls. An unchanged logical
-state reuses the existing mesh rather than regenerating terrain.
+Run on a normal WebGPU host with ChromeDriver and local sockets:
 
-Only mesh! remains mutable: it is a publication slot read by the Rust adapter,
-not the source of world-state decisions. The loop named u:l_oop! contains the
-input/publication effects; the update and geometry functions have no assignments
-to mutable variables. This exception is for the pinned host API, not a claim
-that global mutation is faster. Removing the slot requires an upstream typed
-publication mechanism usable inside an event loop.
+```sh
+python3 scripts/check-demo.py --performance
+```
 
-The gate runs the upstream X_eTaL lint driver through a native integration test
-and rejects enabled findings. A separate AST check rejects mutable application
-state and assignments outside the one mesh publication in the effect loop.
-The preserved mutable source is a regression fixture, not the shipped program.
-See [functional state performance](functional-state.md) for exact replay tests,
-measurements and their limits.
+The harness uses a real WebDriver click to unlock audio, then checks static
+ground/camera, walking past the old boundary, streaming, footprints, idle
+footfall counts, jump/landing, toggles, reset and unsupported-device feedback.
+It checks AudioContext state, not audibility. Inspect work/demo-screenshot.png
+and work/demo-tracks-screenshot.png and listen in a visible browser. Results
+and optional four-mode frame comparisons go to work/demo-browser-result.json.
 
-## Optional detail and player physics
+The gate runs native scene/physics/replay/seam tests, the upstream X_eTaL lint
+driver, a mutation guard, WGSL validation and WASM clippy. These do not replace
+actual browser rendering, visual/audio quality or FPS measurements. The agent
+sandbox denies local sockets, so that hardware acceptance stays pending.
 
-Space jumps with gravity and terrain contact. Textures and Shadows buttons
-control procedural material detail and one small cached sun shadow map. See
-[lightweight effects](lightweight-effects.md) for implementation boundaries,
-limits and the scripts/check-demo.py --performance frame comparison. Effects
-start enabled, but FPS impact has not been measured in the sandbox.
+## Architecture and limits
+
+Pure X_eTaL world-coordinate functions generate deterministic 32-meter chunks.
+One mutable mesh publication slot remains at the typed host boundary; the
+reducer does not read it. A sliced evaluator is retained for the page lifetime.
+Reset does not create or leak another evaluator. Rust keeps at most 25 resident
+chunks, prefetches nearest first and evicts distant ones. The far ring fades
+into the fog horizon. Movement has no fixed arena wall.
+
+Generation currently shares the main thread; transition slices do not time
+limit individual array primitives. Worker scheduling, more terrain detail and
+floating-origin precision are later improvements. Navigation/footfall logic is
+a native-testable Rust adapter; WebAudio and GPU resource ownership are Rust
+platform integrations. WGSL is handwritten GPU shader code. Browser loader
+JavaScript and WASM are generated by the toolchain.
+
+See [streaming, tracks and sound](streaming-snow.md),
+[effects and frame budget](lightweight-effects.md),
+[functional-state measurements](functional-state.md) and
+[host interface requirements](xetal-asks.md).

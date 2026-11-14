@@ -1,5 +1,10 @@
 # Functional world state
 
+This records the earlier finite prototype comparison. The comparison example
+now uses frozen mutable and functional finite fixtures; the live program has
+evolved to immutable chunk-coordinate state and stationary terrain. See
+[streaming snow](streaming-snow.md) for the current implementation.
+
 The demo passes an immutable (phase, boost) tuple to its event reducer.
 Height and terrain generation are pure. A frame function returns the next
 logical state and derived mesh, reusing the old mesh for unchanged state.

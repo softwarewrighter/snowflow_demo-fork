@@ -1,4 +1,4 @@
-pub(crate) fn floor(positions: &[f32], position: [f32; 3]) -> Option<f32> {
+pub fn floor(positions: &[f32], position: [f32; 3]) -> Option<f32> {
     positions
         .as_chunks::<9>()
         .0

@@ -1,114 +1,129 @@
-use crate::status;
+use crate::{Scene, status};
 use std::cell::RefCell;
 use std::rc::Rc;
 use wasm_bindgen::{JsCast, closure::Closure};
-use xetal_world_model::{Demo, Progress};
+use xetal_world_audio::{Kind, Sound};
 use xetal_world_render::Renderer;
 
 type Callback = Rc<RefCell<Option<Closure<dyn FnMut(f64)>>>>;
 pub(crate) struct App {
-    demo: Demo,
+    pub scene: Scene,
     renderer: Renderer,
     canvas: web_sys::HtmlCanvasElement,
     pub paused: bool,
-    pub pending: Option<String>,
-    pub walker: xetal_world_navigation::Walker,
+    pub started: bool,
     pub held: [bool; 4],
     pub effects: [bool; 2],
     pub jump: bool,
-    terrain: Vec<f32>,
+    pub audio: Sound,
     last_frame: f64,
-    waiting: bool,
-    last_tick: f64,
     frames: u32,
     updates: u32,
-    mesh_hash: u32,
 }
 
 impl App {
-    pub fn new(demo: Demo, renderer: Renderer, canvas: web_sys::HtmlCanvasElement) -> Self {
+    pub fn new(scene: Scene, renderer: Renderer, canvas: web_sys::HtmlCanvasElement) -> Self {
         Self {
-            demo,
+            scene,
             renderer,
             canvas,
             paused: false,
-            pending: None,
-            walker: Default::default(),
+            started: false,
             held: [false; 4],
             effects: [true; 2],
             jump: false,
-            terrain: Vec::new(),
+            audio: Sound::default(),
             last_frame: 0.0,
-            waiting: false,
-            last_tick: 0.0,
             frames: 0,
             updates: 0,
-            mesh_hash: 0,
         }
     }
 
     fn tick(&mut self, now: f64) -> Result<(), String> {
-        if self.waiting {
-            let tick =
-                (!self.paused && now - self.last_tick >= 80.0).then(|| "tick 0.08".to_string());
-            if let Some(event) = self.pending.take().or(tick) {
-                self.demo.event(&event)?;
-                self.waiting = false;
-                self.last_tick = now;
-            }
-        }
-        self.advance()?;
-        crate::boot::resize(&self.canvas, &mut self.renderer);
-        self.navigate(now);
-        self.renderer.draw(
-            self.walker.yaw,
-            self.walker.pitch,
-            self.walker.position,
-            self.effects,
-        )?;
-        self.frames += 1;
-        if self.waiting {
-            status::progress(self.frames, self.updates, self.mesh_hash);
-        }
-        Ok(())
-    }
-    fn navigate(&mut self, now: f64) {
         let dt = ((now - self.last_frame) / 1000.0) as f32;
         self.last_frame = now;
-        if !self.paused {
-            let forward = i32::from(self.held[0]) - i32::from(self.held[1]);
-            let sideways = i32::from(self.held[3]) - i32::from(self.held[2]);
-            self.walker.advance(dt, forward as f32, sideways as f32);
-        }
-        self.walker.simulate(
-            if self.paused { 0.0 } else { dt },
-            self.jump && !self.paused,
-            &self.terrain,
-        );
-        self.jump = false;
-        if let Ok(element) = status::element("app") {
-            let _ = element.set_attribute("data-position", &format!("{:?}", self.walker.position));
-        }
-    }
-
-    fn advance(&mut self) -> Result<(), String> {
-        if !self.waiting {
-            match self.demo.step(8_000)? {
-                Progress::Waiting => {
-                    let mesh = self.demo.mesh()?;
-                    self.mesh_hash = mesh.positions().iter().fold(2166136261_u32, |hash, value| {
-                        (hash ^ value.to_bits()).wrapping_mul(16777619)
-                    });
-                    self.renderer.upload(&mesh)?;
-                    self.terrain = mesh.positions().to_vec();
-                    self.waiting = true;
-                    self.updates += 1;
-                }
-                Progress::Done => return Err("The X_eTaL event loop ended.".into()),
-                Progress::Running => {}
-            }
+        self.advance(dt)?;
+        crate::boot::resize(&self.canvas, &mut self.renderer);
+        let walker = &self.scene.walker;
+        self.renderer
+            .draw(walker.yaw, walker.pitch, walker.position, self.effects)?;
+        self.frames += 1;
+        if self.frames.is_multiple_of(6) {
+            self.observe();
         }
         Ok(())
+    }
+
+    fn advance(&mut self, dt: f32) -> Result<(), String> {
+        let update = self
+            .scene
+            .update(dt, self.held, self.jump, self.paused || !self.started)?;
+        self.jump = false;
+        if let Some(mesh) = update.terrain {
+            self.renderer.upload(&mesh)?;
+            self.updates += 1;
+        }
+        if let Some(vertices) = update.tracks {
+            self.renderer.upload_tracks(&vertices)?;
+        }
+        let sound = if update.landing > 0.0 {
+            self.audio.play(Kind::Land, update.landing / 8.0)
+        } else if update.step {
+            self.audio.play(Kind::Step, 1.0)
+        } else {
+            Ok(())
+        };
+        if let Err(error) = sound {
+            self.audio.mute();
+            status::text("sound-status", &format!("Sound unavailable: {error}"));
+        }
+        if !update.moving {
+            self.audio.quiet_steps();
+        }
+        Ok(())
+    }
+
+    fn observe(&self) {
+        let scene = &self.scene;
+        if !self.started {
+            let loaded = scene.world.resident();
+            status::text("splash-status", &format!("Preparing nearby snow ({loaded}/25)..."));
+            if loaded == 25 {
+                status::text("splash-status", "Ready. Choose how to enter.");
+                for id in ["start-sound", "start-muted"] {
+                    if let Ok(button) = status::element(id) { let _ = button.remove_attribute("disabled"); }
+                }
+            }
+        }
+        if scene.world.resident() > 0 {
+            status::progress(self.frames, self.updates, scene.mesh_hash);
+        }
+        status::text("triangles", &format!("{}", scene.world.resident() * 512));
+        status::text(
+            "updates",
+            &format!(
+                "{} chunks / {} prints",
+                scene.world.resident(),
+                scene.trail.marks.len()
+            ),
+        );
+        if let Ok(element) = status::element("app") {
+            for (key, value) in [
+                ("data-position", format!("{:?}", scene.walker.position)),
+                ("data-chunks", scene.world.resident().to_string()),
+                (
+                    "data-center",
+                    format!("[{},{}]", scene.world.center.0, scene.world.center.1),
+                ),
+                ("data-footprints", scene.trail.marks.len().to_string()),
+                ("data-steps", scene.trail.steps.to_string()),
+                ("data-landings", scene.landings.to_string()),
+                ("data-audio", self.audio.state().to_string()),
+                ("data-grounded", scene.walker.motion.grounded.to_string()),
+            ] {
+                let _ = element.set_attribute(key, &value);
+            }
+        }
     }
 }
 

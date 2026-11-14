@@ -2,20 +2,24 @@
 
 [GitHub Pages preview](https://softwarewrighter.github.io/snowflow_demo-fork/)
 
-A procedural, editable snow world built with X_eTaL and Rust for the browser.
-The world combines endless terrain, smooth snow and ice boulders, flowing water,
-torches, exposed dirt, digging and buried gems. Snowflow provides the visual
-reference; the X_eTaL endless-world demos provide the gameplay foundation.
+An endless streamed snowfield built with X_eTaL and Rust for the browser.
+Walk across deterministic snowy hills and ice formations, leave a trail of
+footprints, jump and hear snow crunches and landing thuds. The start screen
+offers sound-enabled or muted entry. Terrain stays still while you rest.
 
-Application algorithms belong in X_eTaL libraries. Rust supplies browser and GPU
-integration, workers, typed data transfer and reusable execution mechanisms.
-The browser build uses generated loader glue, with no handwritten application
-JavaScript or WebAssembly.
+Pure X_eTaL array functions generate world-space terrain chunks. A bounded
+5 by 5 window follows the player and generates the next horizon ahead of
+movement. Rust supplies browser/GPU integration, typed data transfer, navigation
+physics, procedural audio and footprint decals. Application algorithms remain
+candidates for reusable X_eTaL libraries as the host interface evolves.
+The build uses generated loader glue with no handwritten application JavaScript
+or WebAssembly.
 
-The first local application renders an X_eTaL-generated snow patch with pause,
-ridge input, reset and terrain-following WASD navigation. The endless world is not implemented yet.
-The repository also contains validated mesh payloads, a bounded resource store,
-reproducible build tooling and an intact archived reference.
+The longer-term world includes digging, dirt, gems, water and torches. Snowflow
+provides the visual reference; the X_eTaL endless-world demos inform gameplay.
+The repository includes checked mesh payloads, repeatable tooling and an intact
+archived reference. See [streaming, tracks and sound](docs/streaming-snow.md) for
+current limits, ownership and evidence.
 
 Run `python3 scripts/serve-demo.py --no-build` to serve the existing build at
 [localhost:8475](http://127.0.0.1:8475/snowflow_demo-fork/).

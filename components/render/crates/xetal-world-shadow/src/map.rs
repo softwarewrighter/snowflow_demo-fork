@@ -6,17 +6,38 @@ pub struct Shadow {
     pub layout: wgpu::BindGroupLayout,
     pub dirty: bool,
     pipeline: wgpu::RenderPipeline,
+    origin: wgpu::Buffer,
+    depth_group: wgpu::BindGroup,
+    center: [f32; 4],
 }
 
 impl Shadow {
     pub fn new(device: &wgpu::Device) -> Self {
-        let (view, group, layout) = resources::create(device);
+        let pack = resources::create(device);
+        let pipeline = pipeline::create(device, &pack.depth_layout);
         Self {
-            view,
-            group,
-            layout,
+            view: pack.view,
+            group: pack.group,
+            layout: pack.layout,
             dirty: true,
-            pipeline: pipeline::create(device),
+            pipeline,
+            origin: pack.origin,
+            depth_group: pack.depth_group,
+            center: [0.0; 4],
+        }
+    }
+
+    pub fn anchor(&mut self, queue: &wgpu::Queue, eye: [f32; 3]) {
+        let center = [
+            (eye[0] / 16.0).round() * 16.0,
+            0.0,
+            (eye[2] / 16.0).round() * 16.0,
+            0.0,
+        ];
+        if center != self.center {
+            queue.write_buffer(&self.origin, 0, bytemuck::cast_slice(&center));
+            self.center = center;
+            self.dirty = true;
         }
     }
 
@@ -44,6 +65,7 @@ impl Shadow {
             ..Default::default()
         });
         pass.set_pipeline(&self.pipeline);
+        pass.set_bind_group(0, &self.depth_group, &[]);
         pass.set_vertex_buffer(0, vertices.slice(..));
         pass.set_index_buffer(indices.slice(..), wgpu::IndexFormat::Uint32);
         pass.draw_indexed(0..count, 0, 0..1);

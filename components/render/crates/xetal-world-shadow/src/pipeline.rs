@@ -4,16 +4,24 @@ const BUFFERS: [wgpu::VertexBufferLayout<'static>; 1] = [wgpu::VertexBufferLayou
     attributes: &wgpu::vertex_attr_array![0 => Float32x3],
 }];
 
-pub(crate) fn create(device: &wgpu::Device) -> wgpu::RenderPipeline {
+pub(crate) fn create(
+    device: &wgpu::Device,
+    origin: &wgpu::BindGroupLayout,
+) -> wgpu::RenderPipeline {
     let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("sun depth"),
         source: wgpu::ShaderSource::Wgsl(
             concat!(include_str!("light.wgsl"), include_str!("depth.wgsl")).into(),
         ),
     });
+    let layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
+        label: None,
+        bind_group_layouts: &[origin],
+        push_constant_ranges: &[],
+    });
     device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
         label: Some("sun depth"),
-        layout: None,
+        layout: Some(&layout),
         vertex: wgpu::VertexState {
             module: &shader,
             entry_point: Some("shadow_vertex"),

@@ -10,3 +10,10 @@ mod pipeline;
 mod resources;
 #[cfg(target_arch = "wasm32")]
 pub use device::Renderer;
+
+#[cfg(target_arch = "wasm32")]
+impl Renderer {
+    pub fn upload_tracks(&mut self, vertices: &[f32]) -> Result<(), String> {
+        self.decals.update(&self.queue, vertices)
+    }
+}

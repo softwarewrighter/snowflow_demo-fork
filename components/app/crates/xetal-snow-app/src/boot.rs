@@ -1,8 +1,8 @@
+use crate::Scene;
 use crate::{frame, input, status};
 use std::cell::RefCell;
 use std::rc::Rc;
 use wasm_bindgen::JsCast;
-use xetal_world_model::Demo;
 use xetal_world_render::Renderer;
 
 pub(crate) async fn start() -> Result<(), String> {
@@ -16,9 +16,10 @@ pub(crate) async fn start() -> Result<(), String> {
     let canvas = canvas()?;
     status::text("status", "Creating WebGPU device...");
     let renderer = Renderer::new(canvas.clone(), status::error).await?;
-    let demo = Demo::new()?;
-    let state = Rc::new(RefCell::new(frame::App::new(demo, renderer, canvas)));
+    let scene = Scene::new()?;
+    let state = Rc::new(RefCell::new(frame::App::new(scene, renderer, canvas)));
     input::install(state.clone())?;
+    status::text("splash-status", "Generating nearby snow...");
     frame::run(state)
 }
 
@@ -41,4 +42,42 @@ pub(crate) fn canvas() -> Result<web_sys::HtmlCanvasElement, String> {
     status::element("scene")?
         .dyn_into()
         .map_err(|_| "scene is not a canvas".into())
+}
+
+pub(crate) fn enter(app: &mut frame::App, with_sound: bool) {
+    app.started = true;
+    app.paused = false;
+    if with_sound {
+        if !app.audio.enabled { sound(app); }
+    } else {
+        app.audio.mute(); status::text("sound", "Sound: off");
+    }
+    if let Ok(splash) = status::element("splash") {
+        let _ = splash.set_attribute("hidden", "");
+    }
+    if let Ok(canvas) = canvas() {
+        let _ = canvas.focus();
+    }
+}
+
+pub(crate) fn sound(app: &mut frame::App) {
+    if app.audio.enabled {
+        app.audio.mute();
+        status::text("sound", "Sound: off");
+        return;
+    }
+    match app.audio.enable() {
+        Ok(promise) => {
+            status::text("sound", "Sound: on");
+            wasm_bindgen_futures::spawn_local(async move {
+                if wasm_bindgen_futures::JsFuture::from(promise).await.is_err() {
+                    status::text(
+                        "sound-status",
+                        "Audio was blocked. Use Sound to retry, or continue muted.",
+                    );
+                }
+            });
+        }
+        Err(error) => status::text("sound-status", &format!("Audio unavailable: {error}")),
+    }
 }

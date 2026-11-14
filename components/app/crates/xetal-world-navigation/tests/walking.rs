@@ -1,7 +1,7 @@
 use xetal_world_navigation::Walker;
 
 #[test]
-fn movement_is_bounded_and_independent_of_frame_rate() {
+fn movement_is_unbounded_and_independent_of_frame_rate() {
     let mut slow = Walker::default();
     let mut fast = Walker::default();
     for _ in 0..10 {
@@ -15,7 +15,7 @@ fn movement_is_bounded_and_independent_of_frame_rate() {
     for _ in 0..1000 {
         slow.advance(0.1, 1.0, 0.0);
     }
-    assert!(slow.position[2].abs() <= 15.0);
+    assert!(slow.position[2] < -300.0);
     slow = Walker::default();
     assert_eq!(slow.position, [0.0, 1.7, 8.0]);
 }

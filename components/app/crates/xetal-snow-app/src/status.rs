@@ -13,6 +13,10 @@ pub(crate) fn text(id: &str, text: &str) {
 
 pub(crate) fn error(error: String) {
     text("status", &error);
+    text("splash-status", &error);
+    if let Ok(splash) = element("splash") {
+        let _ = splash.set_attribute("hidden", "");
+    }
     if let Ok(node) = element("app") {
         let _ = node.set_attribute("data-state", "error");
     }

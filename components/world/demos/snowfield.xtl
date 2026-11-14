@@ -1,50 +1,63 @@
 #!/usr/bin/env xetal
-## A finite continuous snowfield with rounded ice formations. The host reads mesh! as typed array data.
-## Tick advances the ridge, down changes its height, and a key resets it.
+## Stationary world-space terrain. choose requests a deterministic 32-meter chunk.
+## Logical state is an immutable (chunk x, chunk z) tuple; mesh! publishes to Rust.
 
-u:t_errain := { a ->
-  k := (r_ange 1089) - 1
-  x := (f_loat (k d_iv 33)) - 16.0
-  z := (f_loat (k m_od 33)) - 16.0
-  hill := (2.4 / (1.0 + (0.025 * ((x + 7.0) * (x + 7.0))) + (0.018 * z * z)))
-  ice := 4.0 / (1.0 + (1.4 * ((x - 4.0) * (x - 4.0))) + (0.8 * ((z + 3.0) * (z + 3.0))))
-  rock := 3.2 / (1.0 + (0.9 * ((x + 4.0) * (x + 4.0))) + (1.5 * ((z - 1.0) * (z - 1.0))))
-  y := hill + ice + rock + (a * (1.0 + (0.03 * x * z)))
-  points := 2 1 t_ranspose (3 1089 r_eshape x c_at y c_at z)
-  cell := (r_ange 1024) - 1
-  base := ((cell d_iv 32) * 33) + (cell m_od 32)
-  ids := 1 + r_avel base '+ t_able 0 1 33 1 34 33
-  2048 3 3 r_eshape ids s_elect points
+u:h_ash := { (x, z) ->
+  k := (a_bs ((x * 73856093) + (z * 19349663))) m_od 104729
+  (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
+}
+u:n_oise := { (x, z) ->
+  ix := f_loor x
+  iz := f_loor z
+  fx := x - f_loat ix
+  fz := z - f_loat iz
+  sx := fx * fx * (3.0 - (2.0 * fx))
+  sz := fz * fz * (3.0 - (2.0 * fz))
+  a := u:h_ash (ix, iz)
+  b := u:h_ash (ix + 1, iz)
+  c := u:h_ash (ix, iz + 1)
+  d := u:h_ash (ix + 1, iz + 1)
+  (((a * (1.0 - sx)) + (b * sx)) * (1.0 - sz)) + (((c * (1.0 - sx)) + (d * sx)) * sz)
+}
+u:h_eight := { (x, z) ->
+  lx := (x - (24.0 * f_loat f_loor (x / 24.0))) - 12.0
+  lz := (z - (24.0 * f_loat f_loor (z / 24.0))) - 12.0
+  r := 1.0 - (((lx * lx) / 16.0) + ((lz * lz) / 9.0))
+  cap := (r + a_bs r) / 2.0
+  (4.0 * u:n_oise (x / 40.0, z / 40.0)) + (1.2 * u:n_oise (x / 13.0, z / 13.0)) + (3.5 * cap * cap)
+}
+u:t_errain := { (cx, cz) ->
+  k := (r_ange 289) - 1
+  x := (2.0 * f_loat (k d_iv 17)) + (32.0 * cx)
+  z := (2.0 * f_loat (k m_od 17)) + (32.0 * cz)
+  y := u:h_eight (x, z)
+  points := 2 1 t_ranspose (3 289 r_eshape x c_at y c_at z)
+  cell := (r_ange 256) - 1
+  base := ((cell d_iv 16) * 17) + (cell m_od 16)
+  ids := 1 + r_avel base '+ t_able 0 1 17 1 18 17
+  512 3 3 r_eshape ids s_elect points
 }
 
-# Only the host publication slot is mutable. World state is (phase, boost).
+# This publication slot is the only mutable binding; the reducer never reads it.
 mesh! := 0 3 3 r_eshape 0.0
 u:w_atch := { @ -> mesh! }
 'u:w_atch
 
-u:h_eight := { (phase, boost) ->
-  f := phase - f_loat f_loor phase
-  0.18 + (0.18 * boost) + (0.12 * (1.0 - a_bs ((2.0 * f) - 1.0)))
-}
 u:c_hange := { state e ->
-  (phase, boost) := state
   kind := []E_KIND e
-  kind m_atch "tick" ? (phase + f_irst []E_AT e, boost)
-  kind m_atch "down" ? (phase, 1.0 - boost)
+  kind m_atch "choose" ? (f_irst []E_AT e, 2 s_elect []E_AT e)
   kind m_atch "key" ? (0.0, 0.0)
   state
 }
-# Keep the existing mesh when an event leaves logical state unchanged.
 u:f_rame := { (state, e) mesh ->
   next := state u:c_hange e
   state m_atch next ? (state, mesh)
-  (next, u:t_errain u:h_eight next)
+  (next, u:t_errain next)
 }
-# Effects stay here: publish a derived mesh, receive input, recur with new state.
 u:l_oop! := { (state, mesh) ->
   mesh! := mesh
   e := []E_VENT @
   ([]E_KIND e) m_atch "end" ? @
   u:l_oop! (state, e) u:f_rame mesh
 }
-u:l_oop! ((0.0, 0.0), u:t_errain 0.18)
+u:l_oop! ((0.0, 0.0), u:t_errain (0.0, 0.0))
