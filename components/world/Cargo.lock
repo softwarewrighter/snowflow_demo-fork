@@ -1098,6 +1098,7 @@ dependencies = [
  "xetal-step",
  "xetal-types",
  "xetal-value",
+ "xetal-view",
  "xetal-world-surface",
 ]
 

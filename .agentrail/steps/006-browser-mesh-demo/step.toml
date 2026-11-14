@@ -1,7 +1,7 @@
 number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
-description = "Walkable preview plus typed/rendered source views using upstream xetal-render..."
+description = "Fix missing syntax colors in the published As rendered source pane. Use pinne..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T15:26:42"

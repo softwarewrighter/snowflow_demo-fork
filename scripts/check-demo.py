@@ -35,6 +35,8 @@ def interactions(base, session):
     updates = "Number(document.getElementById('app').dataset.updates)"
     ready = "const a=document.getElementById('app');if(a.dataset.state==='error')throw Error(document.getElementById('status').textContent);return a.dataset.state==='ready' && Number(a.dataset.updates)>1"
     wait(base, session, ready)
+    colors = evaluate(base, session, "return ['c-builtin','c-userfunc','c-number','c-string','c-doc'].map(c=>{const e=document.querySelector('#source-rendered .'+c);if(!e)throw Error('Missing syntax class '+c);return getComputedStyle(e).color})")
+    assert len(set(colors)) == 5, f'syntax colors are missing or indistinguishable: {colors}'
     evaluate(base, session, "document.getElementById('pause').click()")
     time.sleep(0.3)
     before = evaluate(base, session, 'return ' + updates)
@@ -58,7 +60,7 @@ def interactions(base, session):
     wait(base, session, "return document.getElementById('app').dataset.position === " + json.dumps(start))
     screenshot = request(base, f'/session/{session}/screenshot')
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(screenshot))
-    return {'pause': 'passed', 'walking_and_reset': 'passed', 'input_and_reset': 'passed', 'mesh_hashes': hashes}
+    return {'syntax_highlighting': 'passed', 'pause': 'passed', 'walking_and_reset': 'passed', 'input_and_reset': 'passed', 'mesh_hashes': hashes}
 
 
 def browser(base, url, profile):

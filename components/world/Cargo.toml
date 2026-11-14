@@ -18,3 +18,4 @@ xetal-step = { path = "../../work/deps/X_eTaL/components/step/crates/xetal-step"
 xetal-arith = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-arith" }
 xetal-value = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-value" }
 xetal-render = { path = "../../work/deps/X_eTaL/components/render/crates/xetal-render" }
+xetal-view = { path = "../../work/deps/X_eTaL/components/view/crates/xetal-view" }
