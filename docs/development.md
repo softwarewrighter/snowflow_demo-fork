@@ -16,7 +16,8 @@ the next implementation step in the same handoff.
 - `agentrail audit`: saga and git history comparison.
 
 Host and surface have integration tests for mesh data and resource lifetime.
-The remaining bootstrap facades have no behavior or application tests yet.
+World has a native X_eTaL event oracle; render has native shader validation.
+The application has WASM clippy checks and a separate real-browser harness.
 New behavior needs a failing test, implementation, refactor and relevant gate.
 Tests belong in integration-test files by concern. CLI output uses reg-rs when
 an application CLI exists; no CLI or baseline is fabricated for empty facades.
@@ -36,10 +37,14 @@ from local cached refs after DNS prevented a remote fetch; freshness is unverifi
 Run `python3 scripts/inspect-xetal.py` to check hashes and each sibling's own
 `XETAL_COMMIT`. The independent pins differ and must not be overwritten blindly.
 
-A clean build of the new facades needs Rust/Cargo and no external crates. The
+A clean application build needs the pinned core source, locked Cargo dependencies,
+the WASM target and matching build tools. The gate prepares a writable local Cargo
+extraction cache while reusing existing cached archives and sources. The
 [source baseline procedure](source-baseline.md) provides pinned tools, a dependency
 bootstrap with local-cache support, and an upstream evaluator/worker WASM build.
 Real-browser execution has separate terminal-host evidence; see the baseline procedure.
+That earlier evidence covers the upstream editor. The new application has its
+own build, browser report and screenshot; see [local demo](local-demo.md).
 
 ## Evidence and publication
 

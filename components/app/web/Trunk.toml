@@ -1,0 +1,3 @@
+[build]
+target = "index.html"
+public_url = "/snowflow_demo-fork/"

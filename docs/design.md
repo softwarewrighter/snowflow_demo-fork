@@ -17,6 +17,8 @@ features require an upstream ask and test-first implementation in their owner.
 | D9 | Evolve from small visible milestones toward Snowflow quality | Establish correctness and budgets before advanced rendering |
 | D10 | Typed owned f32/u32 payloads with checked f64/i64 adapters | Keep serialization outside the Rust upload boundary and make narrowing explicit |
 | D11 | Instance-scoped mesh handles never wrap or alias disposed resources | Preserve ownership through disposal/reset; keep scene IDs separate |
+| D12 | Capture the public evaluator output hook and lexical mesh binding in the first app | Exercise typed persistent execution without emulating a new language feature |
+| D13 | Main-thread evaluator/rendering for the first mesh; workers follow | Establish a visible baseline before worker ownership and cancellation |
 
 The native mesh contract can be developed independently of browser execution.
 Browser-baseline validation remains mandatory before the browser mesh demo;

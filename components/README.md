@@ -14,7 +14,8 @@ or from inside a component; `.cargo/config.toml` selects the shared `target/`.
 | app | Browser composition, input wiring and inspection UI |
 | evidence | Replays, captures and performance evidence |
 
-The host and surface components implement the application mesh contract; host
-depends on surface. The other Rust facades remain empty.
+Host and surface implement the application mesh contract. World runs the X_eTaL
+surface program; render supplies wgpu; app composes the browser experience.
+Evidence remains a placeholder for shared replay/reporting code.
 X_eTaL library space is under `world/libs/`. Reusable ecosystem features must
 land in their owning sibling repository, then be consumed through pinned commits.

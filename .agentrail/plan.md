@@ -27,8 +27,8 @@ structure; completed work and pending validation are recorded below and in agent
 | 12 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
 
 Work reusable across applications belongs in the appropriate X_eTaL repository,
-then reaches this app through explicit pin updates. Initial component facades
-are scaffolding, not substitute implementations of missing language features.
+then reaches this app through explicit pin updates. Application adapters are not substitutes for missing language features;
+generic changes still belong upstream.
 
 ## Saga 2 visual fidelity
 
@@ -61,21 +61,40 @@ acceleration urgent. It is not a prerequisite for the first playable world.
 [Architecture](architecture.md), [decisions](design.md) and
 [development](development.md) govern application work. The detailed initial
 [world roadmap](xetal-world.md) provides representation and ownership analysis.
-Neither the roadmap nor empty Rust facades constitute a delivered browser demo.
+The local application now has a procedural mesh build; browser render acceptance
+is recorded separately from the earlier upstream editor baseline.
 
 ## Source baseline findings
 
 The dependency bootstrap verifies every inspected commit and each sibling core pin.
 The evaluator and runner native suites and their WASM build are checked separately
 from browser execution. This sandbox denies loopback socket creation, so browser
-execution remains an explicit validation step before the browser mesh demo.
-The independent native mesh contract proceeds first; browser acceptance is open. See
+execution was kept separate while the native mesh contract proceeded.
+A terminal-host result now verifies the upstream editor and event worker. Raw
+messages, browser capabilities and matching WASM hashes are committed as evidence;
+this validates the existing evaluator path, not a new application renderer. See
 [source baseline](source-baseline.md) for commands, tools and evidence limits.
 
 ## Typed mesh contract evidence
 
 The application surface and host crates implement checked payload conversion and
-bounded resource ownership. They compile for native and WASM targets. No renderer,
-GPU upload or evaluator host hook is claimed. Existing E1 remains the upstream
+bounded resource ownership. They compile for native and WASM targets. The first
+application now adds GPU upload and rendering through an application-specific
+evaluator capture adapter; generic typed host registration is not implemented. Existing E1 remains the upstream
 integration requirement. Native payload timings describe serialization stages
 only; see [mesh contract](mesh-contract.md) and [host binding requirements](xetal-asks.md).
+
+## First browser mesh
+
+The application program generates a continuous 128-triangle patch in X_eTaL.
+A persistent sliced machine handles tick, pointer and reset events. Typed values
+feed the validated surface adapter and wgpu renderer without numeric text transfer.
+The local launcher serves the compiled artifact at port 8475 under the repository
+URL prefix. Native event oracles, shader validation and WASM checks are separate
+from the actual browser rendering/input/reset/error-feedback acceptance. Worker
+scheduling remains the next implementation step after this acceptance passes.
+
+The first local artifact is built and all native, shader and WASM checks pass.
+Application browser acceptance is pending a terminal-host report and screenshot;
+the earlier upstream-editor validation does not satisfy this step. The active
+step remains in progress until those actual rendering and interaction checks pass.

@@ -18,8 +18,10 @@ diagnostic identifying the caller. Updates, disposal and reset must release
 resources without letting an old token name a later mesh.
 
 The existing ext: workaround formats dense numeric arrays as text, then parses
-them back. The application contract accepts typed arrays without that round
-trip, but no evaluator hook connects to it yet. The native mesh_transfer example
+them back. The first app instead uses the existing output hook to retain the
+program's lexical environment and read its updated mesh array after event waits.
+This application-specific adapter copies/narrows typed values without formatting
+them; it is not a generic registered native call. The native mesh_transfer example
 provides a repeatable serialization workload and checked conversion reference;
 it is not an ext: benchmark or a reproduction of a missing built-in.
 
@@ -33,8 +35,8 @@ Integration acceptance:
 5. Report caller spans and resource errors; verify native and actual browser
    execution, resource reset and bounded transfers.
 
-The workaround is the Rust-side application contract and direct native tests.
-Remove that integration gap when a reviewed upstream typed binding is pinned
+The workaround is the application contract, captured mesh binding and native tests.
+Replace the representation-dependent adapter when a reviewed upstream typed binding is pinned
 and the same workload runs from X_eTaL without text conversion. No new core
 resource type, syntax or effect rule is silently decided by this prototype.
 

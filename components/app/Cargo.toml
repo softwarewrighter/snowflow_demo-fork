@@ -8,3 +8,12 @@ edition = "2024"
 license = "MIT"
 authors = ["Michael A Wright"]
 repository = "https://github.com/softwarewrighter/snowflow_demo-fork"
+
+[workspace.dependencies]
+xetal-world-model = { path = "../world/crates/xetal-world-model" }
+xetal-world-render = { path = "../render/crates/xetal-world-render" }
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+console_error_panic_hook = "0.1"
+web-sys = { version = "0.3", features = ["Window", "Document", "Element", "HtmlElement", "HtmlCanvasElement", "Event", "KeyboardEvent", "EventTarget", "Navigator", "console"] }

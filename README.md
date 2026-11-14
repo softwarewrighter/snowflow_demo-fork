@@ -10,11 +10,14 @@ integration, workers, typed data transfer and reusable execution mechanisms.
 The browser build uses generated loader glue, with no handwritten application
 JavaScript or WebAssembly.
 
-The repository contains validated mesh payloads, a bounded mesh resource store,
-component scaffolding, reproducible source/build tooling and an intact archived
-reference. The existing X_eTaL evaluator and worker compile to WASM and have
-terminal-host browser validation. There is no
-new playable browser application yet.
+The first local application renders an X_eTaL-generated snow patch with pause,
+ridge input, reset and an orbit camera. The endless world is not implemented yet.
+The repository also contains validated mesh payloads, a bounded resource store,
+reproducible build tooling and an intact archived reference.
+
+Run `python3 scripts/serve-demo.py --no-build` to serve the existing build at
+[localhost:8475](http://127.0.0.1:8475/snowflow_demo-fork/).
+See [local demo](docs/local-demo.md) for a clean build and browser validation.
 
 ## Repository
 
@@ -32,8 +35,8 @@ new playable browser application yet.
 Run `bash scripts/gate.sh` from the repository root. The gate verifies archive
 integrity, owned documentation, component formatting, lint and tests. Run
 `python3 scripts/inspect-xetal.py` separately to check locally available research
-snapshots against the source manifest. The gate does not require those ignored
-snapshots or compile sibling repositories.
+snapshots against the source manifest. The gate does not require those research
+snapshots, but it does build the pinned X_eTaL dependencies under `work/deps/`.
 
 ## License
 

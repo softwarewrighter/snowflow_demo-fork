@@ -1,6 +1,6 @@
 number = 5
 slug = "browser-mesh-demo"
-status = "pending"
+status = "in-progress"
 description = "Build the smallest X_eTaL-controlled procedural triangle mesh rendered by Rus..."
 role = "production"
 context_files = []

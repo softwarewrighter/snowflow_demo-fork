@@ -1,0 +1,56 @@
+#!/usr/bin/env xetal
+## A small continuous snow surface. The host reads mesh! as typed array data.
+## Tick advances the ridge, down changes its height, and a key resets it.
+
+u:t_errain := { a ->
+  k := (r_ange 81) - 1
+  x := ((f_loat (k d_iv 9)) / 4.0) - 1.0
+  z := ((f_loat (k m_od 9)) / 4.0) - 1.0
+  y := (a * (1.0 - (0.45 * ((x * x) + (z * z))))) + (0.08 * x * z)
+  points := 2 1 t_ranspose (3 81 r_eshape x c_at y c_at z)
+  cell := (r_ange 64) - 1
+  base := ((cell d_iv 8) * 9) + (cell m_od 8)
+  ids := 1 + r_avel base '+ t_able 0 1 9 1 10 9
+  128 3 3 r_eshape ids s_elect points
+}
+
+phase! := 0.0
+boost! := 0.0
+mesh! := u:t_errain 0.18
+u:w_atch := { @ -> mesh! }
+'u:w_atch
+
+u:h_eight := { @ ->
+  f := phase! - f_loat f_loor phase!
+  0.18 + (0.18 * boost!) + (0.12 * (1.0 - a_bs ((2.0 * f) - 1.0)))
+}
+u:a_dvance := { e ->
+  phase! := phase! + f_irst []E_AT e
+  mesh! := u:t_errain u:h_eight @
+  @
+}
+u:t_ap := { @ ->
+  boost! := 1.0 - boost!
+  mesh! := u:t_errain u:h_eight @
+  @
+}
+u:r_eset := { @ ->
+  phase! := 0.0
+  boost! := 0.0
+  mesh! := u:t_errain 0.18
+  @
+}
+u:c_hange := { e ->
+  kind := []E_KIND e
+  kind m_atch "tick" ? u:a_dvance e
+  kind m_atch "down" ? u:t_ap @
+  kind m_atch "key" ? u:r_eset @
+  @
+}
+u:l_oop := { @ ->
+  e := []E_VENT @
+  ([]E_KIND e) m_atch "end" ? @
+  changed := u:c_hange e
+  u:l_oop @
+}
+u:l_oop @

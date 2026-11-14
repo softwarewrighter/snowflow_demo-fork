@@ -2,6 +2,16 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+export CARGO_HOME="$(python3 - <<'PY'
+import os
+from pathlib import Path
+import sys
+sys.path.insert(0, 'scripts')
+from cargo_cache import prepare
+print(prepare(Path(os.environ.get('CARGO_HOME', str(Path.home() / '.cargo'))), Path('work/cargo-home')))
+PY
+)"
+
 git diff --check
 python3 scripts/check-archive.py
 python3 scripts/check-spelling.py --self-test
@@ -20,3 +30,5 @@ for component in components/*/Cargo.toml; do
     cargo test --offline --manifest-path "$component"
     sw-checklist "$(dirname "$component")"
 done
+
+cargo-clippy clippy --offline --manifest-path components/app/Cargo.toml --target wasm32-unknown-unknown --all-targets -- -D warnings

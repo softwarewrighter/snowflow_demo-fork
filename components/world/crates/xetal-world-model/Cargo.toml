@@ -6,3 +6,12 @@ edition.workspace = true
 license.workspace = true
 authors.workspace = true
 repository.workspace = true
+
+[dependencies]
+xetal-world-surface.workspace = true
+xetal-program.workspace = true
+xetal-macro.workspace = true
+xetal-types.workspace = true
+xetal-step.workspace = true
+xetal-arith.workspace = true
+xetal-value.workspace = true

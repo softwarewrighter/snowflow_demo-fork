@@ -2,9 +2,9 @@
 
 X_eTaL owns procedural world algorithms and gameplay. Rust owns platform access
 and execution mechanisms. The application composes those reusable facilities.
-Host and surface implement mesh payloads and resource lifetime. The remaining
-component facades are scaffolding; the following boundaries guide implementation
-and do not claim an existing renderer.
+Host and surface implement mesh payloads and resource lifetime. World runs a
+persistent X_eTaL surface program; render supplies WebGPU and app supplies the
+browser composition. Shared replay/evidence code remains scaffolding.
 
 ```text
 X_eTaL generation and gameplay libraries
@@ -40,3 +40,9 @@ Use bounded queues, transferred buffers and versioned chunk requests. Reuse the
 existing sliced evaluator, event waits and browser worker foundations. Shared
 memory and worker-owned rendering are optional later profiles, each requiring
 real browser capability checks.
+
+The initial demo runs the evaluator and renderer on the main thread. Its typed
+adapter uses the existing output hook to retain a closure's lexical environment,
+then reads the updated mesh binding after event waits. This requires no core
+syntax change but depends on the pinned public runtime representation. Generic
+host registration remains an upstream feature request. See [local demo](local-demo.md).

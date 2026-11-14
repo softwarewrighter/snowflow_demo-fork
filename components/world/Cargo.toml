@@ -8,3 +8,12 @@ edition = "2024"
 license = "MIT"
 authors = ["Michael A Wright"]
 repository = "https://github.com/softwarewrighter/snowflow_demo-fork"
+
+[workspace.dependencies]
+xetal-world-surface = { path = "../surface/crates/xetal-world-surface" }
+xetal-program = { path = "../../work/deps/X_eTaL/components/macro/crates/xetal-program" }
+xetal-macro = { path = "../../work/deps/X_eTaL/components/macro/crates/xetal-macro" }
+xetal-types = { path = "../../work/deps/X_eTaL/components/types/crates/xetal-types" }
+xetal-step = { path = "../../work/deps/X_eTaL/components/step/crates/xetal-step" }
+xetal-arith = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-arith" }
+xetal-value = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-value" }
