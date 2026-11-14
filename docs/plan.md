@@ -24,20 +24,21 @@ structure; completed work and pending validation are recorded below and in agent
 | 9 | bloom-spell | Published targeted X_eTaL eruption, crater/rim and reusable particle library/renderer; 70-test native gate passes |
 | 10 | ribbon-spell | Published held path-history water stream, captured-aim release and shallow scoring; 76-test native gate passes |
 | 11 | source-colors-and-wiring | Shared world/spell source palette and a plain-language trace of the actual game/spell bridge |
-| 12 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
-| 13 | deformable-snow-layer | Planned fine local layer, actual boot depressions/edges, shared collision and bounded buffers |
-| 14 | snow-compaction-contact | Planned packed trails, depth/pressure response, movement and depth-sensitive sound |
-| 15 | snow-weather-persistence | Planned geometric wind/snow recovery, saved tiles and versioned worker updates |
-| 16 | cloudy-day-night | Queued overcast sky, faint sun, night/moon and carried torch |
-| 17 | streaming-tracks-audio | Stationary terrain, bounded endless streaming, footprints and gesture-enabled movement/landing sound |
-| 18 | lightweight-effects | Procedural material detail, fixed-step jumping and cached sun shadows with cost controls |
-| 19 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
-| 20 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
-| 21 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
-| 22 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
-| 23 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
-| 24 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
-| 25 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
+| 12 | xetal-app-composition | Planned App.xtl/Spells.xtl composition and generic Rust host before adding another spell |
+| 13 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
+| 14 | deformable-snow-layer | Planned fine local layer, actual boot depressions/edges, shared collision and bounded buffers |
+| 15 | snow-compaction-contact | Planned packed trails, depth/pressure response, movement and depth-sensitive sound |
+| 16 | snow-weather-persistence | Planned geometric wind/snow recovery, saved tiles and versioned worker updates |
+| 17 | cloudy-day-night | Queued overcast sky, faint sun, night/moon and carried torch |
+| 18 | streaming-tracks-audio | Stationary terrain, bounded endless streaming, footprints and gesture-enabled movement/landing sound |
+| 19 | lightweight-effects | Procedural material detail, fixed-step jumping and cached sun shadows with cost controls |
+| 20 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
+| 21 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
+| 22 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
+| 23 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
+| 24 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
+| 25 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
+| 26 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
 
 Work reusable across applications belongs in the appropriate X_eTaL repository,
 then reaches this app through explicit pin updates. Application adapters are not substitutes for missing language features;

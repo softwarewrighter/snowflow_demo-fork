@@ -1,4 +1,4 @@
-number = 15
+number = 16
 slug = "snow-weather-persistence"
 status = "pending"
 description = "Persist modified snow tiles through bounded resident caches and Rust browser ..."

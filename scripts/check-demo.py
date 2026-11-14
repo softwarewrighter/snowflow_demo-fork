@@ -44,6 +44,8 @@ def interactions(base, session):
     assert len(panels) >= 5, panels
     for panel in panels:
         assert panel['shared'] and None not in panel['colors'] and len(set(panel['colors'])) == 5, panel
+    order = evaluate(base, session, "return Array.from(document.querySelectorAll('.controls button')).filter(b=>['sweep','ribbon','bloom','crystallise'].includes(b.id)).map(b=>b.id)")
+    assert order == ['sweep', 'ribbon', 'bloom', 'crystallise'], order
     click(base, session, 'start-sound')
     wait(base, session, "return document.getElementById('app').dataset.audio==='running'")
     position = "return JSON.parse(document.getElementById('app').dataset.position)"

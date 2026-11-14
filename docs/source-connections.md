@@ -73,3 +73,41 @@ pure functions, and those functions return its successor. This adapter is not
 the still-pending generic E1 typed host registration API.
 
 See [library cross-reference](libraries.md) for source, backend and test mappings.
+
+## Where the program set is configured today
+
+It is statically wired in [Scene::new](../components/app/crates/xetal-snow-app/src/scene.rs),
+not in a X_eTaL configuration file. That constructor creates these six runners:
+
+| Rust runner | Embedded program | Role |
+| --- | --- | --- |
+| World | world/demos/terrain.xtl | Streamed terrain and shared brush histories |
+| Player | world/demos/snowfield.xtl | Footsteps, sound commands and wind aging |
+| xetal-world-spells::Spells | world/demos/crystallise.xtl | Crystallise only |
+| Sweep | world/demos/sweep.xtl | Sweep |
+| Bloom | world/demos/bloom.xtl | Bloom |
+| Ribbon | world/demos/ribbon.xtl | Ribbon |
+
+The paths above are relative to components/. Each native wrapper has a `SOURCE`
+constant, populated with Rust `include_str!`, which selects its embedded program.
+`Demo::from_source(SOURCE)` parses/loads that program into an evaluator. The
+program's own final expression starts its `u:l_oop!`. Rust never searches for
+or calls a X_eTaL function named loop; `Machine::run` resumes the loaded program
+at its saved instruction position. Its next event wait yields back to Rust.
+
+There is currently no `u_se< "spells"` import. `xetal-world-spells` is a misleading
+native crate name: it hosts Crystallise, not a spell registry. Also, the embedded
+library catalog resolves library imports; adding a library there does not start
+another program.
+
+## Planned X_eTaL-owned composition
+
+Selecting the spell set and dispatching application actions belong in X_eTaL.
+The next architectural step, before Vortex, is an actual App.xtl entrypoint and
+Spells.xtl composition library. App.xtl should own state and event dispatch,
+importing the existing pure spell libraries. The Rust host should load one app
+entrypoint and supply generic browser timing/input, rendering/audio resources
+and physics queries. Separate spell programs can remain focused examples/tests.
+
+This is planned work. A data-only manifest that still leaves per-spell dispatch
+hard-coded in Rust would not complete that refactor. See [the plan](plan.md).
