@@ -1,8 +1,9 @@
 number = 9
 slug = "bloom-spell"
-status = "in-progress"
+status = "completed"
 description = "Port original spell 3 Bloom using shared terrain brushes, swept surfaces and ..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T11:55:55"
-commits = []
+completed_at = "2026-11-14T12:59:51"
+commits = ["d011957a7a49a4d8bbcb67706f335d33ca4ae97c"]
