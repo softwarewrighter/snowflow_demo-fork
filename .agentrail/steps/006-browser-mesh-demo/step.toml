@@ -1,4 +1,4 @@
-number = 5
+number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
 description = "Build the smallest X_eTaL-controlled procedural triangle mesh rendered by Rus..."

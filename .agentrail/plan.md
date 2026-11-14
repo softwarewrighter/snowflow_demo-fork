@@ -17,9 +17,9 @@ structure; completed work and pending validation are recorded below and in agent
 | 2 | source-baseline | Tested dependency bootstrap, native evaluator/runner checks and WASM build; browser harness supplied |
 | 3 | typed-mesh-contract | Validated application payloads, checked adapters, bounded resources and existing E1 requirements |
 | 4 | browser-baseline-validation | Real-browser editor and event-worker evidence before the browser mesh demo |
-| 5 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
-| 6 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
-| 7 | pages-foundation | Static subdirectory build, working WASM/worker paths and reproducible browser evidence |
+| 5 | pages-foundation | Publish the built static artifact with trusted HTTPS and verify asset URLs |
+| 6 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
+| 7 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
 | 8 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
 | 9 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
 | 10 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
@@ -98,3 +98,7 @@ The first local artifact is built and all native, shader and WASM checks pass.
 Application browser acceptance is pending a terminal-host report and screenshot;
 the earlier upstream-editor validation does not satisfy this step. The active
 step remains in progress until those actual rendering and interaction checks pass.
+
+Pages publication was promoted ahead of browser acceptance at the user request
+so the demo can be opened over trusted HTTPS. HTTP asset checks and publication
+are distinct from hardware rendering/input acceptance, which stays open.

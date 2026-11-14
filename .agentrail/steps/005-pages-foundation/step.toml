@@ -1,0 +1,8 @@
+number = 5
+slug = "pages-foundation"
+status = "in-progress"
+description = "Publish the already built procedural mesh demo to GitHub Pages using its trus..."
+role = "validation"
+context_files = []
+created_at = "2026-11-13T15:26:42"
+commits = []

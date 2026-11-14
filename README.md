@@ -1,5 +1,7 @@
 # X_eTaL snowy world
 
+[GitHub Pages preview](https://softwarewrighter.github.io/snowflow_demo-fork/)
+
 A procedural, editable snow world built with X_eTaL and Rust for the browser.
 The world combines endless terrain, smooth snow and ice boulders, flowing water,
 torches, exposed dirt, digging and buried gems. Snowflow provides the visual
@@ -29,6 +31,7 @@ See [local demo](docs/local-demo.md) for a clean build and browser validation.
 - [Development](docs/development.md): checks, source pins and reproducible evidence.
 - [Design](docs/design.md): application decisions and upstream language asks.
 - [Plan](docs/plan.md): milestones and agentrail execution.
+- [Pages publishing](docs/pages.md): hosted HTTPS preview and update process.
 - [Original README](orig-README.md): the upstream Snowflow description.
 - [Archived reference](archive/README.md): original sources, shaders and license.
 
