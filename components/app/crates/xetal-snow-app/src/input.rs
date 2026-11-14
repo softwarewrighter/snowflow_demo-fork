@@ -137,9 +137,15 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
 }
 
 fn cast(app: &mut App) {
-    if !app.started || app.paused { return; }
+    if !app.started || app.paused {
+        return;
+    }
     let walker = &app.scene.walker;
-    if let Err(error) = app.scene.spells.cast([walker.position[0], walker.position[2]], walker.yaw) {
+    if let Err(error) = app
+        .scene
+        .spells
+        .cast([walker.position[0], walker.position[2]], walker.yaw)
+    {
         status::error(error);
     }
 }

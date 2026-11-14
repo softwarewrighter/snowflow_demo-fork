@@ -72,14 +72,19 @@ def interactions(base, session):
         click(base, session, button)
         assert evaluate(base, session, f"return document.getElementById('{button}').textContent") != label
         click(base, session, button)
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keydown',{key:'4'}))")
+    wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===12")
+    time.sleep(1.9)
+    (ROOT / 'work/demo-crystals-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
     click(base, session, 'clear-tracks')
     wait(base, session, "return Number(document.getElementById('app').dataset.footprints)===0")
     click(base, session, 'reset')
     wait(base, session, "return Number(document.getElementById('app').dataset.chunks)===25 && JSON.parse(document.getElementById('app').dataset.position)[2]===8")
     assert evaluate(base, session, position) == original
+    wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===0")
     assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
-    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):

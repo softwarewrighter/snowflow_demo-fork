@@ -1,8 +1,17 @@
 #[test]
 fn ice_shader_validates_with_shared_camera() {
-    let source = format!("{}{}", xetal_world_camera::SHADER, xetal_world_objects::SHADER);
+    let source = format!(
+        "{}{}",
+        xetal_world_camera::SHADER,
+        xetal_world_objects::SHADER
+    );
     let module = naga::front::wgsl::parse_str(&source).unwrap();
-    naga::valid::Validator::new(naga::valid::ValidationFlags::all(), naga::valid::Capabilities::empty()).validate(&module).unwrap();
+    naga::valid::Validator::new(
+        naga::valid::ValidationFlags::all(),
+        naga::valid::Capabilities::empty(),
+    )
+    .validate(&module)
+    .unwrap();
 }
 #[test]
 fn object_upload_rejects_invalid_payloads() {

@@ -56,5 +56,10 @@ fn xetal_history_stays_bounded_after_a_long_walk() {
     assert_eq!(commands.prints.len(), 256);
     assert_eq!(commands.prints[0][0], 45.0);
     assert_eq!(commands.prints[255][0], 300.0);
-    assert!(commands.prints.iter().all(|row| (0.0..=1.0).contains(&row[5])));
+    assert!(
+        commands
+            .prints
+            .iter()
+            .all(|row| (0.0..=1.0).contains(&row[5]))
+    );
 }

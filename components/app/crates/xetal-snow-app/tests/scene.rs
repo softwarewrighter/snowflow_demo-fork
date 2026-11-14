@@ -50,3 +50,30 @@ fn walking_crosses_original_wall_and_jump_emits_one_landing_event() {
     assert_eq!(scene.steps, 0);
     assert_eq!(scene.trail.marks.len(), 2);
 }
+
+#[test]
+fn spell_geometry_reaches_scene_updates_and_reset_clears_gpu_payload() {
+    let mut scene = xetal_snow_app::Scene::new().unwrap();
+    scene.spells.cast([0.0, 8.0], 0.0).unwrap();
+    let update = scene.update(0.1, [false; 4], false, false).unwrap();
+    assert_eq!(update.objects.unwrap().indices().len(), 648);
+    let before = scene.spells.positions().to_vec();
+    assert!(
+        scene
+            .update(0.1, [false; 4], false, true)
+            .unwrap()
+            .objects
+            .is_none()
+    );
+    assert_eq!(scene.spells.positions(), before);
+    scene.reset().unwrap();
+    assert!(
+        scene
+            .update(0.0, [false; 4], false, true)
+            .unwrap()
+            .objects
+            .unwrap()
+            .positions()
+            .is_empty()
+    );
+}

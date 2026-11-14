@@ -1,0 +1,25 @@
+{
+  "status": "published initial preview; full post-publication gate passed; formatting/HUD follow-up publication pending",
+  "initial_source_commit": "7defe5304cc016653664406396bc68a33c79aeb2",
+  "initial_pages_commit": "0c8cfc8259022be00f80a07520c423b89f62215d",
+  "rust_tests": 50,
+  "python_tests": 18,
+  "wasm_clippy": "passed",
+  "wgsl_validation": "passed",
+  "release_build": "passed",
+  "cpu_native_release": {
+    "method": "cost example; four casts; 18 growth ticks and 100 settled ticks; CPU only",
+    "growth_ms_mean": 4.788,
+    "settled_ms_mean": 0.055
+  },
+  "budgets": {
+    "casts": 4,
+    "crystals": 48,
+    "triangles": 864,
+    "vertex_buffer_bytes": 31104,
+    "extra_draw_calls": 1
+  },
+  "browser": "pending: harness PermissionError opening local socket",
+  "library_sha256": "ced8c41d9920141bc2d020cc2bc455c5ed44f1b76502fc4d3b33a3a7e30bc069",
+  "program_sha256": "544846e288a9637a5f6e1c0229ec00552b60057478fa2122e52892e695c59ec3"
+}

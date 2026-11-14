@@ -18,7 +18,9 @@ pub(crate) async fn start() -> Result<(), String> {
     status::text("source", crate::SOURCE);
     status::element("source-rendered")?.set_inner_html(&xetal_world_model::highlighted_source());
     status::text("spell-source", xetal_world_spells::SOURCE);
-    status::element("spell-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(xetal_world_spells::SOURCE));
+    status::element("spell-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
+        xetal_world_spells::SOURCE,
+    ));
     let window = web_sys::window().ok_or("no browser window")?;
     let gpu = js_sys::Reflect::get(&window.navigator(), &"gpu".into()).unwrap_or_default();
     if gpu.is_undefined() || gpu.is_null() {

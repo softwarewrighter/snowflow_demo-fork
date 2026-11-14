@@ -131,8 +131,22 @@ impl App {
         if chunks > 0 {
             status::progress(self.frames, self.updates, scene.mesh_hash);
         }
-        status::text("triangles", &format!("{}", chunks * 512 + scene.spells.positions().len() / 9));
+        status::text(
+            "triangles",
+            &format!("{}", chunks * 512 + scene.spells.positions().len() / 9),
+        );
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
+        self.attributes();
+    }
+    fn attributes(&self) {
+        let scene = &self.scene;
+        let chunks = scene.world.resident();
+        let visible = scene
+            .trail
+            .marks
+            .iter()
+            .filter(|mark| mark.opacity > 0.01)
+            .count();
         if let Ok(element) = status::element("app") {
             for (key, value) in [
                 ("data-position", format!("{:?}", scene.walker.position)),
@@ -145,7 +159,10 @@ impl App {
                 ("data-steps", scene.steps.to_string()),
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
-                ("data-crystals", (scene.spells.positions().len() / 162).to_string()),
+                (
+                    "data-crystals",
+                    (scene.spells.positions().len() / 162).to_string(),
+                ),
                 ("data-audio", self.audio.state().to_string()),
                 ("data-grounded", scene.walker.motion.grounded.to_string()),
             ] {

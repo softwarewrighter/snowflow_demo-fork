@@ -9,8 +9,10 @@ mod pipeline;
 pub use gpu::Objects;
 
 pub fn validate(vertices: &[f32]) -> Result<(), String> {
-    if vertices.len() > MAX_VERTICES * 3 || !vertices.len().is_multiple_of(9)
-        || vertices.iter().any(|v| !v.is_finite()) {
+    if vertices.len() > MAX_VERTICES * 3
+        || !vertices.len().is_multiple_of(9)
+        || vertices.iter().any(|v| !v.is_finite())
+    {
         return Err("invalid or oversized object triangle payload".into());
     }
     Ok(())
