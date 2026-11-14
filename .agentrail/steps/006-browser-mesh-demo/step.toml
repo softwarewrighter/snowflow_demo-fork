@@ -1,7 +1,7 @@
 number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
-description = "The finite walkable preview is implemented: 2,048 X_eTaL terrain triangles, r..."
+description = "The finite walkable preview is implemented and published at https://softwarew..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T15:26:42"

@@ -2,34 +2,16 @@
   "url": "https://softwarewrighter.github.io/snowflow_demo-fork/",
   "pages_status": "built",
   "https_enforced": true,
-  "source_commit": "5b0e5940705fba4b1903abd002e91de2ec6f1e86",
-  "gh_pages_commit": "3d17d5671f197c4fe579854a05630346cbeed293",
-  "assets": {
-    "favicon-4e963492c77e259d.ico": {
-      "sha256": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
-      "content_type": "image/vnd.microsoft.icon",
-      "http_status": 200
-    },
-    "index.html": {
-      "sha256": "e7464e59d9fbc980be3b82044cf91967a1fd05e46c77daaa4146369098c558b7",
-      "content_type": "text/html; charset=utf-8",
-      "http_status": 200
-    },
-    "style-9710401d3e16e195.css": {
-      "sha256": "cf92c5ff7b2ae67c97099c0bc741b2fdedef980359d69b4c9fb7d4dcede872d0",
-      "content_type": "text/css; charset=utf-8",
-      "http_status": 200
-    },
-    "xetal-snow-app-62f7d7e7e4669aa6.js": {
-      "sha256": "354dfb4405802a5b9d3a460564e43524c431fcf0e5d25e041482df7870ad4598",
-      "content_type": "application/javascript; charset=utf-8",
-      "http_status": 200
-    },
-    "xetal-snow-app-62f7d7e7e4669aa6_bg.wasm": {
-      "sha256": "f0ffdd29d5b600e3036a81f606246791d582db4715365ef094885d064a511da1",
-      "content_type": "application/wasm",
-      "http_status": 200
-    }
+  "source_commit": "6f78fb55885a8dfec8707a4ded803ac599c4f5e6",
+  "gh_pages_commit": "f68e7445e642a197c487720e99b1192856009690",
+  "artifact_sha256": {
+    "xetal-snow-app-a42c2b0405a8b957.js": "aa53c9aed8cce49298f99bb956b1fa34d138ce870c29955531bc050510275a96",
+    "xetal-snow-app-a42c2b0405a8b957_bg.wasm": "89e7fe023c3d44d64935cff400d59e6ec47b9d311609050764dd087d7d972f37",
+    "favicon-4e963492c77e259d.ico": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
+    "index.html": "5333ed49c79d285fa7136bd652eabec543706c12515abc485654116e716df266",
+    "style-9710401d3e16e195.css": "cf92c5ff7b2ae67c97099c0bc741b2fdedef980359d69b4c9fb7d4dcede872d0"
   },
-  "browser_rendering": "separate acceptance; not asserted by HTTP checks"
+  "all_five_assets": "HTTP 200; downloaded hashes match packaged artifact",
+  "wasm_content_type": "application/wasm",
+  "browser_rendering": "pending; sandbox local socket creation denied; HTTP verification is not rendering acceptance"
 }
