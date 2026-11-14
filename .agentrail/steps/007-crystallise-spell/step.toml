@@ -1,8 +1,9 @@
 number = 7
 slug = "crystallise-spell"
-status = "in-progress"
+status = "completed"
 description = "Port the first original spell: key 4 grows bounded procedural hexagonal ice c..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T11:47:30"
-commits = []
+completed_at = "2026-11-14T11:57:30"
+commits = ["26a64777d5fb9762c2181d04bfdd5bd3088cc470"]
