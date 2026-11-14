@@ -102,3 +102,10 @@ step remains in progress until those actual rendering and interaction checks pas
 Pages publication was promoted ahead of browser acceptance at the user request
 so the demo can be opened over trusted HTTPS. HTTP asset checks and publication
 are distinct from hardware rendering/input acceptance, which stays open.
+
+The gh-pages branch is now published at
+https://softwarewrighter.github.io/snowflow_demo-fork/ with HTTPS enforced.
+GitHub reports built. The index and all five static assets return HTTP 200 with
+matching build hashes; the WASM response uses application/wasm. The deployment
+record is docs/evidence/pages.json. Browser hardware rendering acceptance remains
+the next step and is not inferred from these HTTP checks.
