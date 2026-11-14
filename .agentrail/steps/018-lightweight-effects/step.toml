@@ -1,4 +1,4 @@
-number = 17
+number = 18
 slug = "lightweight-effects"
 status = "in-progress"
 description = "Lightweight effects remain published with native 27 Rust/18 Python tests, bot..."

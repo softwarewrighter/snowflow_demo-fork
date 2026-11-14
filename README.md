@@ -94,3 +94,10 @@ Ribbon button to start a latched hold and click again to throw. The stream leave
 shallow scores when its tip contacts loaded snow. See [Ribbon](docs/ribbon.md).
 The [snow mechanics roadmap](docs/snow-mechanics.md) describes planned geometric
 boot prints, compaction, deep-powder movement and persistent weathered snow tiles.
+
+## Reading the source panels
+
+Each source panel shows a real program embedded in the demo. The Rust browser
+loop keeps the programs loaded and sends time/input facts; X_eTaL libraries
+return updated state, geometry and commands. See [how the sources connect](docs/source-connections.md)
+for a simple Ribbon walkthrough and links to the actual call sites.
