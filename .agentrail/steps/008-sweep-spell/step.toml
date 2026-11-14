@@ -1,8 +1,9 @@
 number = 8
 slug = "sweep-spell"
-status = "in-progress"
+status = "completed"
 description = "Port original spell 1 Sweep. Implement X_eTaL terrain brush state shared with..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T11:55:55"
-commits = []
+completed_at = "2026-11-14T12:30:20"
+commits = ["4d4461f10287fca4b301d56d62202a46b2421f26"]
