@@ -78,3 +78,11 @@ and raises snow banks. Walk into the result: collision uses the edited mesh.
 The latest eight cuts remain, including after chunks reload; Reset clears them.
 The live source panel and [Sweep documentation](docs/sweep.md) identify the
 X_eTaL libraries, native backends, repeatable tests and current visual limits.
+
+## Bloom spell
+
+Aim the crosshair at the snow and press **3**, or click **3: Bloom**, to erupt a
+column, carve a crater with a raised rim, and release falling snowflake particles.
+The latest four craters remain. Reset clears them. Timing, crater shape and
+particle motion live in X_eTaL libraries; a reusable Rust/WGPU particle renderer
+provides the native drawing capability. See [Bloom](docs/bloom.md).

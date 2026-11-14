@@ -21,7 +21,7 @@ structure; completed work and pending validation are recorded below and in agent
 | 6 | xetal-library-app | Actual X_eTaL modules for terrain, feet, sound and wind, generated cross-reference and source links |
 | 7 | crystallise-spell | Port spell 4 with bounded X_eTaL crystal growth and a native ice renderer |
 | 8 | sweep-spell | X_eTaL moving slush crescent, signed terrain brushes, exact edited chunk seams and shared collision payload; published preview and 60-test native gate |
-| 9 | bloom-spell | Targeted eruption, crater/rim and particle fallout shared with snowfall |
+| 9 | bloom-spell | Targeted X_eTaL eruption, crater/rim and reusable particle library/renderer; preview validation in progress |
 | 10 | ribbon-spell | Held aim-controlled water stream with release trajectory |
 | 11 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
 | 12 | cloudy-day-night | Queued overcast sky, faint sun, night/moon and carried torch |

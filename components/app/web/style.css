@@ -12,3 +12,5 @@
 .fps-readout{position:absolute;top:15px;right:16px;padding:6px 9px;border-radius:5px;background:#07101bcc;color:#c1e8dc;font:11px JuliaMono,monospace;pointer-events:none}.canvas-label{right:180px}footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:12px;border-top:1px solid #203144;color:#8da5bb;font-size:12px}footer span{width:auto;margin:0}footer .sep{opacity:.6}footer a:hover{color:#dce8f5}
 
 .library-links{font-size:12px;color:#8fc9df;padding:12px 0}#source-rendered a{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}#source-rendered a:hover{background:#203144}
+
+.crosshair { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #eef9ff99; font: 20px monospace; pointer-events: none; text-shadow: 0 1px 2px #10253a; }

@@ -1,0 +1,22 @@
+## SnowParticles: pure analytic particle kinematics and six-column render rows.
+## Rows: [x y z size opacity spin]. Reference: library-reference.html#snow-particles
+"brush:" u_se< "TerrainBrush.xtl"
+l:h_ash := { seed ->
+  k := (a_bs seed) m_od 104729
+  (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
+}
+l:b_allistic := { (origin, velocity, age, gravity) ->
+  (x, y, z) := origin
+  (vx, vy, vz) := velocity
+  (x + (vx * age), (y + (vy * age)) - (0.5 * gravity * age * age), z + (vz * age))
+}
+l:r_ows := { (point, size, opacity, spin) ->
+  (x, y, z) := point
+  n := f_irst s_hape x
+  2 1 t_ranspose ((6 c_at n) r_eshape x c_at y c_at z c_at size c_at opacity c_at spin)
+}
+l:f_ade := { (age, life) ->
+  born := brush:c_lamp (age / 0.08)
+  dying := brush:c_lamp ((life - age) / 0.6)
+  born * dying
+}

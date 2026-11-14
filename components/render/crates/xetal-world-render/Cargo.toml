@@ -13,6 +13,7 @@ xetal-world-camera = { path = "../xetal-world-camera" }
 xetal-world-surface.workspace = true
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
+xetal-world-particles = { path = "../../../effects/crates/xetal-world-particles" }
 xetal-world-decals = { path = "../xetal-world-decals" }
 xetal-world-shadow = { path = "../xetal-world-shadow" }
 wgpu.workspace = true

@@ -17,22 +17,11 @@ impl World {
     }
     pub fn clear_edits(&mut self) {
         self.pending_edit = None;
+        self.pending_bloom = None;
         self.pending_reset = true;
     }
     pub(crate) fn apply_edits(&mut self) -> Result<Option<Mesh>, String> {
-        if self.pending_reset {
-            send(&mut self.demo, "key r")?;
-            self.pending_reset = false;
-        } else if let Some([id, x, z, yaw, reach]) = self.pending_edit.take() {
-            for event in [
-                format!("move {x} {z}"),
-                format!("down {yaw} {reach}"),
-                format!("up {id} 0"),
-            ] {
-                send(&mut self.demo, &event)?;
-            }
-        }
-        let regions = regions(&self.demo)?;
+        let regions = self.send_pending()?;
         let keys: Vec<_> = self
             .chunks
             .keys()
@@ -57,7 +46,7 @@ impl World {
         merge::mesh(&self.chunks).map(Some)
     }
 }
-fn send(demo: &mut Demo, event: &str) -> Result<(), String> {
+pub(crate) fn send(demo: &mut Demo, event: &str) -> Result<(), String> {
     demo.event(event)?;
     for _ in 0..100 {
         if demo.step(8_000)? == Progress::Waiting {
@@ -66,9 +55,9 @@ fn send(demo: &mut Demo, event: &str) -> Result<(), String> {
     }
     Err("terrain edit did not settle within its execution budget".into())
 }
-fn regions(demo: &Demo) -> Result<Vec<[f64; 4]>, String> {
+pub(crate) fn regions(demo: &Demo) -> Result<Vec<[f64; 4]>, String> {
     let (shape, values) = demo.array(1)?;
-    if shape.len() != 2 || shape[1] != 4 || shape[0] > 8 {
+    if shape.len() != 2 || shape[1] != 4 || shape[0] > 12 {
         return Err("invalid dirty terrain regions".into());
     }
     Ok(values.as_chunks::<4>().0.to_vec())

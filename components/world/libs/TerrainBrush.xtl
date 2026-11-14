@@ -13,3 +13,9 @@ l:p_rofile := { (across, cut, bank) ->
 l:b_ound := { delta ->
   (2.2 * l:c_lamp ((delta + 1.2) / 2.2)) - 1.2
 }
+l:r_adial := { (radius, cut, bank) ->
+  center := l:c_lamp (1.0 - ((radius * radius) / 6.76))
+  rim := (radius - 3.3) / 1.2
+  edge := l:c_lamp (1.0 - (rim * rim))
+  (bank * edge * edge) - (cut * center * center)
+}

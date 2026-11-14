@@ -11,6 +11,7 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+xetal-world-bloom = { path = "../../../effects/crates/xetal-world-bloom" }
 xetal-world-sweep = { path = "../../../world/crates/xetal-world-sweep" }
 xetal-world-spells = { path = "../../../world/crates/xetal-world-spells" }
 xetal-world-metrics = { path = "../xetal-world-metrics" }

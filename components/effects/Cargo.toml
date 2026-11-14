@@ -1,0 +1,16 @@
+[workspace]
+resolver = "3"
+members = ["crates/xetal-world-bloom", "crates/xetal-world-particles"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[workspace.dependencies]
+xetal-world-model = { path = "../world/crates/xetal-world-model" }
+xetal-world-surface = { path = "../surface/crates/xetal-world-surface" }
+xetal-world-camera = { path = "../render/crates/xetal-world-camera" }
+wgpu = { version = "=24.0.5", default-features = false, features = ["webgpu", "wgsl"] }
+bytemuck = "1.25"
+naga = { version = "=24.0.0", features = ["wgsl-in"] }

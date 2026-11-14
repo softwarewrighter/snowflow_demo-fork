@@ -1781,6 +1781,7 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "xetal-world-audio",
+ "xetal-world-bloom",
  "xetal-world-metrics",
  "xetal-world-model",
  "xetal-world-navigation",
@@ -1967,6 +1968,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-bloom"
+version = "0.1.0"
+dependencies = [
+ "xetal-world-model",
+ "xetal-world-surface",
+]
+
+[[package]]
 name = "xetal-world-camera"
 version = "0.1.0"
 
@@ -2012,6 +2021,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-particles"
+version = "0.1.0"
+dependencies = [
+ "bytemuck",
+ "wgpu",
+ "xetal-world-camera",
+]
+
+[[package]]
 name = "xetal-world-render"
 version = "0.1.0"
 dependencies = [
@@ -2021,6 +2039,7 @@ dependencies = [
  "xetal-world-camera",
  "xetal-world-decals",
  "xetal-world-objects",
+ "xetal-world-particles",
  "xetal-world-shadow",
  "xetal-world-surface",
 ]

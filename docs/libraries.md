@@ -117,3 +117,12 @@ The additional world native crate is `xetal-world-sweep`; the existing
 `Demo::array` exposes checked typed numeric publication fields without numeric
 text serialization. Input still uses the existing few-scalar queued Event
 transport; generic upstream typed host registration remains pending.
+
+## Bloom and particles
+
+[Bloom](bloom.md) maps Bloom, BloomBrush and SnowParticles to their actual source,
+public APIs, native adapter, particle renderer, tests and resource budgets.
+The independent `effects` component keeps the existing world/render workspaces
+within their five-crate target. `Demo::array` carries crater and particle arrays
+without numeric text output; input still uses the existing few-scalar Event
+bridge. The live composition source links to each actual imported library.

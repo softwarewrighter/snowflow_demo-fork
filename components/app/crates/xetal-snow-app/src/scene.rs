@@ -13,6 +13,7 @@ pub struct Scene {
     pub steps: u64,
     pub wind: f32,
     player: Player,
+    pub bloom: xetal_world_bloom::Bloom,
     pub sweep: xetal_world_sweep::Sweep,
     pub spells: xetal_world_spells::Spells,
     pub(crate) terrain: Vec<f32>,
@@ -22,6 +23,8 @@ pub struct Scene {
 pub struct Update {
     pub terrain: Option<xetal_world_surface::Mesh>,
     pub tracks: Option<Vec<f32>>,
+    pub bloom: Option<xetal_world_surface::Mesh>,
+    pub particles: Option<Vec<f32>>,
     pub sweep: Option<xetal_world_surface::Mesh>,
     pub objects: Option<xetal_world_surface::Mesh>,
     pub step: bool,
@@ -38,6 +41,7 @@ impl Scene {
             terrain: Vec::new(),
             terrain_revision: 0,
             sweep: xetal_world_sweep::Sweep::new()?,
+            bloom: xetal_world_bloom::Bloom::new()?,
             mesh_hash: 0,
             landings: 0,
             steps: 0,
@@ -58,6 +62,10 @@ impl Scene {
         if let Some(brush) = sweep.brush {
             self.world.sweep(brush)?;
         }
+        let bloom = self.bloom.tick(if paused { 0.0 } else { dt })?;
+        if let Some(crater) = bloom.crater {
+            self.world.bloom(crater)?;
+        }
         let terrain = self.world.step(self.walker.position, 2_000)?;
         self.accept_terrain(terrain.as_ref());
         let (pose, moving) = self.motion(dt, held, jump, paused);
@@ -77,6 +85,8 @@ impl Scene {
             terrain,
             tracks,
             sweep: sweep.mesh,
+            bloom: bloom.mesh,
+            particles: bloom.particles,
             objects: self.spells.tick(if paused { 0.0 } else { dt })?,
             step,
             landing,
@@ -118,6 +128,7 @@ impl Scene {
     pub fn reset(&mut self) -> Result<(), String> {
         self.spells.clear()?;
         self.sweep.clear()?;
+        self.bloom.clear()?;
         self.world.clear_edits();
         self.walker = Walker::default();
         self.clear_tracks()

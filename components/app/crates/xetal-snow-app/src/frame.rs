@@ -82,8 +82,13 @@ impl App {
         if let Some(vertices) = update.tracks {
             self.renderer.upload_tracks(&vertices)?;
         }
-        if let Some(mesh) = update.sweep {
-            self.renderer.upload_sweep(mesh.positions())?;
+        if update.sweep.is_some() || update.bloom.is_some() {
+            let mut vertices = self.scene.sweep.positions().to_vec();
+            vertices.extend_from_slice(self.scene.bloom.positions());
+            self.renderer.upload_sweep(&vertices)?;
+        }
+        if let Some(rows) = update.particles {
+            self.renderer.upload_particles(&rows)?;
         }
         if let Some(mesh) = update.objects {
             self.renderer.upload_objects(mesh.positions())?;
@@ -141,6 +146,7 @@ impl App {
                 chunks * 512
                     + scene.spells.positions().len() / 9
                     + scene.sweep.positions().len() / 9
+                    + scene.bloom.positions().len() / 9
             ),
         );
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
@@ -168,6 +174,14 @@ impl App {
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
                 ("data-edits", scene.world.edit_revision.to_string()),
+                (
+                    "data-bloom",
+                    (scene.bloom.positions().len() / 9).to_string(),
+                ),
+                (
+                    "data-particles",
+                    (scene.bloom.particles().len() / 6).to_string(),
+                ),
                 (
                     "data-sweep",
                     (scene.sweep.positions().len() / 9).to_string(),

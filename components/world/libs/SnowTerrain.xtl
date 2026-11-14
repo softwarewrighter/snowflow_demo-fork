@@ -2,6 +2,8 @@
 ## Public API: l:h_eight (x, z), l:m_esh (chunkX, chunkZ).
 ## Reference: library-reference.html#snow-terrain
 "carve:" u_se< "SweepBrush.xtl"
+"crater:" u_se< "BloomBrush.xtl"
+"brush:" u_se< "TerrainBrush.xtl"
 h:h_ash := { (x, z) ->
   k := (a_bs ((x * 73856093) + (z * 19349663))) m_od 104729
   (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
@@ -27,11 +29,13 @@ l:h_eight := { (x, z) ->
   (4.0 * h:n_oise (x / 40.0, z / 40.0)) + (1.2 * h:n_oise (x / 13.0, z / 13.0)) + (3.5 * cap * cap)
 }
 l:m_esh := { chunk -> l:d_eformed (chunk, carve:s_tart @) }
-l:d_eformed := { ((cx, cz), history) ->
+l:d_eformed := { (chunk, history) -> l:c_arved (chunk, history, crater:s_tart @) }
+l:c_arved := { ((cx, cz), history, blooms) ->
   k := (r_ange 289) - 1
   x := (2.0 * f_loat (k d_iv 17)) + (32.0 * cx)
   z := (2.0 * f_loat (k m_od 17)) + (32.0 * cz)
-  y := (l:h_eight (x, z)) + ((x, z) carve:d_elta history)
+  delta := ((x, z) carve:d_elta history) + ((x, z) crater:d_elta blooms)
+  y := (l:h_eight (x, z)) + brush:b_ound delta
   points := 2 1 t_ranspose (3 289 r_eshape x c_at y c_at z)
   cell := (r_ange 256) - 1
   base := ((cell d_iv 16) * 17) + (cell m_od 16)

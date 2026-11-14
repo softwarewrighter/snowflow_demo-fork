@@ -1,8 +1,10 @@
 //! Streamed terrain navigation for the browser host; coordinates are meters.
 mod collision;
 mod physics;
+mod ray;
 pub use collision::floor;
 pub use physics::Motion;
+pub use ray::raycast;
 
 pub struct Walker {
     pub position: [f32; 3],

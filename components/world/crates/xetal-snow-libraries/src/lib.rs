@@ -9,6 +9,27 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "Bloom",
+        alias: "bloom",
+        anchor: "bloom",
+        path: "components/world/libs/Bloom.xtl",
+        source: include_str!("../../../libs/Bloom.xtl"),
+    },
+    Library {
+        name: "BloomBrush",
+        alias: "crater",
+        anchor: "bloom-brush",
+        path: "components/world/libs/BloomBrush.xtl",
+        source: include_str!("../../../libs/BloomBrush.xtl"),
+    },
+    Library {
+        name: "SnowParticles",
+        alias: "powder",
+        anchor: "snow-particles",
+        path: "components/world/libs/SnowParticles.xtl",
+        source: include_str!("../../../libs/SnowParticles.xtl"),
+    },
+    Library {
         name: "TerrainBrush",
         alias: "brush",
         anchor: "terrain-brush",

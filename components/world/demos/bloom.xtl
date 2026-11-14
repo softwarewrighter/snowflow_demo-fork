@@ -1,0 +1,25 @@
+#!/usr/bin/env xetal
+## Bloom composition: typed mesh, crater, particle and targeting data; pure spell state.
+"bloom:" u_se< "../libs/Bloom.xtl"
+"host:" u_se< "../libs/SnowHost.xtl"
+frame! := (0 3 3 r_eshape 0.0, 0.0 0.0 0.0, 0 6 r_eshape 0.0, bloom:t_arget @)
+u:w_atch := { @ -> frame! }
+'u:w_atch
+u:u_pdate := { (spell, point, ground) event ->
+  kind := []E_KIND event
+  kind m_atch "move" ? (spell, []E_AT event, ground)
+  kind m_atch "down" ? (spell, point, f_irst []E_AT event)
+  kind m_atch "click" ? (((f_irst point) c_at ground c_at (2 s_elect point)) bloom:c_ast spell, point, ground)
+  kind m_atch "tick" ? ((f_irst []E_AT event) bloom:t_ick spell, point, ground)
+  kind m_atch "key" ? (bloom:s_tart @, point, ground)
+  (spell, point, ground)
+}
+u:l_oop! := { publication ->
+  e := host:n_ext! @
+  ([]E_KIND e) m_atch "end" ? @
+  next := publication u:u_pdate e
+  (spell, _, _) := next
+  frame! := (bloom:m_esh spell, bloom:c_ommand spell, bloom:p_articles spell, bloom:t_arget @)
+  u:l_oop! next
+}
+u:l_oop! (bloom:s_tart @, 0.0 0.0, 0.0)

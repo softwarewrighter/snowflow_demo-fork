@@ -1,0 +1,66 @@
+## Bloom: spell 3, targeted column, one crater and four-second particle fallout.
+## State: (serial, clock, birth, targetXYZ). Reference: library-reference.html#bloom
+"brush:" u_se< "TerrainBrush.xtl"
+"tube:" u_se< "SweptSurface.xtl"
+"powder:" u_se< "SnowParticles.xtl"
+"wind:" u_se< "SnowWind.xtl"
+l:s_tart := { @ -> (0, 0.0, -100.0, 0.0 0.0 0.0) }
+l:t_arget := { @ -> 24.0 6.0 }
+l:c_ast := { target (serial, clock, _, _) -> (serial + 1, clock, clock, target) }
+l:t_ick := { dt (serial, clock, birth, target) -> (serial, clock + dt, birth, target) }
+l:a_ge := { (_, clock, birth, _) -> clock - birth }
+l:c_ommand := { state ->
+  (serial, _, _, target) := state
+  (l:a_ge state) < 0.09999999 ? 0.0 0.0 0.0
+  (f_loat serial) c_at (1 s_elect target) c_at (3 s_elect target)
+}
+h:s_mooth := { x ->
+  t := brush:c_lamp x
+  t * t * (3.0 - (2.0 * t))
+}
+l:m_esh := { state ->
+  (serial, _, _, target) := state
+  age := l:a_ge state
+  serial = 0 ? 0 3 3 r_eshape 0.0
+  age < 0.09999999 ? 0 3 3 r_eshape 0.0
+  age >= 1.75 ? 0 3 3 r_eshape 0.0
+  envelope := (h:s_mooth ((age - 0.1) / 0.34)) * (1.0 - h:s_mooth ((age - 0.95) / 0.8))
+  height := 6.55 * envelope
+  u := (f_loat ((r_ange 16) - 1)) / 15.0
+  lean := 0.16 * c_os (2.3999632297 * f_loat serial)
+  sway := 0.12 * s_in (age * 3.1)
+  x := (1 s_elect target) + ((lean + sway) * u * u * height)
+  z := (3 s_elect target) + ((lean - sway) * u * u * height)
+  y := ((2 s_elect target) - 0.95) + (u * height)
+  waist := (2.0 * u) - 1.0
+  radius := (0.35 + (0.8 * waist * waist)) * envelope
+  tube:t_ube (2 1 t_ranspose (4 16 r_eshape x c_at y c_at z c_at radius))
+}
+l:p_articles := { state ->
+  (serial, clock, _, target) := state
+  age := l:a_ge state
+  serial = 0 ? 0 6 r_eshape 0.0
+  age >= 5.75 ? 0 6 r_eshape 0.0
+  k := (r_ange 512) - 1
+  seed := k + (serial * 701)
+  a := powder:h_ash seed
+  b := powder:h_ash (seed + 1297)
+  c := powder:h_ash (seed + 3571)
+  born := 0.1 + (1.65 * a)
+  elapsed := age - born
+  live := brush:c_lamp (elapsed * 100.0)
+  t := (elapsed + a_bs elapsed) / 2.0
+  angle := 6.2831853072 * b
+  launch := (0.5 + (2.0 * c)) * h:s_mooth ((born - 0.1) / 0.34)
+  ox := (1 s_elect target) + (launch * c_os angle)
+  oz := (3 s_elect target) + (launch * s_in angle)
+  oy := (2 s_elect target) + (0.8 + (4.0 * c))
+  gust := wind:s_trength clock
+  point := powder:b_allistic ((ox, oy, oz), ((0.4 * c_os angle) + (0.2 * gust), 0.25 + (0.5 * b), 0.4 * s_in angle), t, 0.85)
+  (_, py, _) := point
+  above := brush:c_lamp ((py - (2 s_elect target)) * 5.0)
+  alpha := live * above * powder:f_ade (t, 4.0)
+  size := 0.04 + (0.06 * a)
+  spin := (angle + t) + (b * t)
+  powder:r_ows (point, size, alpha, spin)
+}

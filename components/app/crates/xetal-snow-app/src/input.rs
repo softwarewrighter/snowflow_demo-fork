@@ -27,8 +27,9 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         crate::boot::enter(app, false)
     })?;
     button("sound", state.clone(), crate::boot::sound)?;
-    button("crystallise", state.clone(), |app| cast(app, false))?;
-    button("sweep", state.clone(), |app| cast(app, true))?;
+    button("crystallise", state.clone(), |app| cast(app, "4"))?;
+    button("sweep", state.clone(), |app| cast(app, "1"))?;
+    button("bloom", state.clone(), |app| cast(app, "3"))?;
     button("textures", state.clone(), |app| {
         app.effects[0] = !app.effects[0];
         status::text(
@@ -77,7 +78,12 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
             }) {
                 return;
             }
-            if (event.key() == " " || event.key() == "4" || event.key() == "1") && event.repeat() {
+            if (event.key() == " "
+                || event.key() == "4"
+                || event.key() == "1"
+                || event.key() == "3")
+                && event.repeat()
+            {
                 event.prevent_default();
                 return;
             }
@@ -116,7 +122,7 @@ fn blur(state: State) -> Result<(), String> {
 fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     match key {
         " " if pressed => app.jump = true,
-        "1" | "4" if pressed => cast(app, key == "1"),
+        "1" | "3" | "4" if pressed => cast(app, key),
         "w" | "W" => app.held[0] = pressed,
         "s" | "S" => app.held[1] = pressed,
         "a" | "A" => app.held[2] = pressed,
@@ -137,13 +143,15 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     true
 }
 
-fn cast(app: &mut App, sweep: bool) {
+fn cast(app: &mut App, spell: &str) {
     if !app.started || app.paused {
         return;
     }
     let walker = &app.scene.walker;
     let point = [walker.position[0], walker.position[2]];
-    let result = if sweep {
+    let result = if spell == "3" {
+        app.scene.cast_bloom()
+    } else if spell == "1" {
         app.scene.sweep.cast(point, walker.yaw)
     } else {
         app.scene.spells.cast(point, walker.yaw)

@@ -25,6 +25,10 @@ pub(crate) async fn start() -> Result<(), String> {
     status::element("sweep-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
         xetal_world_sweep::SOURCE,
     ));
+    status::text("bloom-source", xetal_world_bloom::SOURCE);
+    status::element("bloom-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
+        xetal_world_bloom::SOURCE,
+    ));
     let window = web_sys::window().ok_or("no browser window")?;
     let gpu = js_sys::Reflect::get(&window.navigator(), &"gpu".into()).unwrap_or_default();
     if gpu.is_undefined() || gpu.is_null() {

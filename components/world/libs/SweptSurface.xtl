@@ -17,3 +17,19 @@ l:s_heet := { spine ->
   ids := 1 + r_avel base '+ t_able 0 1 7 1 8 7
   (((n - 1) * 12) c_at 3 3) r_eshape ids s_elect points
 }
+l:t_ube := { spine ->
+  n := f_irst s_hape spine
+  k := (r_ange (n * 17)) - 1
+  rows := (1 + (k d_iv 17)) s_elect spine
+  columns := 2 1 t_ranspose rows
+  angle := (6.2831853072 * f_loat (k m_od 17)) / 16.0
+  radius := 4 s_elect columns
+  x := (1 s_elect columns) + (radius * c_os angle)
+  y := 2 s_elect columns
+  z := (3 s_elect columns) + (radius * s_in angle)
+  points := 2 1 t_ranspose ((3 c_at (n * 17)) r_eshape x c_at y c_at z)
+  cells := (r_ange ((n - 1) * 16)) - 1
+  base := ((cells d_iv 16) * 17) + (cells m_od 16)
+  ids := 1 + r_avel base '+ t_able 0 1 17 1 18 17
+  (((n - 1) * 32) c_at 3 3) r_eshape ids s_elect points
+}
