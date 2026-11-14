@@ -118,3 +118,12 @@ and two rounded ice formations. Rust host navigation follows the actual triangle
 heights. Native movement tests, shader validation and WASM builds are prerequisites
 for publication; actual browser movement/reset acceptance remains a separate check.
 Endless chunks, digging, gems, water and torches retain their later steps.
+
+## Functional state checkpoint
+
+The step 6 world program now threads immutable logical state through pure update
+and geometry functions. One mesh publication slot remains at the host boundary,
+as permitted by the user. Exact legacy/new replay, upstream linting and an AST
+mutation guard run in the native gate. Repeatable native measurements record
+roughly 13% more evaluator transitions; tick wall-time distributions overlap.
+See functional-state.md and its raw evidence for costs and measurement limits.

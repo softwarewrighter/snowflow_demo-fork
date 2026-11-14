@@ -19,3 +19,5 @@ xetal-arith = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-arit
 xetal-value = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-value" }
 xetal-render = { path = "../../work/deps/X_eTaL/components/render/crates/xetal-render" }
 xetal-view = { path = "../../work/deps/X_eTaL/components/view/crates/xetal-view" }
+xetal-core = { path = "../../work/deps/X_eTaL/components/core/crates/xetal-core" }
+xetal-linter = { path = "../../work/deps/X_eTaL/components/lint/crates/xetal-linter" }

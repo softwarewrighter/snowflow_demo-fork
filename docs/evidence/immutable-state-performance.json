@@ -1,0 +1,82 @@
+{
+  "status": "native measurement; browser frame performance not measured",
+  "baseline_source_commit": "1ed8f7b822d8daddde2297631d84de0b6ea1698f",
+  "before_source_sha256": "874fcfb603459c45ffe5c6b8d4357cdbce648c2e3eabc4b00e27adfa4326e539",
+  "after_source_sha256": "19fc900dafdefec117f3477a14f1e3802e0cce66dd42f6464af60555e0a060be",
+  "rustc": "1.100.0",
+  "profile": "release",
+  "cpu": "Intel Xeon W-2135 @ 3.70GHz",
+  "samples_per_variant": 10,
+  "slice_budget": 8000,
+  "timed_stages": "event feed, sliced evaluation and typed mesh conversion; startup and compilation excluded",
+  "order": "before/after alternated each round; both variants use the same pinned evaluator and host adapter",
+  "scenarios": {
+    "mixed": {
+      "events_per_sample": 64,
+      "before_us_per_event": [
+        3527.81628125,
+        3605.815671875,
+        3701.824703125,
+        3639.7137968750003,
+        3609.796640625,
+        3749.835828125,
+        3684.668625,
+        3578.7132500000002,
+        3444.422265625,
+        3580.682921875
+      ],
+      "after_us_per_event": [
+        3316.053765625,
+        3292.783328125,
+        3818.4480156249997,
+        3363.674921875,
+        3545.5033125,
+        3578.2922656250003,
+        3425.5338125000003,
+        3453.502921875,
+        3275.45246875,
+        3385.2485312500003
+      ],
+      "before_transitions": 38304,
+      "after_transitions": 43193,
+      "before_median_us": 3607.8061562499997,
+      "after_median_us": 3405.3911718750005,
+      "median_time_change_percent": -5.610472836084746,
+      "transition_change_percent": 12.763680033416879
+    },
+    "ticks": {
+      "events_per_sample": 64,
+      "before_us_per_event": [
+        3767.922296875,
+        3678.6622187499997,
+        3668.2508125,
+        4012.784421875,
+        3807.573203125,
+        3800.29778125,
+        3748.6472343749997,
+        4011.607828125,
+        4066.8196093750003,
+        4206.88665625
+      ],
+      "after_us_per_event": [
+        3940.00615625,
+        4715.877078125,
+        3869.799828125,
+        3937.661046875,
+        3581.1828125,
+        3690.67459375,
+        3602.5696875,
+        3677.765640625,
+        3736.326515625,
+        4054.33165625
+      ],
+      "before_transitions": 40832,
+      "after_transitions": 46016,
+      "before_median_us": 3803.9354921875,
+      "after_median_us": 3803.063171875,
+      "median_time_change_percent": -0.022932047987977988,
+      "transition_change_percent": 12.695924764890275
+    }
+  },
+  "limits": "Timing distributions overlap on a shared machine with variable clock/load; no statistical claim of a tick speedup. Transition increase is deterministic for these traces. No memory, worker or browser FPS measurements."
+}

@@ -136,3 +136,24 @@ The font uses swap loading with a local monospace fallback if the CDN is offline
 See https://cormullion.github.io/pages/2020-07-26-JuliaMono/ for upstream web-font
 guidance. Source display is initialized before WebGPU checks so it remains
 available on unsupported devices.
+
+## Functional state and the publication boundary
+
+The world state is an immutable (phase, boost) tuple. Pure functions update that
+state from an event, derive height and terrain, and return (next state, mesh).
+The event loop threads that pair through recursive calls. An unchanged logical
+state reuses the existing mesh rather than regenerating terrain.
+
+Only mesh! remains mutable: it is a publication slot read by the Rust adapter,
+not the source of world-state decisions. The loop named u:l_oop! contains the
+input/publication effects; the update and geometry functions have no assignments
+to mutable variables. This exception is for the pinned host API, not a claim
+that global mutation is faster. Removing the slot requires an upstream typed
+publication mechanism usable inside an event loop.
+
+The gate runs the upstream X_eTaL lint driver through a native integration test
+and rejects enabled findings. A separate AST check rejects mutable application
+state and assignments outside the one mesh publication in the effect loop.
+The preserved mutable source is a regression fixture, not the shipped program.
+See [functional state performance](functional-state.md) for exact replay tests,
+measurements and their limits.

@@ -21,7 +21,7 @@ fn slices_are_bounded_and_events_require_an_event_wait() {
 }
 
 #[test]
-fn separate_programs_do_not_share_mutable_mesh_state() {
+fn separate_programs_do_not_share_published_meshes() {
     let mut first = Demo::new().unwrap();
     let mut second = Demo::new().unwrap();
     settle(&mut first);

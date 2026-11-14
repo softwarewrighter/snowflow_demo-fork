@@ -1,7 +1,7 @@
 number = 6
 slug = "browser-mesh-demo"
 status = "in-progress"
-description = "Syntax highlighting fix published and verified live at https://softwarewright..."
+description = "Functional refactor implemented: immutable (phase, boost) state, pure reducer..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T15:26:42"
