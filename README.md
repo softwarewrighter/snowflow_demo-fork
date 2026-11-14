@@ -49,3 +49,8 @@ New project files use [MIT](LICENSE); see [COPYRIGHT](COPYRIGHT).
 Archived Snowflow files retain their [original MIT notice](archive/snowflow-original/LICENSE).
 
 Copyright (c) 2026 Michael A Wright.
+
+The preview also includes procedural material detail, a cached sun shadow map
+and Space-to-jump player physics. Textures and Shadows can be disabled separately.
+[Effects and performance checks](docs/lightweight-effects.md) describe their cost
+bounds and pending hardware-browser measurements.

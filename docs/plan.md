@@ -18,13 +18,14 @@ structure; completed work and pending validation are recorded below and in agent
 | 3 | typed-mesh-contract | Validated application payloads, checked adapters, bounded resources and existing E1 requirements |
 | 4 | browser-baseline-validation | Real-browser editor and event-worker evidence before the browser mesh demo |
 | 5 | pages-foundation | Publish the built static artifact with trusted HTTPS and verify asset URLs |
-| 6 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
-| 7 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
-| 8 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
-| 9 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
-| 10 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
-| 11 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
-| 12 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
+| 6 | lightweight-effects | Procedural material detail, fixed-step jumping and cached sun shadows with cost controls |
+| 7 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
+| 8 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
+| 9 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
+| 10 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
+| 11 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
+| 12 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
+| 13 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
 
 Work reusable across applications belongs in the appropriate X_eTaL repository,
 then reaches this app through explicit pin updates. Application adapters are not substitutes for missing language features;
@@ -127,3 +128,12 @@ as permitted by the user. Exact legacy/new replay, upstream linting and an AST
 mutation guard run in the native gate. Repeatable native measurements record
 roughly 13% more evaluator transitions; tick wall-time distributions overlap.
 See functional-state.md and its raw evidence for costs and measurement limits.
+
+## Lightweight effects checkpoint
+
+The user-requested effects work preempts browser acceptance as step 6; the
+previous mesh acceptance step is now step 7. Native physics and shader tests
+remain separate from real-browser visual and frame-time acceptance. The world
+reducer stays immutable. Rust supplies a pure vertical-motion update through
+the existing navigation adapter and GPU resources through a small shadow crate.
+See lightweight-effects.md for defaults, toggles, costs and measurement commands.

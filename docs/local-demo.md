@@ -157,3 +157,11 @@ state and assignments outside the one mesh publication in the effect loop.
 The preserved mutable source is a regression fixture, not the shipped program.
 See [functional state performance](functional-state.md) for exact replay tests,
 measurements and their limits.
+
+## Optional detail and player physics
+
+Space jumps with gravity and terrain contact. Textures and Shadows buttons
+control procedural material detail and one small cached sun shadow map. See
+[lightweight effects](lightweight-effects.md) for implementation boundaries,
+limits and the scripts/check-demo.py --performance frame comparison. Effects
+start enabled, but FPS impact has not been measured in the sandbox.

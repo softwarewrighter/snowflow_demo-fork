@@ -20,6 +20,28 @@ pub(crate) fn install(state: State) -> Result<(), String> {
     button("scene", state.clone(), |app| {
         app.pending = Some("down 0 0".into())
     })?;
+    button("textures", state.clone(), |app| {
+        app.effects[0] = !app.effects[0];
+        status::text(
+            "textures",
+            if app.effects[0] {
+                "Textures: on"
+            } else {
+                "Textures: off"
+            },
+        );
+    })?;
+    button("shadows", state.clone(), |app| {
+        app.effects[1] = !app.effects[1];
+        status::text(
+            "shadows",
+            if app.effects[1] {
+                "Shadows: on"
+            } else {
+                "Shadows: off"
+            },
+        );
+    })?;
     keys(state.clone(), true)?;
     keys(state.clone(), false)?;
     blur(state)
@@ -38,6 +60,10 @@ fn button(id: &str, state: State, action: fn(&mut App)) -> Result<(), String> {
 fn keys(state: State, pressed: bool) -> Result<(), String> {
     let handler =
         Closure::<dyn FnMut(web_sys::KeyboardEvent)>::new(move |event: web_sys::KeyboardEvent| {
+            if event.key() == " " && event.repeat() {
+                event.prevent_default();
+                return;
+            }
             let mut app = state.borrow_mut();
             if !command(&mut app, &event.key(), pressed) {
                 return;
@@ -69,6 +95,7 @@ fn blur(state: State) -> Result<(), String> {
 
 fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     match key {
+        " " if pressed => app.jump = true,
         "w" | "W" => app.held[0] = pressed,
         "s" | "S" => app.held[1] = pressed,
         "a" | "A" => app.held[2] = pressed,

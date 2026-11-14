@@ -4,3 +4,5 @@
 .source-views{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}.source-views section{min-width:0}.source-views h2{font-size:12px;font-weight:500;color:#b5cada}.source-views pre{font-family:JuliaMono,ui-monospace,monospace;font-size:13px;line-height:1.7;white-space:pre;font-variant-ligatures:none}.source-views pre:focus-visible{outline:2px solid #83cce0;outline-offset:2px}@media(max-width:800px){.source-views{grid-template-columns:minmax(0,1fr)}}
 
 #source-rendered .c-builtin{color:#82b4ff}#source-rendered .c-userfunc{color:#7cdb95}#source-rendered .c-libfunc{color:#65d9e5}#source-rendered .c-lambdaarg{color:#e69ce6}#source-rendered .c-number,#source-rendered .c-exponent{color:#f0ce72}#source-rendered .c-string{color:#e8d89b}#source-rendered .c-symbol{color:#a1cfff}#source-rendered .c-quote{font-weight:bold}#source-rendered .c-comment{color:#91a6ba}#source-rendered .c-macro{color:#f0ce72;font-weight:bold}#source-rendered .c-doc{color:#9fc3ad;font-style:italic}#source-rendered .c-heading{color:#9fc3ad;font-weight:bold}#source-rendered .c-error{color:#ff9999}
+
+.controls>div{flex-wrap:wrap}

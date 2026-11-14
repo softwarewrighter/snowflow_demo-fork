@@ -1969,7 +1969,15 @@ dependencies = [
  "bytemuck",
  "web-sys",
  "wgpu",
+ "xetal-world-shadow",
  "xetal-world-surface",
+]
+
+[[package]]
+name = "xetal-world-shadow"
+version = "0.1.0"
+dependencies = [
+ "wgpu",
 ]
 
 [[package]]

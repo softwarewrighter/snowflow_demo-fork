@@ -8,11 +8,12 @@ pub(crate) fn create(
     device: &wgpu::Device,
     format: wgpu::TextureFormat,
     group: &wgpu::BindGroupLayout,
+    shadow: &wgpu::BindGroupLayout,
 ) -> wgpu::RenderPipeline {
     let shader = shader(device);
     let layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
         label: None,
-        bind_group_layouts: &[group],
+        bind_group_layouts: &[group, shadow],
         push_constant_ranges: &[],
     });
     device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
@@ -31,7 +32,13 @@ pub(crate) fn create(
 fn shader(device: &wgpu::Device) -> wgpu::ShaderModule {
     device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("procedural snow"),
-        source: wgpu::ShaderSource::Wgsl(include_str!("snow.wgsl").into()),
+        source: wgpu::ShaderSource::Wgsl(
+            concat!(
+                include_str!("../../xetal-world-shadow/src/light.wgsl"),
+                include_str!("snow.wgsl")
+            )
+            .into(),
+        ),
     })
 }
 

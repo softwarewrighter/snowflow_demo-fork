@@ -14,6 +14,8 @@ pub(crate) struct App {
     pub pending: Option<String>,
     pub walker: xetal_world_navigation::Walker,
     pub held: [bool; 4],
+    pub effects: [bool; 2],
+    pub jump: bool,
     terrain: Vec<f32>,
     last_frame: f64,
     waiting: bool,
@@ -33,6 +35,8 @@ impl App {
             pending: None,
             walker: Default::default(),
             held: [false; 4],
+            effects: [true; 2],
+            jump: false,
             terrain: Vec::new(),
             last_frame: 0.0,
             waiting: false,
@@ -56,8 +60,12 @@ impl App {
         self.advance()?;
         crate::boot::resize(&self.canvas, &mut self.renderer);
         self.navigate(now);
-        self.renderer
-            .draw(self.walker.yaw, self.walker.pitch, self.walker.position)?;
+        self.renderer.draw(
+            self.walker.yaw,
+            self.walker.pitch,
+            self.walker.position,
+            self.effects,
+        )?;
         self.frames += 1;
         if self.waiting {
             status::progress(self.frames, self.updates, self.mesh_hash);
@@ -72,7 +80,12 @@ impl App {
             let sideways = i32::from(self.held[3]) - i32::from(self.held[2]);
             self.walker.advance(dt, forward as f32, sideways as f32);
         }
-        self.walker.ground(&self.terrain);
+        self.walker.simulate(
+            if self.paused { 0.0 } else { dt },
+            self.jump && !self.paused,
+            &self.terrain,
+        );
+        self.jump = false;
         if let Ok(element) = status::element("app") {
             let _ = element.set_attribute("data-position", &format!("{:?}", self.walker.position));
         }

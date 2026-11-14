@@ -15,6 +15,7 @@ impl Renderer {
             }
             _ => self.mesh = Some(resources::GpuMesh::new(&self.device, mesh)?),
         }
+        self.shadow.dirty = true;
         Ok(())
     }
 
@@ -28,7 +29,13 @@ impl Renderer {
         self.depth = resources::depth(&self.device, &self.config);
     }
 
-    pub fn draw(&mut self, angle: f32, tilt: f32, eye: [f32; 3]) -> Result<(), String> {
+    pub fn draw(
+        &mut self,
+        angle: f32,
+        tilt: f32,
+        eye: [f32; 3],
+        effects: [bool; 2],
+    ) -> Result<(), String> {
         let frame = match self.surface.get_current_texture() {
             Ok(frame) => frame,
             Err(wgpu::SurfaceError::Timeout) => return Ok(()),
@@ -42,10 +49,25 @@ impl Renderer {
         self.queue.write_buffer(
             &self.uniform,
             0,
-            bytemuck::cast_slice(&[angle, tilt, aspect, 0.0, eye[0], eye[1], eye[2], 0.0]),
+            bytemuck::cast_slice(&[
+                angle,
+                tilt,
+                aspect,
+                f32::from(u8::from(effects[0])),
+                eye[0],
+                eye[1],
+                eye[2],
+                f32::from(u8::from(effects[1])),
+            ]),
         );
         let view = frame.texture.create_view(&Default::default());
         let mut encoder = self.device.create_command_encoder(&Default::default());
+        if effects[1]
+            && let Some(mesh) = &self.mesh
+        {
+            self.shadow
+                .update(&mut encoder, &mesh.vertices, &mesh.indices, mesh.count);
+        }
         self.encode(&mut encoder, &view);
         self.queue.submit(Some(encoder.finish()));
         frame.present();
@@ -70,6 +92,7 @@ impl Renderer {
         if let Some(mesh) = &self.mesh {
             pass.set_pipeline(&self.pipeline);
             pass.set_bind_group(0, &self.group, &[]);
+            pass.set_bind_group(1, &self.shadow.group, &[]);
             pass.set_vertex_buffer(0, mesh.vertices.slice(..));
             pass.set_index_buffer(mesh.indices.slice(..), wgpu::IndexFormat::Uint32);
             pass.draw_indexed(0..mesh.count, 0, 0..1);

@@ -3,19 +3,19 @@
   "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
   "wgpu": "24.0.5",
   "rustc": "1.100.0",
-  "native_rust_tests": 23,
+  "native_rust_tests": 27,
   "python_tests": 18,
   "wasm_build": "passed",
   "wasm_clippy": "passed",
   "shader_validation": "passed with Naga 24",
   "program_sha256": "19fc900dafdefec117f3477a14f1e3802e0cce66dd42f6464af60555e0a060be",
-  "shader_sha256": "cbf6166e18022df7cde50c9e865eb51dad11a0807f6a3b1a7bdf4e386b5e34ad",
+  "shader_sha256": "f2173a2e771c5d0834a51a1a6ef800620d081ad0d7255b9a12fd6a077b4aa8d1",
   "artifacts": {
     "favicon-4e963492c77e259d.ico": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
-    "index.html": "fa0cd9f6dfaa4b6924f4a48704aae2a5dfe49fd94d2ad059d5ca080ac7223e99",
-    "style-23b3abfff5bcae5.css": "4f6f8337a385e05696778d40fbfb30b050fb5269d8a1f5ec8af9f1d5a556a94e",
-    "xetal-snow-app-2421dccea6b9c590.js": "f4134651eb75d33d4666f1fa6899715c976619da8facf7b95eb0e87e2e51fd5e",
-    "xetal-snow-app-2421dccea6b9c590_bg.wasm": "37e571d57ae4fae85a583395dbc124cec7a3bf61aba5c38a572f9ac9909657e4"
+    "index.html": "d2295f4f88fd38c4a2db432f075a556a8b53e912cdd3b2d0e34f97590c972635",
+    "style-aa8bff641ab9aa4b.css": "90168eb9d3fe4124b121eda51748657dc447d0441a9eb89f2cfdc881ad5d815c",
+    "xetal-snow-app-53c318c70ff3eaa0.js": "3ebafe2113bfbd77bf7cdc122eebd13f917cb7b569d7b14adca0a0ab6861f978",
+    "xetal-snow-app-53c318c70ff3eaa0_bg.wasm": "9aa668780109c16631202fd57667db3a1621b399a920bb38a5e97676852b4869"
   },
   "local_url": "http://127.0.0.1:8475/snowflow_demo-fork/",
   "browser_report": "work/demo-browser-result.json",
@@ -25,5 +25,13 @@
   "browser_attempt": "Sandbox socket creation denied with PermissionError; no rendering result.",
   "source_views": "Typed ASCII and decorated Unicode highlighted with upstream xetal-view semantic classes; JuliaMono CDN",
   "functional_state": "Immutable (phase, boost) reducer and derived (state, mesh) pair; one mutable host publication slot",
-  "performance_evidence": "docs/evidence/immutable-state-performance.json"
+  "performance_evidence": "docs/evidence/immutable-state-performance.json",
+  "effects": {
+    "procedural_materials": "snow grain, wind bands and ice striations; toggleable",
+    "physics": "pure fixed-step vertical motion, jump/gravity and terrain contact in Rust navigation adapter",
+    "shadows": "cached 512x512 directional Depth32Float map; toggleable",
+    "fps_impact": "unmeasured; hardware browser harness socket creation denied",
+    "performance_command": "python3 scripts/check-demo.py --performance"
+  },
+  "shadow_shader_sha256": "9f660d9cce01689e27373f2e672c70ba14f52a89887a6f1cf012de3d2270cbab"
 }

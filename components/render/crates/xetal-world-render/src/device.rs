@@ -10,6 +10,7 @@ pub struct Renderer {
     pub(crate) uniform: wgpu::Buffer,
     pub(crate) group: wgpu::BindGroup,
     pub(crate) depth: wgpu::TextureView,
+    pub(crate) shadow: xetal_world_shadow::Shadow,
     pub(crate) mesh: Option<resources::GpuMesh>,
 }
 
@@ -18,7 +19,8 @@ impl Renderer {
         let (surface, device, queue, config) = connect(&canvas).await?;
         device.on_uncaptured_error(Box::new(move |error| report(error.to_string())));
         let (uniform, group, layout) = resources::uniforms(&device);
-        let pipeline = pipeline::create(&device, config.format, &layout);
+        let shadow = xetal_world_shadow::Shadow::new(&device);
+        let pipeline = pipeline::create(&device, config.format, &layout, &shadow.layout);
         let depth = resources::depth(&device, &config);
         Ok(Self {
             device,
@@ -29,6 +31,7 @@ impl Renderer {
             uniform,
             group,
             depth,
+            shadow,
             mesh: None,
         })
     }

@@ -1,8 +1,15 @@
 //! Finite terrain navigation for the browser host; coordinates are meters.
+mod collision;
+mod physics;
+pub use physics::Motion;
+
 pub struct Walker {
     pub position: [f32; 3],
     pub yaw: f32,
     pub pitch: f32,
+    motion: Motion,
+    accumulated: f32,
+    jump_requested: bool,
 }
 
 impl Default for Walker {
@@ -11,6 +18,13 @@ impl Default for Walker {
             position: [0.0, 1.7, 8.0],
             yaw: 0.0,
             pitch: -0.12,
+            motion: Motion {
+                height: 1.7,
+                velocity: 0.0,
+                grounded: false,
+            },
+            accumulated: 0.0,
+            jump_requested: false,
         }
     }
 }
@@ -26,23 +40,36 @@ impl Walker {
     }
 
     pub fn ground(&mut self, positions: &[f32]) {
-        for triangle in positions.as_chunks::<9>().0.iter() {
-            if let Some(height) = height(triangle, self.position[0], self.position[2]) {
-                self.position[1] = height + 1.7;
-                return;
-            }
+        self.accumulated = 0.0;
+        self.jump_requested = false;
+        if let Some(floor) = collision::floor(positions, self.position) {
+            self.position[1] = floor;
+            self.motion = Motion {
+                height: floor,
+                velocity: 0.0,
+                grounded: true,
+            };
         }
     }
-}
 
-fn height(p: &[f32], x: f32, z: f32) -> Option<f32> {
-    let (ax, az, bx, bz) = (p[3] - p[0], p[5] - p[2], p[6] - p[0], p[8] - p[2]);
-    let det = ax * bz - az * bx;
-    if det.abs() < 1e-8 {
-        return None;
+    pub fn simulate(&mut self, seconds: f32, jump: bool, positions: &[f32]) {
+        let Some(floor) = collision::floor(positions, self.position) else {
+            return;
+        };
+        self.accumulated += seconds.clamp(0.0, 0.1);
+        self.jump_requested |= jump;
+        if self.motion.height < floor {
+            self.motion = Motion {
+                height: floor,
+                velocity: 0.0,
+                grounded: true,
+            };
+        }
+        while self.accumulated >= 1.0 / 120.0 {
+            self.motion = self.motion.step(1.0 / 120.0, floor, self.jump_requested);
+            self.jump_requested = false;
+            self.accumulated -= 1.0 / 120.0;
+        }
+        self.position[1] = self.motion.height;
     }
-    let u = ((x - p[0]) * bz - (z - p[2]) * bx) / det;
-    let v = (ax * (z - p[2]) - az * (x - p[0])) / det;
-    (u >= -1e-5 && v >= -1e-5 && u + v <= 1.00001)
-        .then(|| p[1] + u * (p[4] - p[1]) + v * (p[7] - p[1]))
 }
