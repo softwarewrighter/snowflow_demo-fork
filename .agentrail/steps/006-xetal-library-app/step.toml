@@ -1,8 +1,9 @@
 number = 6
 slug = "xetal-library-app"
-status = "in-progress"
+status = "completed"
 description = "Library-led preview is published at https://softwarewrighter.github.io/snowfl..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T10:05:45"
-commits = []
+completed_at = "2026-11-14T10:55:20"
+commits = ["3b06d863e71d4bda6ad7dae10aeeecade6025972"]
