@@ -1,5 +1,5 @@
 {
-  "status": "initial preview published; full post-publication gate passed; gate-clean publication pending",
+  "status": "published; full post-publication gate passed; hardware browser appearance/FPS pending",
   "initial_source": "f9cbbb113e6c0bc0a30fb51dccebb78e79de0249",
   "initial_pages": "e036fd3a11569696cbb6ad96e58cf3236d829fab",
   "native_rust_tests": 70,
@@ -27,7 +27,7 @@
       "settled: median 0.144 ms, p95 0.257 ms, worst 0.282 ms"
     ]
   },
-  "browser": "pending; sandbox local sockets denied; no appearance/FPS acceptance inferred",
+  "browser": "Attempted updated cast/screenshot/performance harness: PermissionError opening local server socket; no actual appearance/FPS acceptance",
   "libraries": {
     "SnowHost.xtl": "a2e83d01a1138ea5f1295f161bbae2e713f3a8dfa5e6ab241cb7fa7858062088",
     "SweepBrush.xtl": "2eabd1784d80f928287209ccfa18f683f9cffd2312f81380fc58252639ee6a42",
@@ -42,5 +42,18 @@
     "SweptSurface.xtl": "3c01c962cf5cf2acdc16543daf93b05ad84191ae2414abbc771c5997a9746bc2",
     "SnowAudio.xtl": "cba46cfb11e421913c986bf7c157369945ac6c2402cf7eb76d4f23dfb798e759",
     "Footsteps.xtl": "3e224cfb5fdbe438b78c5fa531cf857b229e0dfb38665344dc82acb3a4a1cea2"
-  }
+  },
+  "source_commit": "5f0baf71685096f2f9fc42017004361a8de6c2c8",
+  "gh_pages_commit": "e1647d922259507041bf2266114345e9180951a1",
+  "artifacts": {
+    "style-5b802c37dae26239.css": "7e0bae1f766299fdd751a8bb958d1535bc17de92131b2b53fe47668a3c264312",
+    "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
+    "library-reference.html": "6ef0ef937240224d57f5578f0033056a9e537933522f8913b95c5d98d978fc24",
+    "xetal-snow-app-95ac97857253eef9.js": "5d0ae9ec80ab74298e2c06a8d0f4c767c83aa5839b9f39648c0e2b4d38b064d2",
+    "index.html": "b31da54e4f9a43e4eb0e15eaff8c18314180f4e258cbc4df203e8b54d0c29b6e",
+    "xetal-snow-app-95ac97857253eef9_bg.wasm": "6a991965d4f05d39ddb92bfcf79ddc9d5b819dd03c0953e54d010fa95d72c517"
+  },
+  "http_verification": "All six live files HTTP 200; SHA256 matches package; WASM MIME application/wasm",
+  "program_sha256": "160ef5a30e69f275e69e6a28848d0de3a5d4abb80747e591371cc2790535a18c",
+  "particle_shader_sha256": "e437c169fae186245a43ec40a7e2707236d083ead0dddbe144606627ef8050ba"
 }

@@ -46,3 +46,10 @@ adapter uses the existing output hook to retain a closure's lexical environment,
 then reads the updated mesh binding after event waits. This requires no core
 syntax change but depends on the pinned public runtime representation. Generic
 host registration remains an upstream feature request. See [local demo](local-demo.md).
+
+The effects component adds the Bloom native adapter and a reusable instanced
+particle renderer. Spell and particle algorithms remain in project-local X_eTaL
+libraries. World streaming consumes separate pending Sweep and Bloom commands,
+then publishes one shared edited mesh to rendering and collision. The raycast
+backend reports actual triangle hits; targeting limits come from the Bloom
+library. See [Bloom](bloom.md) for current APIs, budgets and acceptance limits.
