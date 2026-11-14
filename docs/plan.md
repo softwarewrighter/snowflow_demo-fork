@@ -23,7 +23,7 @@ structure; completed work and pending validation are recorded below and in agent
 | 8 | sweep-spell | X_eTaL moving slush crescent, signed terrain brushes, exact edited chunk seams and shared collision payload; published preview and 60-test native gate |
 | 9 | bloom-spell | Published targeted X_eTaL eruption, crater/rim and reusable particle library/renderer; 70-test native gate passes |
 | 10 | ribbon-spell | Published held path-history water stream, captured-aim release and shallow scoring; 76-test native gate passes |
-| 11 | source-colors-and-wiring | Shared world/spell source palette and a plain-language trace of the actual game/spell bridge |
+| 11 | source-colors-and-wiring | Published shared world/spell source palette, numeric buttons and plain-language bridge trace; 76-test gate passes |
 | 12 | xetal-app-composition | Planned App.xtl/Spells.xtl composition and generic Rust host before adding another spell |
 | 13 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
 | 14 | deformable-snow-layer | Planned fine local layer, actual boot depressions/edges, shared collision and bounded buffers |

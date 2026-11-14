@@ -1,0 +1,38 @@
+{
+  "status": "published; full gate passed; actual browser computed colors pending sandbox permissions",
+  "source_commit": "5b2d57bf5ed068023efdf2ccfde8d3c5eb45d5f6",
+  "gh_pages_commit": "27007464cc7ef96498ff4837d50447d8e573ba2d",
+  "root_cause": "Token HTML already existed, but color/link CSS selectors only matched #source-rendered and missed four spell panels",
+  "fix": "Shared rendered-source class and palette/link styles on every rendered panel",
+  "panels": [
+    "source-rendered",
+    "spell-rendered",
+    "sweep-rendered",
+    "bloom-rendered",
+    "ribbon-rendered"
+  ],
+  "spell_button_order": [
+    "sweep",
+    "ribbon",
+    "bloom",
+    "crystallise"
+  ],
+  "native_rust_tests": 76,
+  "python_tests": 18,
+  "wasm_clippy": "passed",
+  "artifacts": {
+    "style-4c186e7bf37a063a.css": "261c549cd11aed0afde9d79fd38e8a563225b8c3e84a39543f340041f56f2333",
+    "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
+    "library-reference.html": "971457d736ceccebbeeacf90e3fb7c4bf36ec2f2ea612ace41a25e75a8b9a495",
+    "xetal-snow-app-16aa7ae6ab76c00c_bg.wasm": "51dc2689c85c5894272cd335428ecc74a1ede04d374734117b9078ab7fa14c81",
+    "index.html": "eaacbca241f3d22d3fbaedcce12d476a0cfd1bc33c1a0f42c7d63115c4769480",
+    "xetal-snow-app-16aa7ae6ab76c00c.js": "6b1ecdf4b56bdbf609dd55687829dfd1616ee574f20279417f13b1956696d29b"
+  },
+  "http_verification": "Six live files HTTP 200 and SHA256 match; WASM MIME application/wasm; live HTML/CSS membership and numeric order verified",
+  "browser_regression": "Computed-color check now visits every rendered panel and asserts five distinct token colors; button order checked",
+  "browser_attempts": [
+    "Main harness denied local server socket with PermissionError",
+    "Offline Chromium CSS fixture also denied socket permissions during startup (setsockopt); no computed-color result claimed"
+  ],
+  "composition": "Current static Rust Scene constructors and per-wrapper SOURCE constants documented. Rust resumes a loaded program; the X_eTaL final expression starts its loop. App.xtl/Spells.xtl composition is the next step, not implemented yet."
+}
