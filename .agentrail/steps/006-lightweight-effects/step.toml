@@ -1,7 +1,7 @@
 number = 6
 slug = "lightweight-effects"
 status = "in-progress"
-description = "Implemented lightweight effects preview: procedural snow/ice shader detail, p..."
+description = "Lightweight effects preview published at https://softwarewrighter.github.io/s..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T08:25:01"
