@@ -1781,6 +1781,7 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "xetal-world-audio",
+ "xetal-world-metrics",
  "xetal-world-model",
  "xetal-world-navigation",
  "xetal-world-render",
@@ -1968,6 +1969,10 @@ dependencies = [
  "wgpu",
  "xetal-world-camera",
 ]
+
+[[package]]
+name = "xetal-world-metrics"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-world-model"

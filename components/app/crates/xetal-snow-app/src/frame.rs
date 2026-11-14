@@ -16,6 +16,7 @@ pub(crate) struct App {
     pub effects: [bool; 2],
     pub jump: bool,
     pub audio: Sound,
+    meter: xetal_world_metrics::Meter,
     last_frame: f64,
     frames: u32,
     updates: u32,
@@ -33,6 +34,7 @@ impl App {
             effects: [true; 2],
             jump: false,
             audio: Sound::default(),
+            meter: Default::default(),
             last_frame: 0.0,
             frames: 0,
             updates: 0,
@@ -42,6 +44,11 @@ impl App {
     fn tick(&mut self, now: f64) -> Result<(), String> {
         let dt = ((now - self.last_frame) / 1000.0) as f32;
         self.last_frame = now;
+        let (meter, reading) = self.meter.record(now); self.meter = meter;
+        if let Some(reading) = reading {
+            status::text("fps", &format!("{:.0} FPS / {:.1} ms", reading.fps, reading.mean_ms));
+            if let Ok(node) = status::element("fps") { let _ = node.set_attribute("title", &format!("Worst recent frame: {:.1} ms", reading.worst_ms)); }
+        }
         self.advance(dt)?;
         crate::boot::resize(&self.canvas, &mut self.renderer);
         let walker = &self.scene.walker;
@@ -87,11 +94,16 @@ impl App {
         let scene = &self.scene;
         if !self.started {
             let loaded = scene.world.resident();
-            status::text("splash-status", &format!("Preparing nearby snow ({loaded}/25)..."));
+            status::text(
+                "splash-status",
+                &format!("Preparing nearby snow ({loaded}/25)..."),
+            );
             if loaded == 25 {
                 status::text("splash-status", "Ready. Choose how to enter.");
                 for id in ["start-sound", "start-muted"] {
-                    if let Ok(button) = status::element(id) { let _ = button.remove_attribute("disabled"); }
+                    if let Ok(button) = status::element(id) {
+                        let _ = button.remove_attribute("disabled");
+                    }
                 }
             }
         }

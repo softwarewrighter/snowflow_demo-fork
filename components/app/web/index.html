@@ -19,6 +19,7 @@
     <div class="heading"><div><p class="eyebrow">PROCEDURAL WORLD / ENDLESS SNOWFIELD</p><h1>A landscape, made of arrays.</h1><p class="intro">Explore an endless snowfield, leave footprints and hear the snow crunch. No model files. Procedural textures.</p></div><div class="stat"><strong id="triangles">0</strong><span>triangles</span></div></div>
     <section class="viewport" aria-label="Procedural snow surface">
       <canvas id="scene" width="960" height="600" tabindex="0" aria-label="Snow field; WASD to walk, arrow keys to look"></canvas>
+      <div id="fps" class="fps-readout" aria-live="off">FPS: measuring...</div>
       <div class="canvas-label"><span class="dot"></span><span id="status" role="status">Loading the Rust application...</span></div>
       <div class="canvas-footer"><span>WASD: walk / Arrows: look / Space: jump</span><span id="updates">Waiting for geometry</span></div>
     </section>
@@ -26,7 +27,7 @@
     <p id="sound-status" role="status"></p>
     <details><summary>See the X_eTaL program <span>Geometry and behavior live here</span></summary><div class="source-views"><section aria-labelledby="typed-heading"><h2 id="typed-heading">As typed</h2><pre id="source" tabindex="0" aria-label="X_eTaL source as typed"></pre></section><section aria-labelledby="rendered-heading"><h2 id="rendered-heading">As rendered</h2><pre id="source-rendered" tabindex="0" aria-label="X_eTaL source as rendered"></pre></section></div></details>
   </main>
-  <footer><span>Copyright (c) 2026 Michael A Wright</span><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/main/LICENSE">MIT License</a><a href="https://github.com/softwarewrighter/X_eTaL">Built with X_eTaL</a></footer>
+  <footer aria-label="Project and build information"><span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/main/LICENSE">MIT License</a><span class="sep">&middot;</span><a href="https://github.com/softwarewrighter/snowflow_demo-fork" target="_blank" rel="noopener noreferrer">Repository</a><span class="sep">&middot;</span><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/main/README.md" target="_blank" rel="noopener noreferrer">README</a><span class="sep">&middot;</span><span id="build-info" title="Build host, source commit and UTC build time">Build: loading...</span></footer>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 number = 6
 slug = "streaming-tracks-audio"
 status = "in-progress"
-description = "Feature implementation built: stationary X_eTaL world-space chunks, bounded 5..."
+description = "Stationary streaming/tracks/audio preview 8ac5553 is live. User reported drop..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T09:10:22"

@@ -2,7 +2,7 @@
 
 [GitHub Pages preview](https://softwarewrighter.github.io/snowflow_demo-fork/)
 
-An endless streamed snowfield built with X_eTaL and Rust for the browser.
+An endless streamed snowfield built with [X_eTaL](https://github.com/softwarewrighter/X_eTaL) and Rust for the browser.
 Walk across deterministic snowy hills and ice formations, leave a trail of
 footprints, jump and hear snow crunches and landing thuds. The start screen
 offers sound-enabled or muted entry. Terrain stays still while you rest.

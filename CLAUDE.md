@@ -343,3 +343,6 @@ run the gate and fix any regressions with follow-up publications. Do not delay
 a preview for the full gate or unavailable sandbox browser checks. Report
 pending validation honestly. This user policy overrides earlier instructions
 requiring the full gate before source commits or preview publication.
+
+Show preview URLs in full as plain text or a code block, not behind descriptive
+Markdown link labels; the user's interface makes those hard to click or copy.

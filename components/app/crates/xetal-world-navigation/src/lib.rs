@@ -60,13 +60,7 @@ impl Walker {
         };
         self.accumulated += seconds.clamp(0.0, 0.1);
         self.jump_requested |= jump;
-        if self.motion.height < floor {
-            self.motion = Motion {
-                height: floor,
-                velocity: 0.0,
-                grounded: true,
-            };
-        }
+        self.motion = self.motion.contact(floor, self.jump_requested);
         while self.accumulated >= 1.0 / 120.0 {
             let before = self.motion;
             self.motion = before.step(1.0 / 120.0, floor, self.jump_requested);

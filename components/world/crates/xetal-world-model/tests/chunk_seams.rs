@@ -36,10 +36,18 @@ fn positive_and_negative_neighbors_share_identical_world_space_edges() {
         edge(original.positions(), 0, 0.0),
         edge(demo.mesh().unwrap().positions(), 0, 0.0)
     );
-    demo.event("choose 0 1").unwrap(); settle(&mut demo);
-    assert_eq!(edge(original.positions(), 2, 32.0), edge(demo.mesh().unwrap().positions(), 2, 32.0));
-    demo.event("choose 0 -1").unwrap(); settle(&mut demo);
-    assert_eq!(edge(original.positions(), 2, 0.0), edge(demo.mesh().unwrap().positions(), 2, 0.0));
+    demo.event("choose 0 1").unwrap();
+    settle(&mut demo);
+    assert_eq!(
+        edge(original.positions(), 2, 32.0),
+        edge(demo.mesh().unwrap().positions(), 2, 32.0)
+    );
+    demo.event("choose 0 -1").unwrap();
+    settle(&mut demo);
+    assert_eq!(
+        edge(original.positions(), 2, 0.0),
+        edge(demo.mesh().unwrap().positions(), 2, 0.0)
+    );
     demo.event("choose 0 0").unwrap();
     settle(&mut demo);
     assert_eq!(
