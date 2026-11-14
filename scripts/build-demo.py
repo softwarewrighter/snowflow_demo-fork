@@ -24,6 +24,9 @@ def main():
     if not (ROOT / 'work/deps/X_eTaL').exists():
         raise RuntimeError('Run python3 scripts/bootstrap-xetal.py before building the demo')
     env = environment()
+    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    reference = subprocess.check_output(['cargo', 'run', '--offline', '--quiet', '--manifest-path', 'components/world/Cargo.toml', '-p', 'xetal-world-model', '--example', 'library_reference', '--', revision], cwd=ROOT, env=env, text=True)
+    (ROOT / 'components/app/web/library-reference.html').write_text(reference)
     target = ROOT / 'work/demo-site/snowflow_demo-fork'
     command = ['trunk', 'build', '--offline', '--locked', '--public-url', '/snowflow_demo-fork/', '--dist', str(target)]
     subprocess.run(command, cwd=ROOT / 'components/app/web', env=env, check=True)

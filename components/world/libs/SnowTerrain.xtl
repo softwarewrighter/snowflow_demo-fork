@@ -1,0 +1,39 @@
+## SnowTerrain: deterministic stationary world-space snow and ice chunks.
+## Public API: l:h_eight (x, z), l:m_esh (chunkX, chunkZ).
+## Reference: library-reference.html#snow-terrain
+h:h_ash := { (x, z) ->
+  k := (a_bs ((x * 73856093) + (z * 19349663))) m_od 104729
+  (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
+}
+h:n_oise := { (x, z) ->
+  ix := f_loor x
+  iz := f_loor z
+  fx := x - f_loat ix
+  fz := z - f_loat iz
+  sx := fx * fx * (3.0 - (2.0 * fx))
+  sz := fz * fz * (3.0 - (2.0 * fz))
+  a := h:h_ash (ix, iz)
+  b := h:h_ash (ix + 1, iz)
+  c := h:h_ash (ix, iz + 1)
+  d := h:h_ash (ix + 1, iz + 1)
+  (((a * (1.0 - sx)) + (b * sx)) * (1.0 - sz)) + (((c * (1.0 - sx)) + (d * sx)) * sz)
+}
+l:h_eight := { (x, z) ->
+  lx := (x - (24.0 * f_loat f_loor (x / 24.0))) - 12.0
+  lz := (z - (24.0 * f_loat f_loor (z / 24.0))) - 12.0
+  r := 1.0 - (((lx * lx) / 16.0) + ((lz * lz) / 9.0))
+  cap := (r + a_bs r) / 2.0
+  (4.0 * h:n_oise (x / 40.0, z / 40.0)) + (1.2 * h:n_oise (x / 13.0, z / 13.0)) + (3.5 * cap * cap)
+}
+l:m_esh := { (cx, cz) ->
+  k := (r_ange 289) - 1
+  x := (2.0 * f_loat (k d_iv 17)) + (32.0 * cx)
+  z := (2.0 * f_loat (k m_od 17)) + (32.0 * cz)
+  y := l:h_eight (x, z)
+  points := 2 1 t_ranspose (3 289 r_eshape x c_at y c_at z)
+  cell := (r_ange 256) - 1
+  base := ((cell d_iv 16) * 17) + (cell m_od 16)
+  ids := 1 + r_avel base '+ t_able 0 1 17 1 18 17
+  512 3 3 r_eshape ids s_elect points
+}
+

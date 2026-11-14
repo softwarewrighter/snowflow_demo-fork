@@ -19,8 +19,8 @@ resources without letting an old token name a later mesh.
 
 The existing ext: workaround formats dense numeric arrays as text, then parses
 them back. The first app instead uses the existing output hook to retain the
-program's lexical environment and read its updated mesh array after event waits.
-Only the publication slot mesh! remains mutable: logical state is an immutable
+program's lexical environment and read its typed frame (mesh, print and sound commands) after event waits.
+Only the publication slot frame! remains mutable: logical state is an immutable
 tuple passed through pure reducers and geometry functions. A typed publication
 operation callable inside the event loop would remove this last slot. The
 slot is a host API workaround, not a measured performance requirement.

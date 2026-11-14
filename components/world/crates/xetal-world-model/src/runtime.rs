@@ -2,7 +2,7 @@ use crate::{SOURCE, capture, snapshot};
 use std::cell::RefCell;
 use std::rc::Rc;
 use xetal_arith::Rng;
-use xetal_macro::StoreLibraries;
+use xetal_snow_libraries::Embedded;
 use xetal_step::{Machine, Status};
 use xetal_world_surface::Mesh;
 
@@ -15,7 +15,7 @@ pub enum Progress {
 
 pub struct Demo {
     machine: Machine<'static, 'static>,
-    captured: capture::Captured,
+    pub(crate) captured: capture::Captured,
     progress: Progress,
 }
 
@@ -25,7 +25,7 @@ impl Demo {
     }
 
     pub fn from_source(source: &str) -> Result<Self, String> {
-        let mut loaded = xetal_program::load_with("snowfield.xtl", source, &StoreLibraries)
+        let mut loaded = xetal_program::load_with("snowfield.xtl", source, &Embedded)
             .map_err(|e| e.to_string())?;
         xetal_types::check_program(&mut loaded.program).map_err(|e| e.to_string())?;
         let loaded = Box::leak(Box::new(loaded));

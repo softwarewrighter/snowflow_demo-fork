@@ -28,3 +28,5 @@ Thumbs.db
 *.webp
 *.mp4
 *.webm
+
+/components/app/web/library-reference.html

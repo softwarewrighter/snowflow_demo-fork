@@ -1,0 +1,8 @@
+[package]
+name = "xetal-snow-libraries"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+xetal-macro.workspace = true

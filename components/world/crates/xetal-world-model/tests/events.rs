@@ -48,7 +48,7 @@ fn time_and_pointer_events_do_not_deform_stationary_ground() {
     let mut demo = Demo::new().unwrap();
     settle(&mut demo);
     let original = demo.mesh().unwrap();
-    for event in ["tick 0.25", "tick 10.0", "down 0 0"] {
+    for event in ["tick 0.25", "tick 10.0"] {
         demo.event(event).unwrap();
         settle(&mut demo);
         assert_eq!(demo.mesh().unwrap(), original);

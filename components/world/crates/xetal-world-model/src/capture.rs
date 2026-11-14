@@ -14,7 +14,8 @@ pub(crate) fn keeper(captured: Captured) -> Keeper {
 }
 
 pub(crate) fn mesh(captured: &Captured) -> Result<Value<'static>, String> {
-    let slot = lookup(&captured.borrow(), "mesh!").ok_or("mesh capture is not ready")?;
+    let env = captured.borrow();
+    let slot = lookup(&env, "frame!").or_else(|| lookup(&env, "mesh!")).ok_or("frame capture is not ready")?;
     match &*slot.borrow() {
         Slot::Value(value) => Ok(value.clone()),
         _ => Err("mesh binding is not an evaluated value".into()),

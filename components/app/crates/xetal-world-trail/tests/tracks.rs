@@ -1,35 +1,19 @@
 use xetal_world_trail::Trail;
-const FLAT: [f32; 9] = [
-    -1000.0, 0.0, -1000.0, 1000.0, 0.0, -1000.0, 0.0, 0.0, 1000.0,
-];
-
+const FLAT: [f32;9] = [-1000.0,0.0,-1000.0,1000.0,0.0,-1000.0,0.0,0.0,1000.0];
 #[test]
-fn idle_and_airborne_movement_do_not_emit_steps_and_history_is_bounded() {
-    let mut trail = Trail::new([0.0; 3]);
-    for _ in 0..100 {
-        assert!(!trail.update([0.0; 3], 0.0, true, 0.0, &FLAT));
-    }
-    assert!(!trail.update([1.0, 1.0, 0.0], 0.0, false, 0.0, &FLAT));
-    for i in 2..400 {
-        assert!(trail.update([i as f32, 0.0, 0.0], 0.0, true, 0.0, &FLAT));
-    }
-    assert_eq!(trail.marks.len(), 256);
-    assert!(trail.marks[0].position[0] < trail.marks[255].position[0]);
+fn backend_obeys_xetal_opacity_and_reuses_draped_geometry() {
+    let mut trail = Trail::default();
+    trail.replace(&[[0.0,0.0,0.0,1.0,0.0,1.0]], &FLAT).unwrap();
+    let geometry = trail.marks[0].vertices;
+    trail.replace(&[[0.0,0.0,0.0,1.0,0.0,0.25]], &[]).unwrap();
+    assert_eq!(trail.marks[0].vertices, geometry);
+    assert_eq!(trail.marks[0].opacity, 0.25);
+    assert_eq!(trail.vertices().len(), 36);
+    assert!(trail.vertices().as_chunks::<6>().0.iter().all(|v| v[5] == 0.25));
+    trail.replace(&[], &FLAT).unwrap();
+    assert!(trail.vertices().is_empty());
 }
-
 #[test]
-fn landing_leaves_two_marks_without_a_walking_crunch() {
-    let mut trail = Trail::new([0.0; 3]);
-    assert!(!trail.update([0.0; 3], 0.0, true, 5.0, &FLAT));
-    assert_eq!(trail.marks.len(), 2);
-    assert_eq!(trail.steps, 0);
-    assert_eq!(trail.vertices().len(), 60);
-    assert!(
-        trail
-            .vertices()
-            .as_chunks::<5>()
-            .0
-            .iter()
-            .all(|v| (v[1] - 0.012).abs() < 0.0001)
-    );
+fn backend_rejects_over_budget_commands() {
+    assert!(Trail::default().replace(&[[0.0;6];257], &FLAT).is_err());
 }

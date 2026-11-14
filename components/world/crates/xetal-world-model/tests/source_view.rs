@@ -5,7 +5,7 @@ fn shipped_program_uses_language_decoration_and_preserves_lines_and_strings() {
     let rendered = rendered_source().unwrap();
     assert_ne!(rendered, SOURCE);
     assert_eq!(rendered.lines().count(), SOURCE.lines().count());
-    assert!(rendered.contains("mesh! \u{2190}"));
+    assert!(rendered.contains("frame! \u{2190}"));
     for literal in ["\"choose\"", "\"key\"", "\"end\""] {
         assert!(rendered.contains(literal));
     }

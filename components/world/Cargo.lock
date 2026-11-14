@@ -982,6 +982,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-snow-libraries"
+version = "0.1.0"
+dependencies = [
+ "xetal-macro",
+]
+
+[[package]]
 name = "xetal-source"
 version = "0.1.0"
 dependencies = [
@@ -1163,9 +1170,9 @@ dependencies = [
  "xetal-arith",
  "xetal-core",
  "xetal-linter",
- "xetal-macro",
  "xetal-program",
  "xetal-render",
+ "xetal-snow-libraries",
  "xetal-step",
  "xetal-types",
  "xetal-value",

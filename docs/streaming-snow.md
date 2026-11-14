@@ -17,6 +17,8 @@ speed. Sound can be toggled afterward. Audio nodes disconnect when finished.
 The latest 256 world-space boot prints are retained as terrain-draped decals.
 Clear tracks erases them; Reset returns to the start and clears the trail.
 Prints are visual marks rather than edits to terrain geometry or collision.
+Footsteps and SnowWind are now X_eTaL libraries, and SnowAudio selects native
+audio commands. The old Rust stride/aging decisions have been removed.
 Their vertices are calculated once at each footfall, not rebuilt by sampling
 the entire history. Older prints roll out of the bounded history.
 
@@ -46,3 +48,5 @@ The chunk_cost example records native release CPU loading, row-generation
 and idle-scheduler timings. These exclude GPU, browser audio and physics
 and do not measure FPS. Logical merged terrain storage is 614,400 bytes;
 footprint vertices are capped at 30,720 bytes and the sun depth map at 1 MiB.
+
+See [library APIs and source ownership](libraries.md).

@@ -1,0 +1,15 @@
+## SnowWind: deterministic gust strength and snow-fill opacity, both pure.
+## Gusts repeat every 12 seconds. Marks vanish after 25 units of wind exposure.
+## Reference: library-reference.html#snow-wind
+l:s_trength := { time ->
+  f := (time / 12.0) - f_loat f_loor (time / 12.0)
+  wave := 1.0 - a_bs ((2.0 * f) - 1.0)
+  peak := (wave - 0.6) / 0.4
+  gust := (peak + a_bs peak) / 2.0
+  0.3 + (2.5 * gust * gust)
+}
+l:o_pacity := { exposure ->
+  remaining := 1.0 - (exposure / 25.0)
+  cap := (remaining + a_bs remaining) / 2.0
+  cap * cap
+}

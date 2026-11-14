@@ -7,10 +7,13 @@ Walk across deterministic snowy hills and ice formations, leave a trail of
 footprints, jump and hear snow crunches and landing thuds. The start screen
 offers sound-enabled or muted entry. Terrain stays still while you rest.
 
-Pure X_eTaL array functions generate world-space terrain chunks. A bounded
+Pure X_eTaL libraries generate world-space terrain, decide footfalls and sound
+commands, and age prints under wind gusts. See the [library cross-reference](docs/libraries.md).
+The displayed source imports the actual modules, and its rendered library calls
+link to generated API/source documentation. A bounded
 5 by 5 window follows the player and generates the next horizon ahead of
 movement. Rust supplies browser/GPU integration, typed data transfer, navigation
-physics, procedural audio and footprint decals. Application algorithms remain
+physics, audio execution and footprint rendering. Application algorithms remain
 candidates for reusable X_eTaL libraries as the host interface evolves.
 The build uses generated loader glue with no handwritten application JavaScript
 or WebAssembly.

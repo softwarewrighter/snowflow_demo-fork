@@ -1,7 +1,7 @@
 const BUFFERS: [wgpu::VertexBufferLayout<'static>; 1] = [wgpu::VertexBufferLayout {
-    array_stride: 20,
+    array_stride: 24,
     step_mode: wgpu::VertexStepMode::Vertex,
-    attributes: &wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x2],
+    attributes: &wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x2, 2 => Float32],
 }];
 pub(crate) fn create(
     device: &wgpu::Device,

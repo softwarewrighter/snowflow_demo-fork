@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/xetal-world-model", "crates/xetal-world-stream"]
+members = ["crates/xetal-world-model", "crates/xetal-world-stream", "crates/xetal-snow-libraries"]
 
 [workspace.package]
 version = "0.1.0"

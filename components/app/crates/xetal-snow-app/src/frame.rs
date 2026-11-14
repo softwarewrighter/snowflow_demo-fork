@@ -82,12 +82,10 @@ impl App {
         if let Some(vertices) = update.tracks {
             self.renderer.upload_tracks(&vertices)?;
         }
-        let sound = if update.landing > 0.0 {
-            self.audio.play(Kind::Land, update.landing / 8.0)
-        } else if update.step {
-            self.audio.play(Kind::Step, 1.0)
-        } else {
-            Ok(())
+        let sound = match update.sound[0] {
+            1.0 => self.audio.play(Kind::Step, update.sound[1], update.sound[2]),
+            2.0 => self.audio.play(Kind::Land, update.sound[1], update.sound[2]),
+            _ => Ok(()),
         };
         if let Err(error) = sound {
             self.audio.mute();
@@ -125,7 +123,7 @@ impl App {
             &format!(
                 "{} chunks / {} prints",
                 scene.world.resident(),
-                scene.trail.marks.len()
+                scene.trail.marks.iter().filter(|mark| mark.opacity > 0.01).count()
             ),
         );
         if let Ok(element) = status::element("app") {
@@ -136,9 +134,10 @@ impl App {
                     "data-center",
                     format!("[{},{}]", scene.world.center.0, scene.world.center.1),
                 ),
-                ("data-footprints", scene.trail.marks.len().to_string()),
-                ("data-steps", scene.trail.steps.to_string()),
+                ("data-footprints", scene.trail.marks.iter().filter(|mark| mark.opacity > 0.01).count().to_string()),
+                ("data-steps", scene.steps.to_string()),
                 ("data-landings", scene.landings.to_string()),
+                ("data-wind", scene.wind.to_string()),
                 ("data-audio", self.audio.state().to_string()),
                 ("data-grounded", scene.walker.motion.grounded.to_string()),
             ] {

@@ -1,4 +1,4 @@
-number = 9
+number = 11
 slug = "workers-and-replay"
 status = "pending"
 description = "Add bounded generation/meshing jobs in a WASM worker with transferable buffer..."

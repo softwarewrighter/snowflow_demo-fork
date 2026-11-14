@@ -1,0 +1,10 @@
+## SnowHost: facade for the current Rust host's queued Event transport.
+## move carries world x/z; down/up carries yaw/impact with grounded 1/0.
+## choose requests chunk coordinates. Dense output stays in the typed frame.
+## Reference: library-reference.html#snow-host
+l:n_ext! := { @ -> []E_VENT @ }
+l:c_hunk := { event -> (f_irst []E_AT event, 2 s_elect []E_AT event) }
+l:p_ose := { (point, grounded, event) ->
+  at := []E_AT event
+  (point, f_irst at, grounded, 2 s_elect at)
+}

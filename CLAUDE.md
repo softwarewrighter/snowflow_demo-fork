@@ -346,3 +346,14 @@ requiring the full gate before source commits or preview publication.
 
 Show preview URLs in full as plain text or a code block, not behind descriptive
 Markdown link labels; the user's interface makes those hard to click or copy.
+
+## X_eTaL application ownership (user policy)
+
+This is a demonstration of building apps from actual X_eTaL libraries. Keep
+application policies such as footfall timing, footprint history/aging and
+sound-command selection in X_eTaL. Rust supplies native capability wrappers,
+physics facts, execution scheduling, audio output and rendering resources.
+Do not move application decisions into Rust for convenience and describe that
+as an X_eTaL app. Document current bridge limitations honestly. Maintain a
+cross-reference of actual modules, public APIs, sources, backends and tests,
+with links from the live rendered source.

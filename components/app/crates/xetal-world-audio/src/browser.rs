@@ -6,7 +6,6 @@ pub struct Sound {
     bank: Option<Bank>,
     active: Option<(Kind, GainNode)>,
     pub enabled: bool,
-    sequence: u32,
 }
 
 impl Sound {
@@ -38,15 +37,12 @@ impl Sound {
         }
     }
 
-    pub fn play(&mut self, kind: Kind, strength: f32) -> Result<(), String> {
+    pub fn play(&mut self, kind: Kind, volume: f32, rate: f32) -> Result<(), String> {
         if self.state() != "running" {
             return Ok(());
         }
         let bank = self.bank.as_ref().ok_or("audio bank unavailable")?;
-        self.sequence = self.sequence.wrapping_add(1);
-        let rate = 0.92 + 0.04 * (self.sequence % 5) as f32;
-        let volume = (if kind == Kind::Step { 0.17 } else { 0.3 }) * strength.clamp(0.15, 1.0);
-        let gain = bank.voice(kind, rate, volume)?;
+        let gain = bank.voice(kind, rate.clamp(0.1,4.0), volume.clamp(0.0,1.0))?;
         self.active = Some((kind, gain));
         Ok(())
     }

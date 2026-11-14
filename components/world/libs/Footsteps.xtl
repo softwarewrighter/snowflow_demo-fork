@@ -1,0 +1,42 @@
+## Footsteps: pure boot placement, walking/landing events and wind-driven aging.
+## State: (last point, travel, side, steps, landings, time, snow exposure, marks).
+## Stored marks: N by 5 [x z yaw side birthExposure]; view adds opacity column.
+## Reference: library-reference.html#footsteps
+"wind:" u_se< "SnowWind.xtl"
+l:s_tart := { point -> (point, 0.0, 1.0, 0, 0, 0.0, 0.0, 0 5 r_eshape 0.0) }
+l:c_ount := { (_, _, _, count, _, _, _, _) -> count }
+l:l_ands := { (_, _, _, _, count, _, _, _) -> count }
+l:w_ind := { (_, _, _, _, _, time, _, _) -> wind:s_trength time }
+l:t_ick := { dt state ->
+  (point, travel, side, steps, lands, time, snow, marks) := state
+  (point, travel, side, steps, lands, time + dt, snow + (dt * l:w_ind state), marks)
+}
+h:b_ound := { marks ->
+  (f_irst s_hape marks) > 256 ? -256 t_ake marks
+  marks
+}
+l:u_pdate := { (point, yaw, grounded, impact) state ->
+  (last, walked, side, count, lands, time, snow, marks) := state
+  delta := point - last
+  dx := f_irst delta
+  dz := 2 s_elect delta
+  distance := ((dx * dx) + (dz * dz)) ^ 0.5
+  grounded = 0 ? ((point, 0.0, side, count, lands, time, snow, marks), (0, 0.0))
+  distance > 2.0 ? ((point, 0.0, side, count, lands, time, snow, marks), (0, 0.0))
+  impact > 1.0 ? (
+    (point, 0.0, side, count, lands + 1, time, snow,
+      h:b_ound marks c_at 2 5 r_eshape ((point c_at yaw c_at -1.0 c_at snow) c_at (point c_at yaw c_at 1.0 c_at snow))),
+    (2, impact)
+  )
+  total := walked + distance
+  total < 0.9 ? ((point, total, side, count, lands, time, snow, marks), (0, 0.0))
+  ((point, total - 0.9, n_eg side, count + 1, lands, time, snow,
+    h:b_ound marks c_at 1 5 r_eshape point c_at yaw c_at side c_at snow), (1, 1.0))
+}
+l:v_iew := { (_, _, _, _, _, _, snow, marks) ->
+  n := f_irst s_hape marks
+  columns := 2 1 t_ranspose marks
+  age := snow - 5 s_elect columns
+  alpha := wind:o_pacity age
+  2 1 t_ranspose ((6 c_at n) r_eshape (r_avel columns) c_at alpha)
+}

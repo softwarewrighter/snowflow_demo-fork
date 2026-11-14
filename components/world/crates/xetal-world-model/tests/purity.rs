@@ -5,7 +5,7 @@ const BEFORE: &str = include_str!("fixtures/snowfield-mutable.xtl");
 
 fn assignments(expr: &Expr) -> usize {
     if let Kind::Set { name, .. } = &expr.kind {
-        assert_eq!(name, "mesh!");
+        assert_eq!(name, "frame!");
     }
     if let Kind::Let { name, .. } = &expr.kind {
         assert!(!name.ends_with('!'));
@@ -16,7 +16,8 @@ fn assignments(expr: &Expr) -> usize {
 
 #[test]
 fn only_the_effect_loop_may_publish_to_the_mesh_slot() {
-    let program = xetal_core::lower(SOURCE).unwrap();
+    let loaded = xetal_program::load_with("snowfield.xtl", SOURCE, &xetal_snow_libraries::Embedded).unwrap();
+    let program = loaded.program;
     let mut mutable = Vec::new();
     let mut publications = 0;
     for item in &program.items {
@@ -29,13 +30,13 @@ fn only_the_effect_loop_may_publish_to_the_mesh_slot() {
             Item::Set { .. } => panic!("no top-level reassignment allowed"),
         }
     }
-    assert_eq!(mutable, ["mesh!"]);
+    assert_eq!(mutable, ["frame!"]);
     assert_eq!(publications, 1);
 }
 
 #[test]
 fn shipped_xetal_source_has_no_enabled_lint_findings() {
-    let findings = xetal_linter::lint("snowfield.xtl", SOURCE, &[]).unwrap();
+    let findings = xetal_linter::lint(concat!(env!("CARGO_MANIFEST_DIR"), "/../../demos/snowfield.xtl"), SOURCE, &[]).unwrap();
     assert!(findings.is_empty(), "{findings:#?}");
 }
 

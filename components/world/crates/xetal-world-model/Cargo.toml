@@ -8,9 +8,9 @@ authors.workspace = true
 repository.workspace = true
 
 [dependencies]
+xetal-snow-libraries = { path = "../xetal-snow-libraries" }
 xetal-world-surface.workspace = true
 xetal-program.workspace = true
-xetal-macro.workspace = true
 xetal-types.workspace = true
 xetal-step.workspace = true
 xetal-arith.workspace = true

@@ -13,7 +13,7 @@ impl Decals {
             pipeline: crate::pipeline::create(device, format, camera),
             buffer: device.create_buffer(&wgpu::BufferDescriptor {
                 label: Some("bounded snow tracks"),
-                size: 256 * 6 * 5 * 4,
+                size: 256 * 6 * 6 * 4,
                 usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST,
                 mapped_at_creation: false,
             }),
@@ -21,10 +21,10 @@ impl Decals {
         }
     }
     pub fn update(&mut self, queue: &wgpu::Queue, vertices: &[f32]) -> Result<(), String> {
-        if vertices.len() > 256 * 6 * 5 || !vertices.len().is_multiple_of(30) {
+        if vertices.len() > 256 * 6 * 6 || !vertices.len().is_multiple_of(36) {
             return Err("invalid footprint vertex payload".into());
         }
-        self.count = (vertices.len() / 5) as u32;
+        self.count = (vertices.len() / 6) as u32;
         if !vertices.is_empty() {
             queue.write_buffer(&self.buffer, 0, bytemuck::cast_slice(vertices));
         }

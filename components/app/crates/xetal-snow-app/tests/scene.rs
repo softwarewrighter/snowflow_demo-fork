@@ -36,17 +36,17 @@ fn walking_crosses_original_wall_and_jump_emits_one_landing_event() {
             .unwrap();
     }
     assert!(scene.walker.position[2] < -15.0);
-    assert!(scene.trail.steps > 0 && scene.trail.marks.len() <= 256);
+    assert!(scene.steps > 0 && scene.trail.marks.len() <= 256);
     for _ in 0..120 {
         scene.update(1.0 / 60.0, [false; 4], false, false).unwrap();
     }
     let before = scene.landings;
-    scene.clear_tracks();
+    scene.clear_tracks().unwrap();
     scene.update(1.0 / 60.0, [false; 4], true, false).unwrap();
     for _ in 0..120 {
         scene.update(1.0 / 60.0, [false; 4], false, false).unwrap();
     }
     assert_eq!(scene.landings - before, 1);
-    assert_eq!(scene.trail.steps, 0);
+    assert_eq!(scene.steps, 0);
     assert_eq!(scene.trail.marks.len(), 2);
 }

@@ -1,0 +1,15 @@
+## SnowAudio: semantic snow events to WebAudio host commands [buffer gain rate].
+## 0 is silence, 1 a walking crunch, 2 a landing thud. The host executes commands.
+## Reference: library-reference.html#snow-audio
+h:c_lamp := { value ->
+  value < 0.15 ? 0.15
+  value > 1.0 ? 1.0
+  value
+}
+l:s_ilent := { @ -> 0.0 0.0 1.0 }
+l:c_ommand := { ((kind, impact), step) ->
+  rate := 0.92 + (0.04 * f_loat (step m_od 5))
+  kind = 1 ? 1.0 0.17 c_at rate
+  kind = 2 ? 2.0 c_at (0.3 * h:c_lamp (impact / 8.0)) c_at rate
+  l:s_ilent @
+}

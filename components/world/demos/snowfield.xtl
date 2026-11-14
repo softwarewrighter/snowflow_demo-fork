@@ -1,63 +1,50 @@
 #!/usr/bin/env xetal
-## Stationary world-space terrain. choose requests a deterministic 32-meter chunk.
-## Logical state is an immutable (chunk x, chunk z) tuple; mesh! publishes to Rust.
+## Snow app: library-led immutable updates; Rust supplies pose facts and executes output.
+## Click a library function in As rendered for API, source and backend references.
+## Reference: library-reference.html
+"snow:" u_se< "../libs/SnowTerrain.xtl"
+"feet:" u_se< "../libs/Footsteps.xtl"
+"sfx:" u_se< "../libs/SnowAudio.xtl"
+"host:" u_se< "../libs/SnowHost.xtl"
 
-u:h_ash := { (x, z) ->
-  k := (a_bs ((x * 73856093) + (z * 19349663))) m_od 104729
-  (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
-}
-u:n_oise := { (x, z) ->
-  ix := f_loor x
-  iz := f_loor z
-  fx := x - f_loat ix
-  fz := z - f_loat iz
-  sx := fx * fx * (3.0 - (2.0 * fx))
-  sz := fz * fz * (3.0 - (2.0 * fz))
-  a := u:h_ash (ix, iz)
-  b := u:h_ash (ix + 1, iz)
-  c := u:h_ash (ix, iz + 1)
-  d := u:h_ash (ix + 1, iz + 1)
-  (((a * (1.0 - sx)) + (b * sx)) * (1.0 - sz)) + (((c * (1.0 - sx)) + (d * sx)) * sz)
-}
-u:h_eight := { (x, z) ->
-  lx := (x - (24.0 * f_loat f_loor (x / 24.0))) - 12.0
-  lz := (z - (24.0 * f_loat f_loor (z / 24.0))) - 12.0
-  r := 1.0 - (((lx * lx) / 16.0) + ((lz * lz) / 9.0))
-  cap := (r + a_bs r) / 2.0
-  (4.0 * u:n_oise (x / 40.0, z / 40.0)) + (1.2 * u:n_oise (x / 13.0, z / 13.0)) + (3.5 * cap * cap)
-}
-u:t_errain := { (cx, cz) ->
-  k := (r_ange 289) - 1
-  x := (2.0 * f_loat (k d_iv 17)) + (32.0 * cx)
-  z := (2.0 * f_loat (k m_od 17)) + (32.0 * cz)
-  y := u:h_eight (x, z)
-  points := 2 1 t_ranspose (3 289 r_eshape x c_at y c_at z)
-  cell := (r_ange 256) - 1
-  base := ((cell d_iv 16) * 17) + (cell m_od 16)
-  ids := 1 + r_avel base '+ t_able 0 1 17 1 18 17
-  512 3 3 r_eshape ids s_elect points
-}
-
-# This publication slot is the only mutable binding; the reducer never reads it.
-mesh! := 0 3 3 r_eshape 0.0
-u:w_atch := { @ -> mesh! }
+# The one mutable binding publishes typed mesh, print and audio commands to the host.
+frame! := (0 3 3 r_eshape 0.0, 0 6 r_eshape 0.0, sfx:s_ilent @, 0, 0, 0.3)
+u:w_atch := { @ -> frame! }
 'u:w_atch
 
-u:c_hange := { state e ->
+u:s_tart := { @ -> ((0.0, 0.0), feet:s_tart 0.0 8.0, 0.0 8.0, snow:m_esh (0.0, 0.0)) }
+u:i_dle := { state ->
+  (_, foot, _, _) := state
+  (state, feet:v_iew foot, sfx:s_ilent @)
+}
+u:c_hunk := { state e ->
+  (chunk, foot, point, _) := state
+  next := host:c_hunk e
+  chunk m_atch next ? u:i_dle state
+  u:i_dle (next, foot, point, snow:m_esh next)
+}
+u:p_ose := { (grounded, e) state ->
+  (chunk, foot, point, mesh) := state
+  (next, sound) := (host:p_ose (point, grounded, e)) feet:u_pdate foot
+  ((chunk, next, point, mesh), feet:v_iew next, sfx:c_ommand (sound, feet:c_ount next))
+}
+u:f_rame := { state e ->
+  (chunk, foot, point, mesh) := state
   kind := []E_KIND e
-  kind m_atch "choose" ? (f_irst []E_AT e, 2 s_elect []E_AT e)
-  kind m_atch "key" ? (0.0, 0.0)
-  state
+  kind m_atch "choose" ? state u:c_hunk e
+  kind m_atch "move" ? u:i_dle (chunk, foot, []E_AT e, mesh)
+  kind m_atch "down" ? (1, e) u:p_ose state
+  kind m_atch "up" ? (0, e) u:p_ose state
+  kind m_atch "tick" ? u:i_dle (chunk, (f_irst []E_AT e) feet:t_ick foot, point, mesh)
+  kind m_atch "click" ? u:i_dle (chunk, feet:s_tart point, point, mesh)
+  kind m_atch "key" ? u:i_dle u:s_tart @
+  u:i_dle state
 }
-u:f_rame := { (state, e) mesh ->
-  next := state u:c_hange e
-  state m_atch next ? (state, mesh)
-  (next, u:t_errain next)
-}
-u:l_oop! := { (state, mesh) ->
-  mesh! := mesh
-  e := []E_VENT @
+u:l_oop! := { (state, prints, sound) ->
+  (_, foot, _, mesh) := state
+  frame! := (mesh, prints, sound, feet:c_ount foot, feet:l_ands foot, feet:w_ind foot)
+  e := host:n_ext! @
   ([]E_KIND e) m_atch "end" ? @
-  u:l_oop! (state, e) u:f_rame mesh
+  u:l_oop! state u:f_rame e
 }
-u:l_oop! ((0.0, 0.0), u:t_errain (0.0, 0.0))
+u:l_oop! u:i_dle u:s_tart @
