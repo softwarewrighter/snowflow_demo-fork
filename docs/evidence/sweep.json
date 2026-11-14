@@ -1,0 +1,57 @@
+{
+  "status": "published; post-publication full gate passed; hardware browser appearance/FPS pending",
+  "initial_source": "2552a6c23e3393413d9a1b7c8a623ba29602eab3",
+  "initial_pages": "7464550",
+  "budgets": {
+    "active_waves": 1,
+    "retained_casts": 8,
+    "resident_chunks": 25,
+    "wave_triangles": 384,
+    "fixed_wave_vertex_buffer_bytes": 31104,
+    "full_wave_occupied_vertex_bytes": 13824
+  },
+  "cpu_native_release": {
+    "scope": "Scene update including X_eTaL wave and dirty terrain rebuild, navigation, no tracks; excludes GPU/audio/browser frame pacing",
+    "command": "cargo run --release --manifest-path components/app/Cargo.toml -p xetal-snow-app --example sweep_cost",
+    "raw": [
+      "cast 1: median 16.132ms, p95 16.833ms, worst 16.879ms",
+      "cast 2: median 19.260ms, p95 19.696ms, worst 20.706ms",
+      "cast 3: median 22.472ms, p95 25.632ms, worst 28.771ms",
+      "cast 4: median 26.010ms, p95 29.455ms, worst 32.049ms",
+      "cast 5: median 30.545ms, p95 35.276ms, worst 36.315ms",
+      "cast 6: median 34.426ms, p95 40.167ms, worst 42.492ms",
+      "cast 7: median 38.160ms, p95 43.207ms, worst 44.411ms",
+      "cast 8: median 38.894ms, p95 40.131ms, worst 46.041ms"
+    ],
+    "interpretation": "CPU terrain rebuilds block main thread and can cause frame spikes; worker and array execution improvements remain necessary"
+  },
+  "browser": "pending; sandbox prohibits local server socket; no visual/FPS acceptance claimed",
+  "library_sha256": {
+    "SnowHost.xtl": "a2e83d01a1138ea5f1295f161bbae2e713f3a8dfa5e6ab241cb7fa7858062088",
+    "SweepBrush.xtl": "2eabd1784d80f928287209ccfa18f683f9cffd2312f81380fc58252639ee6a42",
+    "TerrainBrush.xtl": "a3c7aa15b199a39a69d13c9409f9cce9fdd1315d06a2086f35f7f6d880e71063",
+    "SnowTerrain.xtl": "7f9a77abcacfe8c2726336210a404429a8b6b8fb4a98b8461f544705efad691c",
+    "Crystallise.xtl": "ced8c41d9920141bc2d020cc2bc455c5ed44f1b76502fc4d3b33a3a7e30bc069",
+    "SnowWind.xtl": "78f555580326d40f744d024352a60b5f25ce7154c96b04c0dee6a4d7fa59b903",
+    "Sweep.xtl": "6c5133350f22d6f9ceee269d38670e0cd14f15bc6b8abdcf1d8571480d4c09db",
+    "SweptSurface.xtl": "efea89d18dc45daebc9c24c827c643be9288bc9b023e216089c67ee3630e91e8",
+    "SnowAudio.xtl": "cba46cfb11e421913c986bf7c157369945ac6c2402cf7eb76d4f23dfb798e759",
+    "Footsteps.xtl": "3e224cfb5fdbe438b78c5fa531cf857b229e0dfb38665344dc82acb3a4a1cea2"
+  },
+  "source_commit": "2552a6c23e3393413d9a1b7c8a623ba29602eab3",
+  "gh_pages_commit": "7464550d762dccf969d2f282ab74dac6134bf628",
+  "native_rust_tests": 60,
+  "python_tests": 18,
+  "wasm_clippy": "passed",
+  "shader_validation": "passed",
+  "live_artifacts": {
+    "xetal-snow-app-3c3d3d5440c4d36c.js": "0b41bb572b69347b86f163fae76959b78d824fc862a0f8a2dac022504bd7f9b4",
+    "xetal-snow-app-3c3d3d5440c4d36c_bg.wasm": "98b8de12518db6b18c9afc0958c149360c066de49806c0dca91ece881ccccf07",
+    "style-c01cdee203025dd1.css": "59ec380e2e449c0bf647f46c928a329a36a0f940ddf058c7b82a1775d9cfe799",
+    "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
+    "library-reference.html": "0cb4dea7b6f916f1fb98e6628da4b0c99d376f9e827890bbb3402db8173bbf1d",
+    "index.html": "9bff8b854d016fe8a526dbe70a8c58cb8029c1012e178a54fd8dff0513994786"
+  },
+  "http_verification": "All six live files HTTP 200 and SHA256 match; WASM MIME application/wasm",
+  "regressions": "Rotated dirty-region seam oracle and footprint redrape passed in full gate"
+}

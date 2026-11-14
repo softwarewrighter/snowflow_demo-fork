@@ -87,3 +87,24 @@ fn updating_one_cast_replaces_it_and_ninth_cast_evicts_oldest() {
     assert!(world.sweep([0.0; 5]).is_err());
     assert!(world.sweep([f32::NAN; 5]).is_err());
 }
+
+#[test]
+fn rotated_dirty_regions_cover_all_changed_chunk_border_vertices() {
+    let mut world = World::new().unwrap();
+    fill(&mut world, [31.0, 0.0, 31.0]);
+    for (id, yaw) in [0.0, 0.3, std::f32::consts::FRAC_PI_2, 2.4, -2.0]
+        .iter()
+        .enumerate()
+    {
+        world
+            .sweep([id as f32 + 1.0, 31.0, 31.0, *yaw, 13.0])
+            .unwrap();
+        let mesh = world.step([31.0, 0.0, 31.0], 8_000).unwrap().unwrap();
+        let mut heights = std::collections::BTreeMap::new();
+        for p in mesh.positions().as_chunks::<3>().0 {
+            if let Some(y) = heights.insert((p[0].to_bits(), p[2].to_bits()), p[1].to_bits()) {
+                assert_eq!(y, p[1].to_bits(), "edited seam at {p:?}, yaw {yaw}");
+            }
+        }
+    }
+}

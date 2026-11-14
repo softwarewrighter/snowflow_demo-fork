@@ -76,6 +76,11 @@ def interactions(base, session):
     wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===12")
     time.sleep(1.9)
     (ROOT / 'work/demo-crystals-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    edits_before = evaluate(base, session, "return Number(document.getElementById('app').dataset.edits)")
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keydown',{key:'1'}))")
+    wait(base, session, f"return Number(document.getElementById('app').dataset.sweep)>0 && Number(document.getElementById('app').dataset.edits)>{edits_before}")
+    (ROOT / 'work/demo-sweep-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    wait(base, session, "return Number(document.getElementById('app').dataset.sweep)===0")
     click(base, session, 'clear-tracks')
     wait(base, session, "return Number(document.getElementById('app').dataset.footprints)===0")
     click(base, session, 'reset')
@@ -84,7 +89,7 @@ def interactions(base, session):
     wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===0")
     assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
-    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):

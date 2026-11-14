@@ -46,7 +46,9 @@ The wave has at most 384 triangles, one extra draw call and a fixed 31,104-byte
 GPU vertex buffer (13,824 occupied bytes at full wave size). Edited terrain uses
 the existing chunk resolution and cached sun shadows update after mesh edits.
 
-Native release CPU measurements are recorded in the evidence file. Rebuilding
+Native release CPU Scene updates measured a median 16.132 ms for the first cast
+and 38.894 ms with eight retained cuts (p95 40.131 ms for the eighth cast),
+without footprints or GPU work. Full samples are in [the evidence](evidence/sweep.json). Rebuilding
 edited terrain currently blocks the main thread and can cause frame spikes,
 especially with multiple retained cuts. Worker execution and faster array
 kernels remain necessary optimizations; these measurements are not browser FPS.

@@ -30,3 +30,26 @@ fn backend_obeys_xetal_opacity_and_reuses_draped_geometry() {
 fn backend_rejects_over_budget_commands() {
     assert!(Trail::default().replace(&[[0.0; 6]; 257], &FLAT).is_err());
 }
+
+#[test]
+fn terrain_edits_redrape_existing_footprints_without_changing_opacity() {
+    let mut trail = Trail::default();
+    trail
+        .replace(&[[0.0, 0.0, 0.0, 1.0, 0.0, 0.6]], &FLAT)
+        .unwrap();
+    let before = trail.marks[0].vertices;
+    let mut lowered = FLAT;
+    for point in lowered.as_chunks_mut::<3>().0 {
+        point[1] -= 0.65;
+    }
+    trail.redrape(&lowered);
+    for (old, new) in before
+        .as_chunks::<5>()
+        .0
+        .iter()
+        .zip(trail.marks[0].vertices.as_chunks::<5>().0)
+    {
+        assert!((new[1] - old[1] + 0.65).abs() < 0.0001);
+    }
+    assert_eq!(trail.marks[0].opacity, 0.6);
+}

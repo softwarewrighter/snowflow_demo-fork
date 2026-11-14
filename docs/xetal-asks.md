@@ -45,3 +45,20 @@ and the same workload runs from X_eTaL without text conversion. No new core
 resource type, syntax or effect rule is silently decided by this prototype.
 
 Reference: [existing extensions asks](https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/docs/xetal-asks.md).
+
+## Measured editable-terrain workload
+
+Sweep adds a concrete performance workload for worker execution, typed bulk
+arrays and faster array kernels. The current native release Scene update takes
+about 16 ms for one cut and 39 ms with eight retained cuts, excluding GPU/audio
+and footprints. See [measurements and reproduction](evidence/sweep.json).
+Application policy stays in the pure Sweep/TerrainBrush libraries; moving those
+rules into native application code would hide the language workload.
+
+Dirty chunks are committed atomically so collision and rendering agree. The
+current few-scalar Event transport and typed output capture do not provide a
+generic way to pass cached bulk arrays back into the evaluator. E1 would help
+replace this bridge and expose reusable cache/array capabilities. Worker jobs
+must preserve edit revisions and atomic publication, coalesce obsolete work,
+and bound queues and memory. This is local evidence for existing requirements,
+not a claim that a new upstream API or GPU compiler has been implemented.
