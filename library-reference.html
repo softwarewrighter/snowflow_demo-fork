@@ -1,4 +1,7 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Snowfield library reference</title><style>@font-face{font-family:JuliaMono;src:url(https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/JuliaMono-Regular.woff2)}body{max-width:1100px;margin:32px auto;padding:0 20px;background:#0b1421;color:#dce8f5;font:15px system-ui;line-height:1.6}a{color:#87cbe5}pre{overflow:auto;padding:20px;background:#08101a;font:13px/1.7 JuliaMono,monospace}section{padding:20px 0;border-top:1px solid #294258}code{font-family:JuliaMono,monospace}.c-builtin{color:#82b4ff}.c-userfunc,.c-libfunc{color:#7cdb95}.c-number,.c-exponent{color:#f0ce72}.c-string{color:#e8d89b}.c-comment,.c-doc{color:#9fc3ad}.c-symbol{color:#a1cfff}.c-error{color:#ff9999}</style><body><a href="./">Back to demo</a><h1>X_eTaL libraries used by the snowfield</h1><p>This page is generated from the exact imported modules. The program owns pure state updates and emits typed render/audio data; Rust supplies physics facts, execution scheduling, WebAudio and GPU resources.</p><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/docs/libraries.md">Architecture and native backend cross-reference</a></p><nav>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Snowfield library reference</title><style>@font-face{font-family:JuliaMono;src:url(https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/JuliaMono-Regular.woff2)}body{max-width:1100px;margin:32px auto;padding:0 20px;background:#0b1421;color:#dce8f5;font:15px system-ui;line-height:1.6}a{color:#87cbe5}pre{overflow:auto;padding:20px;background:#08101a;font:13px/1.7 JuliaMono,monospace}section{padding:20px 0;border-top:1px solid #294258}code{font-family:JuliaMono,monospace}.c-builtin{color:#82b4ff}.c-userfunc,.c-libfunc{color:#7cdb95}.c-number,.c-exponent{color:#f0ce72}.c-string{color:#e8d89b}.c-comment,.c-doc{color:#9fc3ad}.c-symbol{color:#a1cfff}.c-error{color:#ff9999}</style><body><a href="./">Back to demo</a><h1>X_eTaL libraries used by the snowfield</h1><p>This page is generated from the exact imported modules. The program owns pure state updates and emits typed render/audio data; Rust supplies physics facts, execution scheduling, WebAudio and GPU resources.</p><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/docs/libraries.md">Architecture and native backend cross-reference</a></p><nav>
+<a href="#ribbon-brush">RibbonBrush</a> &middot; 
+<a href="#ribbon">Ribbon</a> &middot; 
+<a href="#ribbon-surface">RibbonSurface</a> &middot; 
 <a href="#bloom">Bloom</a> &middot; 
 <a href="#bloom-brush">BloomBrush</a> &middot; 
 <a href="#snow-particles">SnowParticles</a> &middot; 
@@ -13,15 +16,224 @@
 <a href="#snow-host">SnowHost</a> &middot; 
 <a href="#snow-wind">SnowWind</a> &middot; 
 </nav>
-<section id="bloom"><h2>Bloom</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl">X_eTaL source</a> &middot; alias <code>bloom:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L7"><code>bloom:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L8"><code>bloom:t_arget</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L9"><code>bloom:c_ast</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L10"><code>bloom:t_ick</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L11"><code>bloom:a_ge</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L12"><code>bloom:c_ommand</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L21"><code>bloom:m_esh</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Bloom.xtl#L39"><code>bloom:p_articles</code></a></li>
+<section id="ribbon-brush"><h2>RibbonBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonBrush.xtl">X_eTaL source</a> &middot; alias <code>score:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonBrush.xtl#L4"><code>score:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonBrush.xtl#L5"><code>score:r_egion</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonBrush.xtl#L11"><code>score:u_pdate</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonBrush.xtl#L26"><code>score:d_elta</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> RibbonBrush: bounded shallow contact stamps, latest sixteen retained.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Rows: [serial x z radius]. Reference: library-reference.html#ribbon-brush</span>
+<span class="c-libfunc">ᵇʳᵘˢʰ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;TerrainBrush.xtl&quot;</span>
+<span class="c-libfunc">ˡs̲tart</span> ← { @ → <span class="c-number">0</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span> }
+<span class="c-libfunc">ˡr̲egion</span> ← { row →
+  x ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> row
+  z ← <span class="c-number">3</span> <span class="c-builtin">s̲elect</span> row
+  extent ← <span class="c-number">1.5</span> <span class="c-symbol">×</span> <span class="c-number">4</span> <span class="c-builtin">s̲elect</span> row
+  (x <span class="c-symbol">−</span> extent) <span class="c-builtin">c̲at</span> (x <span class="c-symbol">+</span> extent) <span class="c-builtin">c̲at</span> (z <span class="c-symbol">−</span> extent) <span class="c-builtin">c̲at</span> (z <span class="c-symbol">+</span> extent)
+}
+<span class="c-libfunc">ˡu̲pdate</span> ← { row history →
+  n ← <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> history
+  bounds ← <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> <span class="c-libfunc">ˡr̲egion</span> row
+  n <span class="c-symbol">=</span> <span class="c-number">0</span> ? (<span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> row, bounds)
+  last ← n <span class="c-builtin">s̲elect</span> history
+  (<span class="c-builtin">f̲irst</span> row) <span class="c-symbol">=</span> <span class="c-builtin">f̲irst</span> last ? ((<span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> history) <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> row, bounds)
+  n <span class="c-symbol">&lt;</span> <span class="c-number">16</span> ? (history <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> row, bounds)
+  ((<span class="c-number">1</span> <span class="c-builtin">d̲rop</span> history) <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> row, bounds <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> <span class="c-libfunc">ˡr̲egion</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> history))
+}
+<span class="c-libfunc">ʰs̲tamp</span> ← { (x, z) row →
+  dx ← x <span class="c-symbol">−</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> row
+  dz ← z <span class="c-symbol">−</span> <span class="c-number">3</span> <span class="c-builtin">s̲elect</span> row
+  radius ← (((dx <span class="c-symbol">×</span> dx) <span class="c-symbol">+</span> (dz <span class="c-symbol">×</span> dz)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">÷</span> <span class="c-number">4</span> <span class="c-builtin">s̲elect</span> row
+  <a href="library-reference.html#terrain-brush" title="TerrainBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᵇʳᵘˢʰs̲pot</span></a> (radius, <span class="c-number">0.22</span>, <span class="c-number">0.06</span>)
+}
+<span class="c-libfunc">ˡd̲elta</span> ← { (x, z) history →
+  (<span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> history) <span class="c-symbol">=</span> <span class="c-number">0</span> ? <span class="c-number">0.0</span> <span class="c-symbol">×</span> x
+  ((x, z) <span class="c-libfunc">ʰs̲tamp</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> history)) <span class="c-symbol">+</span> ((x, z) <span class="c-libfunc">ˡd̲elta</span> (<span class="c-number">1</span> <span class="c-builtin">d̲rop</span> history))
+}
+</pre></section>
+<section id="ribbon"><h2>Ribbon</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl">X_eTaL source</a> &middot; alias <code>ribbon:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L22"><code>ribbon:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L23"><code>ribbon:p_ose</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L27"><code>ribbon:p_ress</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L33"><code>ribbon:r_elease</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L66"><code>ribbon:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L83"><code>ribbon:c_ontact</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L94"><code>ribbon:m_esh</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L105"><code>ribbon:c_ommand</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L109"><code>ribbon:p_robe</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Ribbon.xtl#L112"><code>ribbon:s_tatus</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Ribbon: held path-history water stream, inertial release and shallow scoring.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> State: (mode clock released origin aim tip velocity history serial score).</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Modes: 0 idle, 1 held, 2 thrown, 3 draining. History: [x y z birth speed].</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#ribbon</span>
+<span class="c-libfunc">ˢᵗʳᵉᵃᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;RibbonSurface.xtl&quot;</span>
+<span class="c-libfunc">ʰu̲nit</span> ← { v →
+  x ← <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> v
+  y ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> v
+  z ← <span class="c-number">3</span> <span class="c-builtin">s̲elect</span> v
+  v <span class="c-symbol">÷</span> ((((x <span class="c-symbol">×</span> x) <span class="c-symbol">+</span> (y <span class="c-symbol">×</span> y) <span class="c-symbol">+</span> (z <span class="c-symbol">×</span> z)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">+</span> <span class="c-number">0.000000001</span>)
+}
+<span class="c-libfunc">ʰd̲irection</span> ← { aim →
+  yaw ← <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> aim
+  pitch ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> aim
+  ((<span class="c-builtin">s̲in</span> yaw) <span class="c-symbol">×</span> <span class="c-builtin">c̲os</span> pitch) <span class="c-builtin">c̲at</span> (<span class="c-builtin">s̲in</span> pitch) <span class="c-builtin">c̲at</span> ((<span class="c-builtin">n̲eg</span> <span class="c-builtin">c̲os</span> yaw) <span class="c-symbol">×</span> <span class="c-builtin">c̲os</span> pitch)
+}
+<span class="c-libfunc">ʰh̲and</span> ← { (origin, aim) →
+  yaw ← <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> aim
+  right ← (<span class="c-builtin">c̲os</span> yaw) <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">s̲in</span> yaw)
+  (origin <span class="c-symbol">+</span> (<span class="c-number">0.4</span> <span class="c-symbol">×</span> right) <span class="c-symbol">+</span> (<span class="c-number">0.8</span> <span class="c-symbol">×</span> <span class="c-libfunc">ʰd̲irection</span> aim)) <span class="c-symbol">−</span> <span class="c-number">0.0</span> <span class="c-number">0.35</span> <span class="c-number">0.0</span>
+}
+<span class="c-libfunc">ˡs̲tart</span> ← { @ → (<span class="c-number">0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span>, <span class="c-number">0</span>, (<span class="c-number">0</span>, <span class="c-number">-1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>)) }
+<span class="c-libfunc">ˡp̲ose</span> ← { (origin, aim) (mode, clock, released, old, facing, tip, velocity, history, serial, score) →
+  mode <span class="c-symbol">&gt;</span> <span class="c-number">1</span> ? (mode, clock, released, old, facing, tip, velocity, history, serial, score)
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score)
+}
+<span class="c-libfunc">ˡp̲ress</span> ← { (origin, aim) state →
+  (mode, clock, _, _, _, _, _, _, serial, score) ← state
+  mode <span class="c-symbol">=</span> <span class="c-number">1</span> ? state
+  tip ← (<span class="c-libfunc">ʰh̲and</span> (origin, aim)) <span class="c-symbol">+</span> <span class="c-libfunc">ʰd̲irection</span> aim
+  (<span class="c-number">1</span>, clock, clock, origin, aim, tip, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> tip <span class="c-builtin">c̲at</span> clock <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span>, serial <span class="c-symbol">+</span> <span class="c-number">1</span>, score)
+}
+<span class="c-libfunc">ˡr̲elease</span> ← { state →
+  (mode, clock, _, origin, aim, tip, velocity, history, serial, score) ← state
+  mode <span class="c-symbol">=</span> <span class="c-number">1</span> ? (<span class="c-number">2</span>, clock, clock, origin, aim, tip, velocity, history, serial, score)
+  state
+}
+<span class="c-libfunc">ʰd̲rive</span> ← { (dt, clock, flight, mode, origin, aim, tip, velocity) →
+  mode <span class="c-symbol">=</span> <span class="c-number">3</span> ? (tip, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>)
+  forward ← <span class="c-libfunc">ʰd̲irection</span> aim
+  yaw ← <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> aim
+  right ← (<span class="c-builtin">c̲os</span> yaw) <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">s̲in</span> yaw)
+  pitch ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> aim
+  up ← ((<span class="c-builtin">n̲eg</span> <span class="c-builtin">s̲in</span> yaw) <span class="c-symbol">×</span> <span class="c-builtin">s̲in</span> pitch) <span class="c-builtin">c̲at</span> (<span class="c-builtin">c̲os</span> pitch) <span class="c-builtin">c̲at</span> ((<span class="c-builtin">c̲os</span> yaw) <span class="c-symbol">×</span> <span class="c-builtin">s̲in</span> pitch)
+  mode <span class="c-symbol">=</span> <span class="c-number">1</span> ? { @ →
+    target ← (<span class="c-libfunc">ʰh̲and</span> (origin, aim)) <span class="c-symbol">+</span> (forward <span class="c-symbol">×</span> (<span class="c-number">4.0</span> <span class="c-symbol">+</span> (<span class="c-number">1.2</span> <span class="c-symbol">×</span> <span class="c-builtin">s̲in</span> (clock <span class="c-symbol">×</span> <span class="c-number">0.9</span>)))) <span class="c-symbol">+</span> (right <span class="c-symbol">×</span> (<span class="c-number">1.5</span> <span class="c-symbol">×</span> <span class="c-builtin">s̲in</span> (clock <span class="c-symbol">×</span> <span class="c-number">3.2</span>))) <span class="c-symbol">+</span> (up <span class="c-symbol">×</span> (<span class="c-number">0.8</span> <span class="c-symbol">×</span> <span class="c-builtin">s̲in</span> (clock <span class="c-symbol">×</span> <span class="c-number">6.4</span>)))
+    next ← velocity <span class="c-symbol">+</span> (dt <span class="c-symbol">×</span> ((<span class="c-number">35.0</span> <span class="c-symbol">×</span> (target <span class="c-symbol">−</span> tip)) <span class="c-symbol">−</span> (<span class="c-number">8.0</span> <span class="c-symbol">×</span> velocity)))
+    (tip <span class="c-symbol">+</span> (dt <span class="c-symbol">×</span> next), next)
+  } @
+  direction ← <span class="c-libfunc">ʰu̲nit</span> (forward <span class="c-symbol">+</span> <span class="c-number">0.0</span> <span class="c-number">0.18</span> <span class="c-number">0.0</span>)
+  desired ← (<span class="c-number">21.0</span> <span class="c-symbol">×</span> direction) <span class="c-symbol">−</span> (<span class="c-number">0.0</span> <span class="c-builtin">c̲at</span> (<span class="c-number">3.0</span> <span class="c-symbol">×</span> flight) <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span>)
+  next ← velocity <span class="c-symbol">+</span> (dt <span class="c-symbol">×</span> <span class="c-number">5.5</span> <span class="c-symbol">×</span> (desired <span class="c-symbol">−</span> velocity))
+  (tip <span class="c-symbol">+</span> (dt <span class="c-symbol">×</span> next), next)
+}
+<span class="c-libfunc">ʰh̲istory</span> ← { (clock, tip, velocity, mode) history →
+  speed ← (((<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> velocity) <span class="c-symbol">^</span> <span class="c-number">2</span>) <span class="c-symbol">+</span> ((<span class="c-number">2</span> <span class="c-builtin">s̲elect</span> velocity) <span class="c-symbol">^</span> <span class="c-number">2</span>) <span class="c-symbol">+</span> ((<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> velocity) <span class="c-symbol">^</span> <span class="c-number">2</span>)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>
+  next ← { @ →
+    mode <span class="c-symbol">=</span> <span class="c-number">3</span> ? history
+    history <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> tip <span class="c-builtin">c̲at</span> clock <span class="c-builtin">c̲at</span> speed
+  } @
+  columns ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> next
+  kept ← ((clock <span class="c-symbol">−</span> <span class="c-number">4</span> <span class="c-builtin">s̲elect</span> columns) <span class="c-symbol">&lt;</span> <span class="c-number">1.25</span>) <span class="c-builtin">r̲eplicate</span> next
+  (<span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> kept) <span class="c-symbol">&gt;</span> <span class="c-number">32</span> ? <span class="c-number">-32</span> <span class="c-builtin">t̲ake</span> kept
+  kept
+}
+<span class="c-libfunc">ˡt̲ick</span> ← { dt state →
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score) ← state
+  time ← clock <span class="c-symbol">+</span> dt
+  mode <span class="c-symbol">=</span> <span class="c-number">0</span> ? (mode, time, released, origin, aim, tip, velocity, history, serial, score)
+  ((mode <span class="c-symbol">=</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> ((time <span class="c-symbol">−</span> released) <span class="c-symbol">≥</span> <span class="c-number">2.5</span>)) ? (<span class="c-number">0</span>, time, released, origin, aim, tip, velocity, <span class="c-number">0</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span>, serial, score)
+  (point, speed) ← <span class="c-libfunc">ʰd̲rive</span> (dt, time, time <span class="c-symbol">−</span> released, mode, origin, aim, tip, velocity)
+  next ← (time, point, speed, mode) <span class="c-libfunc">ʰh̲istory</span> history
+  (<span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> next) <span class="c-symbol">=</span> <span class="c-number">0</span> ? (<span class="c-number">0</span>, time, released, origin, aim, point, speed, next, serial, score)
+  (mode, time, released, origin, aim, point, speed, next, serial, score)
+}
+<span class="c-libfunc">ʰs̲core</span> ← { (clock, tip) (count, last, point) →
+  delta ← tip <span class="c-symbol">−</span> point
+  distance ← (((<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> delta) <span class="c-symbol">^</span> <span class="c-number">2</span>) <span class="c-symbol">+</span> ((<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> delta) <span class="c-symbol">^</span> <span class="c-number">2</span>)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>
+  (clock <span class="c-symbol">−</span> last) <span class="c-symbol">&lt;</span> <span class="c-number">0.12</span> ? (count, last, point)
+  ((count <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (distance <span class="c-symbol">&lt;</span> <span class="c-number">0.35</span>)) ? (count, last, point)
+  (count <span class="c-symbol">+</span> <span class="c-number">1</span>, clock, tip)
+}
+<span class="c-libfunc">ˡc̲ontact</span> ← { ground state →
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score) ← state
+  ((mode <span class="c-symbol">=</span> <span class="c-number">1</span>) <span class="c-symbol">+</span> (mode <span class="c-symbol">=</span> <span class="c-number">2</span>)) <span class="c-symbol">=</span> <span class="c-number">0</span> ? state
+  (<span class="c-number">2</span> <span class="c-builtin">s̲elect</span> tip) <span class="c-symbol">&gt;</span> (ground <span class="c-symbol">+</span> <span class="c-number">0.18</span>) ? state
+  point ← (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> tip) <span class="c-builtin">c̲at</span> (ground <span class="c-symbol">+</span> <span class="c-number">0.08</span>) <span class="c-builtin">c̲at</span> (<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> tip)
+  next ← (clock, point) <span class="c-libfunc">ʰs̲core</span> score
+  motion ← (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> velocity) <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span> <span class="c-builtin">c̲at</span> (<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> velocity)
+  rows ← (<span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> history) <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> point <span class="c-builtin">c̲at</span> clock <span class="c-builtin">c̲at</span> <span class="c-number">0.0</span>
+  mode <span class="c-symbol">=</span> <span class="c-number">2</span> ? (<span class="c-number">3</span>, clock, released, origin, aim, point, motion, rows, serial, next)
+  (mode, clock, released, origin, aim, point, motion, rows, serial, next)
+}
+<span class="c-libfunc">ˡm̲esh</span> ← { (_, _, _, _, _, _, _, history, _, _) →
+  n ← <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> history
+  n <span class="c-symbol">&lt;</span> <span class="c-number">2</span> ? <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span>
+  columns ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> history
+  u ← (<span class="c-builtin">f̲loat</span> ((<span class="c-builtin">r̲ange</span> n) <span class="c-symbol">−</span> <span class="c-number">1</span>)) <span class="c-symbol">÷</span> <span class="c-builtin">f̲loat</span> (n <span class="c-symbol">−</span> <span class="c-number">1</span>)
+  taper ← ((<span class="c-builtin">s̲in</span> (<span class="c-number">3.1415926536</span> <span class="c-symbol">×</span> u)) <span class="c-symbol">+</span> <span class="c-builtin">a̲bs</span> <span class="c-builtin">s̲in</span> (<span class="c-number">3.1415926536</span> <span class="c-symbol">×</span> u)) <span class="c-symbol">÷</span> <span class="c-number">2.0</span>
+  radius ← (<span class="c-number">0.205</span> <span class="c-symbol">×</span> (taper <span class="c-symbol">^</span> <span class="c-number">0.5</span>)) <span class="c-symbol">÷</span> (<span class="c-number">1.0</span> <span class="c-symbol">+</span> (<span class="c-number">0.03</span> <span class="c-symbol">×</span> <span class="c-number">5</span> <span class="c-builtin">s̲elect</span> columns))
+  spin ← <span class="c-number">4.0</span> <span class="c-symbol">×</span> <span class="c-number">4</span> <span class="c-builtin">s̲elect</span> columns
+  xyz ← <span class="c-builtin">r̲avel</span> <span class="c-number">3</span> <span class="c-builtin">t̲ake</span> columns
+  <a href="library-reference.html#ribbon-surface" title="RibbonSurface API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ˢᵗʳᵉᵃᵐm̲esh</span></a> (<span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> ((<span class="c-number">5</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> xyz <span class="c-builtin">c̲at</span> radius <span class="c-builtin">c̲at</span> spin))
+}
+<span class="c-libfunc">ˡc̲ommand</span> ← { (_, _, _, _, _, _, _, _, _, score) →
+  (count, _, tip) ← score
+  (<span class="c-builtin">f̲loat</span> count) <span class="c-builtin">c̲at</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> tip) <span class="c-builtin">c̲at</span> (<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> tip) <span class="c-builtin">c̲at</span> <span class="c-number">1.6</span>
+}
+<span class="c-libfunc">ˡp̲robe</span> ← { (mode, _, _, _, _, tip, _, _, _, _) →
+  (<span class="c-builtin">f̲loat</span> ((mode <span class="c-symbol">=</span> <span class="c-number">1</span>) <span class="c-symbol">+</span> (mode <span class="c-symbol">=</span> <span class="c-number">2</span>))) <span class="c-builtin">c̲at</span> tip
+}
+<span class="c-libfunc">ˡs̲tatus</span> ← { (mode, _, _, _, _, _, _, history, _, _) → mode <span class="c-builtin">c̲at</span> <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> history }
+</pre></section>
+<section id="ribbon-surface"><h2>RibbonSurface</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonSurface.xtl">X_eTaL source</a> &middot; alias <code>stream:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/RibbonSurface.xtl#L29"><code>stream:m_esh</code></a></li>
+</ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> RibbonSurface: elliptical rings along an arbitrary 3D spine, with stable frames.</span>
+<span class="c-doc">⍝│</span><span class="c-doc"> Input columns [x y z radius twist]. Reference: library-reference.html#ribbon-surface</span>
+<span class="c-libfunc">ʰf̲rames</span> ← { spine →
+  n ← <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> spine
+  ids ← <span class="c-builtin">r̲ange</span> n
+  previous ← (ids <span class="c-symbol">−</span> (ids <span class="c-symbol">&gt;</span> <span class="c-number">1</span>)) <span class="c-builtin">s̲elect</span> spine
+  following ← (ids <span class="c-symbol">+</span> (ids <span class="c-symbol">&lt;</span> n)) <span class="c-builtin">s̲elect</span> spine
+  delta ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (following <span class="c-symbol">−</span> previous)
+  dx ← <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> delta
+  dy ← <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> delta
+  dz ← <span class="c-number">3</span> <span class="c-builtin">s̲elect</span> delta
+  length ← (((dx <span class="c-symbol">×</span> dx) <span class="c-symbol">+</span> (dy <span class="c-symbol">×</span> dy) <span class="c-symbol">+</span> (dz <span class="c-symbol">×</span> dz)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">+</span> <span class="c-number">0.000000001</span>
+  tx ← dx <span class="c-symbol">÷</span> length
+  ty ← dy <span class="c-symbol">÷</span> length
+  tz ← dz <span class="c-symbol">÷</span> length
+  vertical ← <span class="c-builtin">f̲loat</span> ((<span class="c-builtin">a̲bs</span> ty) <span class="c-symbol">&gt;</span> <span class="c-number">0.9</span>)
+  ax ← (<span class="c-builtin">n̲eg</span> tz) <span class="c-symbol">×</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> vertical)
+  ay ← tz <span class="c-symbol">×</span> vertical
+  az ← (tx <span class="c-symbol">×</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> vertical)) <span class="c-symbol">−</span> (ty <span class="c-symbol">×</span> vertical)
+  norm ← (((ax <span class="c-symbol">×</span> ax) <span class="c-symbol">+</span> (ay <span class="c-symbol">×</span> ay) <span class="c-symbol">+</span> (az <span class="c-symbol">×</span> az)) <span class="c-symbol">^</span> <span class="c-number">0.5</span>) <span class="c-symbol">+</span> <span class="c-number">0.000000001</span>
+  rx ← ax <span class="c-symbol">÷</span> norm
+  ry ← ay <span class="c-symbol">÷</span> norm
+  rz ← az <span class="c-symbol">÷</span> norm
+  ux ← (ry <span class="c-symbol">×</span> tz) <span class="c-symbol">−</span> (rz <span class="c-symbol">×</span> ty)
+  uy ← (rz <span class="c-symbol">×</span> tx) <span class="c-symbol">−</span> (rx <span class="c-symbol">×</span> tz)
+  uz ← (rx <span class="c-symbol">×</span> ty) <span class="c-symbol">−</span> (ry <span class="c-symbol">×</span> tx)
+  <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> ((<span class="c-number">6</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> rx <span class="c-builtin">c̲at</span> ry <span class="c-builtin">c̲at</span> rz <span class="c-builtin">c̲at</span> ux <span class="c-builtin">c̲at</span> uy <span class="c-builtin">c̲at</span> uz)
+}
+<span class="c-libfunc">ˡm̲esh</span> ← { spine →
+  n ← <span class="c-builtin">f̲irst</span> <span class="c-builtin">s̲hape</span> spine
+  n <span class="c-symbol">&lt;</span> <span class="c-number">2</span> ? <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.0</span>
+  k ← (<span class="c-builtin">r̲ange</span> (n <span class="c-symbol">×</span> <span class="c-number">9</span>)) <span class="c-symbol">−</span> <span class="c-number">1</span>
+  ids ← <span class="c-number">1</span> <span class="c-symbol">+</span> (k <span class="c-builtin">d̲iv</span> <span class="c-number">9</span>)
+  rows ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (ids <span class="c-builtin">s̲elect</span> spine)
+  basis ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (ids <span class="c-builtin">s̲elect</span> <span class="c-libfunc">ʰf̲rames</span> spine)
+  angle ← ((<span class="c-number">6.2831853072</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (k <span class="c-builtin">m̲od</span> <span class="c-number">9</span>)) <span class="c-symbol">÷</span> <span class="c-number">8.0</span>) <span class="c-symbol">+</span> (<span class="c-number">5</span> <span class="c-builtin">s̲elect</span> rows)
+  side ← (<span class="c-number">1.55</span> <span class="c-symbol">×</span> <span class="c-builtin">c̲os</span> angle) <span class="c-symbol">×</span> (<span class="c-number">4</span> <span class="c-builtin">s̲elect</span> rows)
+  up ← (<span class="c-builtin">s̲in</span> angle) <span class="c-symbol">×</span> (<span class="c-number">4</span> <span class="c-builtin">s̲elect</span> rows)
+  x ← (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> rows) <span class="c-symbol">+</span> ((<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> side) <span class="c-symbol">+</span> ((<span class="c-number">4</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> up)
+  y ← (<span class="c-number">2</span> <span class="c-builtin">s̲elect</span> rows) <span class="c-symbol">+</span> ((<span class="c-number">2</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> side) <span class="c-symbol">+</span> ((<span class="c-number">5</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> up)
+  z ← (<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> rows) <span class="c-symbol">+</span> ((<span class="c-number">3</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> side) <span class="c-symbol">+</span> ((<span class="c-number">6</span> <span class="c-builtin">s̲elect</span> basis) <span class="c-symbol">×</span> up)
+  points ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> ((<span class="c-number">3</span> <span class="c-builtin">c̲at</span> (n <span class="c-symbol">×</span> <span class="c-number">9</span>)) <span class="c-builtin">r̲eshape</span> x <span class="c-builtin">c̲at</span> y <span class="c-builtin">c̲at</span> z)
+  cells ← (<span class="c-builtin">r̲ange</span> ((n <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-symbol">×</span> <span class="c-number">8</span>)) <span class="c-symbol">−</span> <span class="c-number">1</span>
+  base ← ((cells <span class="c-builtin">d̲iv</span> <span class="c-number">8</span>) <span class="c-symbol">×</span> <span class="c-number">9</span>) <span class="c-symbol">+</span> (cells <span class="c-builtin">m̲od</span> <span class="c-number">8</span>)
+  indices ← <span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-builtin">r̲avel</span> base <span class="c-symbol">'</span><span class="c-symbol">+</span> <span class="c-builtin">t̲able</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">9</span> <span class="c-number">1</span> <span class="c-number">10</span> <span class="c-number">9</span>
+  (((n <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-symbol">×</span> <span class="c-number">16</span>) <span class="c-builtin">c̲at</span> <span class="c-number">3</span> <span class="c-number">3</span>) <span class="c-builtin">r̲eshape</span> indices <span class="c-builtin">s̲elect</span> points
+}
+</pre></section>
+<section id="bloom"><h2>Bloom</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl">X_eTaL source</a> &middot; alias <code>bloom:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L7"><code>bloom:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L8"><code>bloom:t_arget</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L9"><code>bloom:c_ast</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L10"><code>bloom:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L11"><code>bloom:a_ge</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L12"><code>bloom:c_ommand</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L21"><code>bloom:m_esh</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Bloom.xtl#L39"><code>bloom:p_articles</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Bloom: spell 3, targeted column, one crater and four-second particle fallout.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> State: (serial, clock, birth, targetXYZ). Reference: library-reference.html#bloom</span>
 <span class="c-libfunc">ᵇʳᵘˢʰ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;TerrainBrush.xtl&quot;</span>
@@ -89,11 +301,11 @@
   <a href="library-reference.html#snow-particles" title="SnowParticles API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᵖᵒʷᵈᵉʳr̲ows</span></a> (point, size, alpha, spin)
 }
 </pre></section>
-<section id="bloom-brush"><h2>BloomBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/BloomBrush.xtl">X_eTaL source</a> &middot; alias <code>crater:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/BloomBrush.xtl#L4"><code>crater:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/BloomBrush.xtl#L5"><code>crater:r_egion</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/BloomBrush.xtl#L10"><code>crater:u_pdate</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/BloomBrush.xtl#L25"><code>crater:d_elta</code></a></li>
+<section id="bloom-brush"><h2>BloomBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/BloomBrush.xtl">X_eTaL source</a> &middot; alias <code>crater:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/BloomBrush.xtl#L4"><code>crater:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/BloomBrush.xtl#L5"><code>crater:r_egion</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/BloomBrush.xtl#L10"><code>crater:u_pdate</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/BloomBrush.xtl#L25"><code>crater:d_elta</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> BloomBrush: immutable latest-four radial crater/rim history and dirty bounds.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Rows: [serial centerX centerZ]. Reference: library-reference.html#bloom-brush</span>
 <span class="c-libfunc">ᵇʳᵘˢʰ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;TerrainBrush.xtl&quot;</span>
@@ -123,11 +335,11 @@
   ((x, z) <span class="c-libfunc">ʰs̲tamp</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> history)) <span class="c-symbol">+</span> ((x, z) <span class="c-libfunc">ˡd̲elta</span> (<span class="c-number">1</span> <span class="c-builtin">d̲rop</span> history))
 }
 </pre></section>
-<section id="snow-particles"><h2>SnowParticles</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowParticles.xtl">X_eTaL source</a> &middot; alias <code>powder:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowParticles.xtl#L4"><code>powder:h_ash</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowParticles.xtl#L8"><code>powder:b_allistic</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowParticles.xtl#L13"><code>powder:r_ows</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowParticles.xtl#L18"><code>powder:f_ade</code></a></li>
+<section id="snow-particles"><h2>SnowParticles</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowParticles.xtl">X_eTaL source</a> &middot; alias <code>powder:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowParticles.xtl#L4"><code>powder:h_ash</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowParticles.xtl#L8"><code>powder:b_allistic</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowParticles.xtl#L13"><code>powder:r_ows</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowParticles.xtl#L18"><code>powder:f_ade</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowParticles: pure analytic particle kinematics and six-column render rows.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Rows: [x y z size opacity spin]. Reference: library-reference.html#snow-particles</span>
 <span class="c-libfunc">ᵇʳᵘˢʰ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;TerrainBrush.xtl&quot;</span>
@@ -151,11 +363,12 @@
   born <span class="c-symbol">×</span> dying
 }
 </pre></section>
-<section id="terrain-brush"><h2>TerrainBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/TerrainBrush.xtl">X_eTaL source</a> &middot; alias <code>brush:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/TerrainBrush.xtl#L3"><code>brush:c_lamp</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/TerrainBrush.xtl#L7"><code>brush:p_rofile</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/TerrainBrush.xtl#L13"><code>brush:b_ound</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/TerrainBrush.xtl#L16"><code>brush:r_adial</code></a></li>
+<section id="terrain-brush"><h2>TerrainBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl">X_eTaL source</a> &middot; alias <code>brush:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl#L3"><code>brush:c_lamp</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl#L7"><code>brush:p_rofile</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl#L13"><code>brush:b_ound</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl#L16"><code>brush:r_adial</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/TerrainBrush.xtl#L22"><code>brush:s_pot</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> TerrainBrush: pure signed snow cut/bank profile, shared by procedural edits.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#terrain-brush</span>
 <span class="c-libfunc">ˡc̲lamp</span> ← { x →
@@ -177,12 +390,18 @@
   edge ← <span class="c-libfunc">ˡc̲lamp</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> (rim <span class="c-symbol">×</span> rim))
   (bank <span class="c-symbol">×</span> edge <span class="c-symbol">×</span> edge) <span class="c-symbol">−</span> (cut <span class="c-symbol">×</span> center <span class="c-symbol">×</span> center)
 }
+<span class="c-libfunc">ˡs̲pot</span> ← { (radius, cut, bank) →
+  center ← <span class="c-libfunc">ˡc̲lamp</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> (radius <span class="c-symbol">×</span> radius))
+  ring ← (radius <span class="c-symbol">−</span> <span class="c-number">1.0</span>) <span class="c-symbol">÷</span> <span class="c-number">0.5</span>
+  rim ← <span class="c-libfunc">ˡc̲lamp</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> (ring <span class="c-symbol">×</span> ring))
+  (bank <span class="c-symbol">×</span> rim <span class="c-symbol">×</span> rim) <span class="c-symbol">−</span> (cut <span class="c-symbol">×</span> center <span class="c-symbol">×</span> center)
+}
 </pre></section>
-<section id="sweep-brush"><h2>SweepBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweepBrush.xtl">X_eTaL source</a> &middot; alias <code>carve:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweepBrush.xtl#L5"><code>carve:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweepBrush.xtl#L6"><code>carve:r_egion</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweepBrush.xtl#L18"><code>carve:u_pdate</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweepBrush.xtl#L44"><code>carve:d_elta</code></a></li>
+<section id="sweep-brush"><h2>SweepBrush</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweepBrush.xtl">X_eTaL source</a> &middot; alias <code>carve:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweepBrush.xtl#L5"><code>carve:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweepBrush.xtl#L6"><code>carve:r_egion</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweepBrush.xtl#L18"><code>carve:u_pdate</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweepBrush.xtl#L44"><code>carve:d_elta</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SweepBrush: bounded immutable curved channel history and conservative bounds.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Rows: [serial originX originZ yaw reach]. Latest eight casts are retained.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#sweep-brush</span>
@@ -228,9 +447,9 @@
 }
 <span class="c-libfunc">ˡd̲elta</span> ← { point history → <a href="library-reference.html#terrain-brush" title="TerrainBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᵇʳᵘˢʰb̲ound</span></a> (point <span class="c-libfunc">ʰs̲um</span> history) }
 </pre></section>
-<section id="swept-surface"><h2>SweptSurface</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweptSurface.xtl">X_eTaL source</a> &middot; alias <code>tube:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweptSurface.xtl#L4"><code>tube:s_heet</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SweptSurface.xtl#L20"><code>tube:t_ube</code></a></li>
+<section id="swept-surface"><h2>SweptSurface</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweptSurface.xtl">X_eTaL source</a> &middot; alias <code>tube:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweptSurface.xtl#L4"><code>tube:s_heet</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SweptSurface.xtl#L20"><code>tube:t_ube</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SweptSurface: sweep a curled seven-sample section along an N-row spine.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Spine columns: [x y z radialX radialZ height]. Output: triangle array.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#swept-surface</span>
@@ -267,13 +486,13 @@
   (((n <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-symbol">×</span> <span class="c-number">32</span>) <span class="c-builtin">c̲at</span> <span class="c-number">3</span> <span class="c-number">3</span>) <span class="c-builtin">r̲eshape</span> ids <span class="c-builtin">s̲elect</span> points
 }
 </pre></section>
-<section id="sweep"><h2>Sweep</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl">X_eTaL source</a> &middot; alias <code>sweep:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L7"><code>sweep:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L8"><code>sweep:c_ast</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L9"><code>sweep:t_ick</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L13"><code>sweep:r_each</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L14"><code>sweep:c_ommand</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Sweep.xtl#L18"><code>sweep:m_esh</code></a></li>
+<section id="sweep"><h2>Sweep</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl">X_eTaL source</a> &middot; alias <code>sweep:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L7"><code>sweep:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L8"><code>sweep:c_ast</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L9"><code>sweep:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L13"><code>sweep:r_each</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L14"><code>sweep:c_ommand</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Sweep.xtl#L18"><code>sweep:m_esh</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Sweep: spell 1, a moving crescent of slush; recast restarts the active wave.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> State: (serial, time, point, yaw). X_eTaL owns trajectory and deformation command.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#sweep</span>
@@ -311,12 +530,12 @@
   <a href="library-reference.html#swept-surface" title="SweptSurface API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᵗᵘᵇᵉs̲heet</span></a> (<span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (<span class="c-number">6</span> <span class="c-number">33</span> <span class="c-builtin">r̲eshape</span> x <span class="c-builtin">c̲at</span> y <span class="c-builtin">c̲at</span> z <span class="c-builtin">c̲at</span> rx <span class="c-builtin">c̲at</span> rz <span class="c-builtin">c̲at</span> height))
 }
 </pre></section>
-<section id="crystallise"><h2>Crystallise</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl">X_eTaL source</a> &middot; alias <code>ice:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl#L6"><code>ice:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl#L7"><code>ice:c_ast</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl#L12"><code>ice:t_ick</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl#L13"><code>ice:g_rowing</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Crystallise.xtl#L62"><code>ice:m_esh</code></a></li>
+<section id="crystallise"><h2>Crystallise</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl">X_eTaL source</a> &middot; alias <code>ice:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl#L6"><code>ice:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl#L7"><code>ice:c_ast</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl#L12"><code>ice:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl#L13"><code>ice:g_rowing</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Crystallise.xtl#L62"><code>ice:m_esh</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Crystallise: original spell 4, bounded golden-angle hexagonal ice growth.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Public API: l:s_tart @, l:c_ast (point, yaw) state, l:t_ick dt state, l:m_esh state.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> State: (time, N by 4 casts [x z yaw birth]); latest four formations persist.</span>
@@ -385,17 +604,19 @@
   ((n <span class="c-symbol">×</span> <span class="c-number">216</span>) <span class="c-builtin">c̲at</span> <span class="c-number">3</span> <span class="c-number">3</span>) <span class="c-builtin">r̲eshape</span> <span class="c-libfunc">ʰp̲oints</span> state
 }
 </pre></section>
-<section id="snow-terrain"><h2>SnowTerrain</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowTerrain.xtl">X_eTaL source</a> &middot; alias <code>snow:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowTerrain.xtl#L24"><code>snow:h_eight</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowTerrain.xtl#L31"><code>snow:m_esh</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowTerrain.xtl#L32"><code>snow:d_eformed</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowTerrain.xtl#L33"><code>snow:c_arved</code></a></li>
+<section id="snow-terrain"><h2>SnowTerrain</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl">X_eTaL source</a> &middot; alias <code>snow:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl#L25"><code>snow:h_eight</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl#L32"><code>snow:m_esh</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl#L33"><code>snow:d_eformed</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl#L34"><code>snow:c_arved</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowTerrain.xtl#L35"><code>snow:s_cored</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowTerrain: deterministic stationary world-space snow and ice chunks.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Public API: l:h_eight (x, z), l:m_esh (chunkX, chunkZ).</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-terrain</span>
 <span class="c-libfunc">ᶜᵃʳᵛᵉ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;SweepBrush.xtl&quot;</span>
 <span class="c-libfunc">ᶜʳᵃᵗᵉʳ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;BloomBrush.xtl&quot;</span>
 <span class="c-libfunc">ᵇʳᵘˢʰ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;TerrainBrush.xtl&quot;</span>
+<span class="c-libfunc">ˢᶜᵒʳᵉ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;RibbonBrush.xtl&quot;</span>
 <span class="c-libfunc">ʰh̲ash</span> ← { (x, z) →
   k ← (<span class="c-builtin">a̲bs</span> ((x <span class="c-symbol">×</span> <span class="c-number">73856093</span>) <span class="c-symbol">+</span> (z <span class="c-symbol">×</span> <span class="c-number">19349663</span>))) <span class="c-builtin">m̲od</span> <span class="c-number">104729</span>
   (<span class="c-builtin">f̲loat</span> (((k <span class="c-symbol">×</span> k) <span class="c-symbol">+</span> <span class="c-number">17389</span>) <span class="c-builtin">m̲od</span> <span class="c-number">104729</span>)) <span class="c-symbol">÷</span> <span class="c-number">104729.0</span>
@@ -422,11 +643,12 @@
 }
 <span class="c-libfunc">ˡm̲esh</span> ← { chunk → <span class="c-libfunc">ˡd̲eformed</span> (chunk, <a href="library-reference.html#sweep-brush" title="SweepBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜᵃʳᵛᵉs̲tart</span></a> @) }
 <span class="c-libfunc">ˡd̲eformed</span> ← { (chunk, history) → <span class="c-libfunc">ˡc̲arved</span> (chunk, history, <a href="library-reference.html#bloom-brush" title="BloomBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜʳᵃᵗᵉʳs̲tart</span></a> @) }
-<span class="c-libfunc">ˡc̲arved</span> ← { ((cx, cz), history, blooms) →
+<span class="c-libfunc">ˡc̲arved</span> ← { (chunk, history, blooms) → <span class="c-libfunc">ˡs̲cored</span> (chunk, history, blooms, <a href="library-reference.html#ribbon-brush" title="RibbonBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ˢᶜᵒʳᵉs̲tart</span></a> @) }
+<span class="c-libfunc">ˡs̲cored</span> ← { ((cx, cz), history, blooms, scores) →
   k ← (<span class="c-builtin">r̲ange</span> <span class="c-number">289</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>
   x ← (<span class="c-number">2.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (k <span class="c-builtin">d̲iv</span> <span class="c-number">17</span>)) <span class="c-symbol">+</span> (<span class="c-number">32.0</span> <span class="c-symbol">×</span> cx)
   z ← (<span class="c-number">2.0</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (k <span class="c-builtin">m̲od</span> <span class="c-number">17</span>)) <span class="c-symbol">+</span> (<span class="c-number">32.0</span> <span class="c-symbol">×</span> cz)
-  delta ← ((x, z) <a href="library-reference.html#sweep-brush" title="SweepBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜᵃʳᵛᵉd̲elta</span></a> history) <span class="c-symbol">+</span> ((x, z) <a href="library-reference.html#bloom-brush" title="BloomBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜʳᵃᵗᵉʳd̲elta</span></a> blooms)
+  delta ← ((x, z) <a href="library-reference.html#sweep-brush" title="SweepBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜᵃʳᵛᵉd̲elta</span></a> history) <span class="c-symbol">+</span> ((x, z) <a href="library-reference.html#bloom-brush" title="BloomBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᶜʳᵃᵗᵉʳd̲elta</span></a> blooms) <span class="c-symbol">+</span> ((x, z) <a href="library-reference.html#ribbon-brush" title="RibbonBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ˢᶜᵒʳᵉd̲elta</span></a> scores)
   y ← (<span class="c-libfunc">ˡh̲eight</span> (x, z)) <span class="c-symbol">+</span> <a href="library-reference.html#terrain-brush" title="TerrainBrush API and source" target="_blank" rel="noopener noreferrer"><span class="c-libfunc">ᵇʳᵘˢʰb̲ound</span></a> delta
   points ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (<span class="c-number">3</span> <span class="c-number">289</span> <span class="c-builtin">r̲eshape</span> x <span class="c-builtin">c̲at</span> y <span class="c-builtin">c̲at</span> z)
   cell ← (<span class="c-builtin">r̲ange</span> <span class="c-number">256</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>
@@ -436,14 +658,14 @@
 }
 
 </pre></section>
-<section id="footsteps"><h2>Footsteps</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl">X_eTaL source</a> &middot; alias <code>feet:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L6"><code>feet:s_tart</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L7"><code>feet:c_ount</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L8"><code>feet:l_ands</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L9"><code>feet:w_ind</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L10"><code>feet:t_ick</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L18"><code>feet:u_pdate</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/Footsteps.xtl#L36"><code>feet:v_iew</code></a></li>
+<section id="footsteps"><h2>Footsteps</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl">X_eTaL source</a> &middot; alias <code>feet:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L6"><code>feet:s_tart</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L7"><code>feet:c_ount</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L8"><code>feet:l_ands</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L9"><code>feet:w_ind</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L10"><code>feet:t_ick</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L18"><code>feet:u_pdate</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/Footsteps.xtl#L36"><code>feet:v_iew</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> Footsteps: pure boot placement, walking/landing events and wind-driven aging.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> State: (last point, travel, side, steps, landings, time, snow exposure, marks).</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Stored marks: N by 5 [x z yaw side birthExposure]; view adds opacity column.</span>
@@ -487,9 +709,9 @@
   <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> ((<span class="c-number">6</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> (<span class="c-builtin">r̲avel</span> columns) <span class="c-builtin">c̲at</span> alpha)
 }
 </pre></section>
-<section id="snow-audio"><h2>SnowAudio</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowAudio.xtl">X_eTaL source</a> &middot; alias <code>sfx:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowAudio.xtl#L9"><code>sfx:s_ilent</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowAudio.xtl#L10"><code>sfx:c_ommand</code></a></li>
+<section id="snow-audio"><h2>SnowAudio</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowAudio.xtl">X_eTaL source</a> &middot; alias <code>sfx:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowAudio.xtl#L9"><code>sfx:s_ilent</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowAudio.xtl#L10"><code>sfx:c_ommand</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowAudio: semantic snow events to WebAudio host commands [buffer gain rate].</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> 0 is silence, 1 a walking crunch, 2 a landing thud. The host executes commands.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-audio</span>
@@ -506,10 +728,10 @@
   <span class="c-libfunc">ˡs̲ilent</span> @
 }
 </pre></section>
-<section id="snow-host"><h2>SnowHost</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowHost.xtl">X_eTaL source</a> &middot; alias <code>host:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowHost.xtl#L5"><code>host:n_ext!</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowHost.xtl#L6"><code>host:c_hunk</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowHost.xtl#L7"><code>host:p_ose</code></a></li>
+<section id="snow-host"><h2>SnowHost</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowHost.xtl">X_eTaL source</a> &middot; alias <code>host:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowHost.xtl#L5"><code>host:n_ext!</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowHost.xtl#L6"><code>host:c_hunk</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowHost.xtl#L7"><code>host:p_ose</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowHost: facade for the current Rust host's queued Event transport.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> move carries world x/z; down/up carries yaw/impact with grounded 1/0.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> choose requests chunk coordinates. Dense output stays in the typed frame.</span>
@@ -521,9 +743,9 @@
   (point, <span class="c-builtin">f̲irst</span> at, grounded, <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> at)
 }
 </pre></section>
-<section id="snow-wind"><h2>SnowWind</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowWind.xtl">X_eTaL source</a> &middot; alias <code>wind:</code></p><h3>Public functions</h3><ul>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowWind.xtl#L4"><code>wind:s_trength</code></a></li>
-<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/5f0baf71685096f2f9fc42017004361a8de6c2c8/components/world/libs/SnowWind.xtl#L11"><code>wind:o_pacity</code></a></li>
+<section id="snow-wind"><h2>SnowWind</h2><p><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowWind.xtl">X_eTaL source</a> &middot; alias <code>wind:</code></p><h3>Public functions</h3><ul>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowWind.xtl#L4"><code>wind:s_trength</code></a></li>
+<li><a href="https://github.com/softwarewrighter/snowflow_demo-fork/blob/d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9/components/world/libs/SnowWind.xtl#L11"><code>wind:o_pacity</code></a></li>
 </ul><h3>Source as rendered</h3><pre><span class="c-doc">⍝│</span><span class="c-doc"> SnowWind: deterministic gust strength and snow-fill opacity, both pure.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Gusts repeat every 12 seconds. Marks vanish after 25 units of wind exposure.</span>
 <span class="c-doc">⍝│</span><span class="c-doc"> Reference: library-reference.html#snow-wind</span>
@@ -540,4 +762,4 @@
   cap <span class="c-symbol">×</span> cap
 }
 </pre></section>
-<footer>Copyright (c) 2026 Michael A Wright &middot; MIT License &middot; <a href="https://github.com/softwarewrighter/snowflow_demo-fork">Repository</a> &middot; Source 5f0baf71685096f2f9fc42017004361a8de6c2c8</footer></body></html>
+<footer>Copyright (c) 2026 Michael A Wright &middot; MIT License &middot; <a href="https://github.com/softwarewrighter/snowflow_demo-fork">Repository</a> &middot; Source d8c44e69f8b6d324f8f9bafce7c4aa4786f751b9</footer></body></html>
