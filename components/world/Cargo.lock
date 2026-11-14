@@ -1202,6 +1202,15 @@ name = "xetal-world-surface"
 version = "0.1.0"
 
 [[package]]
+name = "xetal-world-sweep"
+version = "0.1.0"
+dependencies = [
+ "xetal-linter",
+ "xetal-world-model",
+ "xetal-world-surface",
+]
+
+[[package]]
 name = "zlib-rs"
 version = "0.6.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"

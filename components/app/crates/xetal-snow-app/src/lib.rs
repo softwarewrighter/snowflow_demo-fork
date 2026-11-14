@@ -20,5 +20,6 @@ pub fn start() {
     });
 }
 
+mod effects;
 mod scene;
 pub use scene::Scene;

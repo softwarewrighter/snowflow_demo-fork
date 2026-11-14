@@ -26,3 +26,22 @@ pub(crate) fn number(value: &Value<'_>) -> Result<f64, &'static str> {
         _ => Err("mesh! contains a nonnumeric value"),
     }
 }
+
+pub(crate) fn array(value: &Value<'_>) -> Result<(Vec<usize>, Vec<f64>), String> {
+    let Value::Array(array) = value else {
+        return Err("expected numeric publication array".into());
+    };
+    let values = array
+        .data()
+        .iter()
+        .map(number)
+        .map(|n| {
+            let n = n?;
+            if !n.is_finite() {
+                return Err("nonfinite publication value");
+            }
+            Ok(n)
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    Ok((array.shape().to_vec(), values))
+}

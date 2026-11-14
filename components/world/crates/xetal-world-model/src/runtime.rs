@@ -27,7 +27,8 @@ impl Demo {
     pub fn from_source(source: &str) -> Result<Self, String> {
         let mut loaded = xetal_program::load_with("snowfield.xtl", source, &Embedded)
             .map_err(|e| e.to_string())?;
-        xetal_types::check_program(&mut loaded.program).map_err(|e| e.to_string())?;
+        xetal_types::check_program(&mut loaded.program)
+            .map_err(|e| xetal_program::located(&loaded.sources, e).to_string())?;
         let loaded = Box::leak(Box::new(loaded));
         let captured = Rc::new(RefCell::new(None));
         let output = Box::leak(Box::new(std::io::sink()));
@@ -58,6 +59,15 @@ impl Demo {
         self.machine.feed(event.into());
         self.progress = Progress::Running;
         Ok(())
+    }
+
+    /// Read a numeric array from a typed publication tuple, without text serialization.
+    pub fn array(&self, index: usize) -> Result<(Vec<usize>, Vec<f64>), String> {
+        let frame = capture::mesh(&self.captured)?;
+        let xetal_value::Value::Tuple(parts) = frame else {
+            return Err("expected typed publication tuple".into());
+        };
+        snapshot::array(parts.get(index).ok_or("missing publication field")?)
     }
 
     pub fn mesh(&self) -> Result<Mesh, String> {

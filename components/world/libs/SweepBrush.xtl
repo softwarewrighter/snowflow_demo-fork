@@ -1,0 +1,44 @@
+## SweepBrush: bounded immutable curved channel history and conservative bounds.
+## Rows: [serial originX originZ yaw reach]. Latest eight casts are retained.
+## Reference: library-reference.html#sweep-brush
+"brush:" u_se< "TerrainBrush.xtl"
+l:s_tart := { @ -> 0 5 r_eshape 0.0 }
+l:r_egion := { row ->
+  x := 2 s_elect row
+  z := 3 s_elect row
+  yaw := 4 s_elect row
+  sx := s_in yaw
+  cz := c_os yaw
+  cx := x + (6.0 * sx)
+  czz := z - (6.0 * cz)
+  ex := (12.0 * a_bs sx) + (6.0 * a_bs cz)
+  ez := (12.0 * a_bs cz) + (6.0 * a_bs sx)
+  (cx - ex) c_at (cx + ex) c_at (czz - ez) c_at (czz + ez)
+}
+l:u_pdate := { row history ->
+  n := f_irst s_hape history
+  bounds := 1 4 r_eshape l:r_egion row
+  n = 0 ? (1 5 r_eshape row, bounds)
+  last := n s_elect history
+  (f_irst row) = f_irst last ? ((-1 d_rop history) c_at 1 5 r_eshape row, bounds)
+  n < 8 ? (history c_at 1 5 r_eshape row, bounds)
+  ((1 d_rop history) c_at 1 5 r_eshape row, bounds c_at 1 4 r_eshape l:r_egion (1 s_elect history))
+}
+h:s_troke := { (x, z) row ->
+  yaw := 4 s_elect row
+  dx := x - 2 s_elect row
+  dz := z - 3 s_elect row
+  across := (dx * c_os yaw) + (dz * s_in yaw)
+  forward := ((dx * s_in yaw) - (dz * c_os yaw)) - 1.1
+  radial := 30.25 - (across * across)
+  root := (((radial + a_bs radial) / 2.0) ^ 0.5)
+  along := forward + 5.5 - root
+  reach := 5 s_elect row
+  mask := (brush:c_lamp (along - 1.4)) * brush:c_lamp ((reach - 0.4) - along)
+  mask * brush:p_rofile (across, 0.65, 0.45)
+}
+h:s_um := { (x, z) history ->
+  (f_irst s_hape history) = 0 ? 0.0 * x
+  ((x, z) h:s_troke (1 s_elect history)) + ((x, z) h:s_um (1 d_rop history))
+}
+l:d_elta := { point history -> brush:b_ound (point h:s_um history) }

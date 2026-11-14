@@ -1,0 +1,15 @@
+## TerrainBrush: pure signed snow cut/bank profile, shared by procedural edits.
+## Reference: library-reference.html#terrain-brush
+l:c_lamp := { x ->
+  positive := (x + a_bs x) / 2.0
+  (positive + 1.0 - a_bs (positive - 1.0)) / 2.0
+}
+l:p_rofile := { (across, cut, bank) ->
+  center := l:c_lamp (1.0 - ((across * across) / 21.16))
+  rim := ((a_bs across) - 4.7) / 1.3
+  edge := l:c_lamp (1.0 - (rim * rim))
+  (bank * edge * edge) - (cut * center * center)
+}
+l:b_ound := { delta ->
+  (2.2 * l:c_lamp ((delta + 1.2) / 2.2)) - 1.2
+}

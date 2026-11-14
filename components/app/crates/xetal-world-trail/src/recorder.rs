@@ -39,6 +39,17 @@ impl Trail {
         self.revision += 1;
         Ok(())
     }
+    /// Reproject cached decals after a committed terrain edit.
+    pub fn redrape(&mut self, terrain: &[f32]) {
+        for mark in &mut self.marks {
+            if let Some(vertices) =
+                geometry::quad(mark.position, f32::from_bits(mark.key[2]), terrain)
+            {
+                mark.vertices = vertices;
+            }
+        }
+        self.revision += 1;
+    }
     pub fn vertices(&self) -> Vec<f32> {
         let mut vertices = Vec::with_capacity(self.marks.len() * 36);
         for mark in self.marks.iter().filter(|mark| mark.opacity > 0.0) {

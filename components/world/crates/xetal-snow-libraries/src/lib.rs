@@ -9,6 +9,34 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "TerrainBrush",
+        alias: "brush",
+        anchor: "terrain-brush",
+        path: "components/world/libs/TerrainBrush.xtl",
+        source: include_str!("../../../libs/TerrainBrush.xtl"),
+    },
+    Library {
+        name: "SweepBrush",
+        alias: "carve",
+        anchor: "sweep-brush",
+        path: "components/world/libs/SweepBrush.xtl",
+        source: include_str!("../../../libs/SweepBrush.xtl"),
+    },
+    Library {
+        name: "SweptSurface",
+        alias: "tube",
+        anchor: "swept-surface",
+        path: "components/world/libs/SweptSurface.xtl",
+        source: include_str!("../../../libs/SweptSurface.xtl"),
+    },
+    Library {
+        name: "Sweep",
+        alias: "sweep",
+        anchor: "sweep",
+        path: "components/world/libs/Sweep.xtl",
+        source: include_str!("../../../libs/Sweep.xtl"),
+    },
+    Library {
         name: "Crystallise",
         alias: "ice",
         anchor: "crystallise",

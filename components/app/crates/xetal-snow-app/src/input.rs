@@ -27,7 +27,8 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         crate::boot::enter(app, false)
     })?;
     button("sound", state.clone(), crate::boot::sound)?;
-    button("crystallise", state.clone(), cast)?;
+    button("crystallise", state.clone(), |app| cast(app, false))?;
+    button("sweep", state.clone(), |app| cast(app, true))?;
     button("textures", state.clone(), |app| {
         app.effects[0] = !app.effects[0];
         status::text(
@@ -76,7 +77,7 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
             }) {
                 return;
             }
-            if (event.key() == " " || event.key() == "4") && event.repeat() {
+            if (event.key() == " " || event.key() == "4" || event.key() == "1") && event.repeat() {
                 event.prevent_default();
                 return;
             }
@@ -115,7 +116,7 @@ fn blur(state: State) -> Result<(), String> {
 fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     match key {
         " " if pressed => app.jump = true,
-        "4" if pressed => cast(app),
+        "1" | "4" if pressed => cast(app, key == "1"),
         "w" | "W" => app.held[0] = pressed,
         "s" | "S" => app.held[1] = pressed,
         "a" | "A" => app.held[2] = pressed,
@@ -136,16 +137,18 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     true
 }
 
-fn cast(app: &mut App) {
+fn cast(app: &mut App, sweep: bool) {
     if !app.started || app.paused {
         return;
     }
     let walker = &app.scene.walker;
-    if let Err(error) = app
-        .scene
-        .spells
-        .cast([walker.position[0], walker.position[2]], walker.yaw)
-    {
+    let point = [walker.position[0], walker.position[2]];
+    let result = if sweep {
+        app.scene.sweep.cast(point, walker.yaw)
+    } else {
+        app.scene.spells.cast(point, walker.yaw)
+    };
+    if let Err(error) = result {
         status::error(error);
     }
 }

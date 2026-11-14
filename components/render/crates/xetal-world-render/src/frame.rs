@@ -99,6 +99,7 @@ impl Renderer {
             pass.draw_indexed(0..mesh.count, 0, 0..1);
             self.decals.draw(&mut pass);
             self.objects.draw(&mut pass);
+            self.slush.draw(&mut pass);
         }
     }
 }

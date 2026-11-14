@@ -70,3 +70,11 @@ shown as typed and as rendered below the demo, and its library functions link
 to the API/source cross-reference. Geometry and growth run in X_eTaL; Rust
 provides input transport and a bounded WebGPU ice renderer. Crystals are visual
 objects and do not yet block movement.
+
+## Sweep spell
+
+Press **1** or click **1: Sweep** to launch a slush crescent that carves a channel
+and raises snow banks. Walk into the result: collision uses the edited mesh.
+The latest eight cuts remain, including after chunks reload; Reset clears them.
+The live source panel and [Sweep documentation](docs/sweep.md) identify the
+X_eTaL libraries, native backends, repeatable tests and current visual limits.

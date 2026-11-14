@@ -82,6 +82,9 @@ impl App {
         if let Some(vertices) = update.tracks {
             self.renderer.upload_tracks(&vertices)?;
         }
+        if let Some(mesh) = update.sweep {
+            self.renderer.upload_sweep(mesh.positions())?;
+        }
         if let Some(mesh) = update.objects {
             self.renderer.upload_objects(mesh.positions())?;
         }
@@ -133,7 +136,12 @@ impl App {
         }
         status::text(
             "triangles",
-            &format!("{}", chunks * 512 + scene.spells.positions().len() / 9),
+            &format!(
+                "{}",
+                chunks * 512
+                    + scene.spells.positions().len() / 9
+                    + scene.sweep.positions().len() / 9
+            ),
         );
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
         self.attributes();
@@ -159,6 +167,11 @@ impl App {
                 ("data-steps", scene.steps.to_string()),
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
+                ("data-edits", scene.world.edit_revision.to_string()),
+                (
+                    "data-sweep",
+                    (scene.sweep.positions().len() / 9).to_string(),
+                ),
                 (
                     "data-crystals",
                     (scene.spells.positions().len() / 162).to_string(),

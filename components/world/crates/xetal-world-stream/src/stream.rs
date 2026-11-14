@@ -4,9 +4,12 @@ use xetal_world_model::{Demo, Progress};
 use xetal_world_surface::Mesh;
 
 pub struct World {
-    demo: Demo,
-    chunks: BTreeMap<Key, Mesh>,
+    pub(crate) demo: Demo,
+    pub(crate) chunks: BTreeMap<Key, Mesh>,
     requested: Option<Key>,
+    pub(crate) pending_edit: Option<[f32; 5]>,
+    pub(crate) pending_reset: bool,
+    pub edit_revision: u64,
     pub center: Key,
     pub generated: u64,
 }
@@ -14,7 +17,10 @@ pub struct World {
 impl World {
     pub fn new() -> Result<Self, String> {
         Ok(Self {
-            demo: Demo::new()?,
+            demo: Demo::from_source(crate::SOURCE)?,
+            pending_edit: None,
+            pending_reset: false,
+            edit_revision: 0,
             chunks: BTreeMap::new(),
             requested: Some((0, 0)),
             center: (0, 0),
@@ -23,6 +29,9 @@ impl World {
     }
 
     pub fn step(&mut self, position: [f32; 3], budget: usize) -> Result<Option<Mesh>, String> {
+        if self.requested.is_none() && (self.pending_reset || self.pending_edit.is_some()) {
+            return self.apply_edits();
+        }
         let next = center(position);
         if next == self.center && self.requested.is_none() && self.chunks.len() == 25 {
             return Ok(None);

@@ -1788,6 +1788,7 @@ dependencies = [
  "xetal-world-spells",
  "xetal-world-stream",
  "xetal-world-surface",
+ "xetal-world-sweep",
  "xetal-world-trail",
 ]
 
@@ -2051,6 +2052,14 @@ dependencies = [
 [[package]]
 name = "xetal-world-surface"
 version = "0.1.0"
+
+[[package]]
+name = "xetal-world-sweep"
+version = "0.1.0"
+dependencies = [
+ "xetal-world-model",
+ "xetal-world-surface",
+]
 
 [[package]]
 name = "xetal-world-trail"

@@ -9,8 +9,16 @@ impl Objects {
         format: wgpu::TextureFormat,
         camera: &wgpu::BindGroupLayout,
     ) -> Self {
+        Self::material(device, format, camera, false)
+    }
+    pub fn material(
+        device: &wgpu::Device,
+        format: wgpu::TextureFormat,
+        camera: &wgpu::BindGroupLayout,
+        slush: bool,
+    ) -> Self {
         Self {
-            pipeline: crate::pipeline::create(device, format, camera),
+            pipeline: crate::pipeline::create(device, format, camera, slush),
             buffer: device.create_buffer(&wgpu::BufferDescriptor {
                 label: Some("bounded procedural ice"),
                 size: (crate::MAX_VERTICES * 3 * 4) as u64,

@@ -7,6 +7,7 @@ pub(crate) fn create(
     device: &wgpu::Device,
     format: wgpu::TextureFormat,
     camera: &wgpu::BindGroupLayout,
+    slush: bool,
 ) -> wgpu::RenderPipeline {
     let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
         label: Some("procedural ice"),
@@ -25,6 +26,7 @@ pub(crate) fn create(
         vertex: vertex(&shader),
         fragment: Some(fragment(
             &shader,
+            slush,
             &[Some(wgpu::ColorTargetState {
                 format,
                 blend: Some(wgpu::BlendState::ALPHA_BLENDING),
@@ -49,11 +51,16 @@ fn vertex(shader: &wgpu::ShaderModule) -> wgpu::VertexState<'_> {
 }
 fn fragment<'a>(
     shader: &'a wgpu::ShaderModule,
+    slush: bool,
     targets: &'a [Option<wgpu::ColorTargetState>],
 ) -> wgpu::FragmentState<'a> {
     wgpu::FragmentState {
         module: shader,
-        entry_point: Some("ice_fragment"),
+        entry_point: Some(if slush {
+            "slush_fragment"
+        } else {
+            "ice_fragment"
+        }),
         compilation_options: Default::default(),
         targets,
     }

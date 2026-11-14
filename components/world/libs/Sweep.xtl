@@ -1,0 +1,36 @@
+## Sweep: spell 1, a moving crescent of slush; recast restarts the active wave.
+## State: (serial, time, point, yaw). X_eTaL owns trajectory and deformation command.
+## Reference: library-reference.html#sweep
+"snow:" u_se< "SnowTerrain.xtl"
+"tube:" u_se< "SweptSurface.xtl"
+"brush:" u_se< "TerrainBrush.xtl"
+l:s_tart := { @ -> (0, 2.4, 0.0 0.0, 0.0) }
+l:c_ast := { (point, yaw) (serial, _, _, _) -> (serial + 1, 0.0, point, yaw) }
+l:t_ick := { dt (serial, time, point, yaw) ->
+  next := time + dt
+  (serial, 2.4 * brush:c_lamp (next / 2.4), point, yaw)
+}
+l:r_each := { (_, time, _, _) -> 1.4 + (10.0 * (1.0 - e_xp (n_eg (1.15 * time)))) + (1.2 * time) }
+l:c_ommand := { state ->
+  (serial, _, point, yaw) := state
+  (f_loat serial) c_at point c_at yaw c_at l:r_each state
+}
+l:m_esh := { state ->
+  (serial, time, point, yaw) := state
+  serial = 0 ? 0 3 3 r_eshape 0.0
+  time >= 2.4 ? 0 3 3 r_eshape 0.0
+  reach := l:r_each state
+  u := (f_loat ((r_ange 33) - 1)) / 32.0
+  arc := 0.52 + (0.44 * brush:c_lamp ((reach - 1.4) / 14.0))
+  angle := (u - 0.5) * 2.0 * arc
+  rx := ((s_in yaw) * c_os angle) + ((c_os yaw) * s_in angle)
+  rz := ((n_eg c_os yaw) * c_os angle) + ((s_in yaw) * s_in angle)
+  x := (f_irst point) + ((s_in yaw) * (1.1 + reach - 5.5)) + (5.5 * rx)
+  z := (2 s_elect point) - ((c_os yaw) * (1.1 + reach - 5.5)) + (5.5 * rz)
+  y := (snow:h_eight (x, z)) - 0.8
+  rise := brush:c_lamp (time / 0.26)
+  fall := 1.0 - brush:c_lamp (((time / 2.4) - 0.55) / 0.45)
+  env := rise * rise * (3.0 - (2.0 * rise)) * fall * fall
+  height := (2.15 * env * s_in (3.1415926536 * u)) / (1.0 + (0.45 * brush:c_lamp ((reach - 1.4) / 14.0)))
+  tube:s_heet (2 1 t_ranspose (6 33 r_eshape x c_at y c_at z c_at rx c_at rz c_at height))
+}

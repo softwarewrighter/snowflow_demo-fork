@@ -8,6 +8,10 @@ The demo imports these actual project-local X_eTaL libraries:
 - SnowWind: gust strength and footprint filling.
 - SnowHost: the existing queued Event transport facade.
 - Crystallise: spiral placement, hexagonal geometry and crystal growth.
+- Sweep: moving crescent trajectory, lifetime and semantic edit command.
+- SweptSurface: curled sheet meshing along a spine.
+- TerrainBrush: signed channel/bank profile and displacement bounds.
+- SweepBrush: curved terrain cuts, latest-eight history and dirty regions.
 
 See [library cross-reference](../../../docs/libraries.md) for public APIs,
 Rust backends and tests. Reusable modules can move to their owning X_eTaL

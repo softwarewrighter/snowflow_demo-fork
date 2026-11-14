@@ -106,3 +106,14 @@ lights and original-demo visual parity are not implemented.
 Native tests cover deterministic geometry, growth, aim, replacement budget,
 reset uploads, invalid inputs, shader validation and upload rejection. The
 `cost` example measures CPU transport/evaluation separately from browser FPS.
+
+## Sweep and editable terrain
+
+[Sweep usage and ownership](sweep.md) maps the actual Sweep, SweptSurface,
+TerrainBrush and SweepBrush APIs to their source, native transport and GPU path.
+The additional world native crate is `xetal-world-sweep`; the existing
+`xetal-world-stream` schedules atomic dirty-chunk rebuilds from X_eTaL bounds.
+`xetal-world-objects` provides the bounded slush material alongside ice.
+`Demo::array` exposes checked typed numeric publication fields without numeric
+text serialization. Input still uses the existing few-scalar queued Event
+transport; generic upstream typed host registration remains pending.

@@ -13,13 +13,16 @@ pub struct Scene {
     pub steps: u64,
     pub wind: f32,
     player: Player,
+    pub sweep: xetal_world_sweep::Sweep,
     pub spells: xetal_world_spells::Spells,
-    terrain: Vec<f32>,
+    pub(crate) terrain: Vec<f32>,
+    pub(crate) terrain_revision: u64,
     track_revision: u64,
 }
 pub struct Update {
     pub terrain: Option<xetal_world_surface::Mesh>,
     pub tracks: Option<Vec<f32>>,
+    pub sweep: Option<xetal_world_surface::Mesh>,
     pub objects: Option<xetal_world_surface::Mesh>,
     pub step: bool,
     pub landing: f32,
@@ -33,6 +36,8 @@ impl Scene {
             walker: Walker::default(),
             trail: Trail::default(),
             terrain: Vec::new(),
+            terrain_revision: 0,
+            sweep: xetal_world_sweep::Sweep::new()?,
             mesh_hash: 0,
             landings: 0,
             steps: 0,
@@ -49,13 +54,12 @@ impl Scene {
         jump: bool,
         paused: bool,
     ) -> Result<Update, String> {
-        let terrain = self.world.step(self.walker.position, 2_000)?;
-        if let Some(mesh) = &terrain {
-            self.terrain = mesh.positions().to_vec();
-            self.mesh_hash = mesh.positions().iter().fold(2166136261_u32, |hash, value| {
-                (hash ^ value.to_bits()).wrapping_mul(16777619)
-            });
+        let sweep = self.sweep.tick(if paused { 0.0 } else { dt })?;
+        if let Some(brush) = sweep.brush {
+            self.world.sweep(brush)?;
         }
+        let terrain = self.world.step(self.walker.position, 2_000)?;
+        self.accept_terrain(terrain.as_ref());
         let (pose, moving) = self.motion(dt, held, jump, paused);
         let mut sound = [0.0, 0.0, 1.0];
         if let Some(commands) = self.player.update(pose, if paused { 0.0 } else { dt })? {
@@ -72,6 +76,7 @@ impl Scene {
         Ok(Update {
             terrain,
             tracks,
+            sweep: sweep.mesh,
             objects: self.spells.tick(if paused { 0.0 } else { dt })?,
             step,
             landing,
@@ -112,6 +117,8 @@ impl Scene {
     }
     pub fn reset(&mut self) -> Result<(), String> {
         self.spells.clear()?;
+        self.sweep.clear()?;
+        self.world.clear_edits();
         self.walker = Walker::default();
         self.clear_tracks()
     }

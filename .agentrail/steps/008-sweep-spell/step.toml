@@ -1,6 +1,6 @@
 number = 8
 slug = "sweep-spell"
-status = "pending"
+status = "in-progress"
 description = "Port original spell 1 Sweep. Implement X_eTaL terrain brush state shared with..."
 role = "production"
 context_files = []
