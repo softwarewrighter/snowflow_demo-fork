@@ -1,0 +1,38 @@
+{
+  "initial_25_chunks_ms": [
+    75.52950899999999,
+    68.04896500000001,
+    69.91892399999999,
+    68.24042299999999,
+    68.283696,
+    72.15611700000001,
+    77.203991
+  ],
+  "shift_5_chunks_ms": [
+    13.992068,
+    14.897802,
+    13.460383,
+    13.628511,
+    13.531457999999999,
+    14.053282,
+    14.720265
+  ],
+  "idle_us_per_update": [
+    0.010641000000000001,
+    0.010394,
+    0.0104147,
+    0.013359000000000001,
+    0.0106229,
+    0.0126974,
+    0.010649500000000001
+  ],
+  "merged_mesh_bytes": 614400,
+  "profile": "native release",
+  "cpu": "Intel Xeon W-2135",
+  "samples": 7,
+  "source_sha256": "3a2767a30eadb261ca54c1803af7752c45ec5dbbf180e0b58aa05010b87adea7",
+  "scope": "Initial evaluator load and 25 chunks plus merging; five-chunk row and merging; scheduling-only idle fast path with black_box. Excludes GPU, browser audio, physics and FPS.",
+  "median_initial_ms": 69.91892399999999,
+  "median_shift_ms": 13.992068,
+  "median_idle_us": 0.010641000000000001
+}

@@ -51,14 +51,19 @@ fn jump_input_survives_a_frame_shorter_than_one_physics_step() {
 
 #[test]
 fn ordinary_downhill_and_uphill_walking_keep_ground_contact() {
-    let slope = [-100.0,-10.0,-100.0,100.0,-10.0,-100.0,0.0,10.0,100.0];
-    for direction in [-1.0,1.0] {
+    let slope = [
+        -100.0, -10.0, -100.0, 100.0, -10.0, -100.0, 0.0, 10.0, 100.0,
+    ];
+    for direction in [-1.0, 1.0] {
         let mut walker = xetal_world_navigation::Walker::default();
         walker.ground(&slope);
         for _ in 0..120 {
-            walker.advance(1.0/60.0, direction, 0.0);
-            walker.simulate(1.0/60.0, false, &slope);
-            assert!(walker.motion.grounded, "walking contact was dropped on a slope");
+            walker.advance(1.0 / 60.0, direction, 0.0);
+            walker.simulate(1.0 / 60.0, false, &slope);
+            assert!(
+                walker.motion.grounded,
+                "walking contact was dropped on a slope"
+            );
         }
     }
 }

@@ -6,7 +6,15 @@ use wasm_bindgen::JsCast;
 use xetal_world_render::Renderer;
 
 pub(crate) async fn start() -> Result<(), String> {
-    status::text("build-info", &format!("Build ({} {} {})", env!("BUILD_HOST"), env!("BUILD_SHA"), env!("BUILD_TIMESTAMP")));
+    status::text(
+        "build-info",
+        &format!(
+            "Build ({} {} {})",
+            env!("BUILD_HOST"),
+            env!("BUILD_SHA"),
+            env!("BUILD_TIMESTAMP")
+        ),
+    );
     status::text("source", crate::SOURCE);
     status::element("source-rendered")?.set_inner_html(&xetal_world_model::highlighted_source());
     let window = web_sys::window().ok_or("no browser window")?;

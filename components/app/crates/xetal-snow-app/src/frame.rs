@@ -44,10 +44,19 @@ impl App {
     fn tick(&mut self, now: f64) -> Result<(), String> {
         let dt = ((now - self.last_frame) / 1000.0) as f32;
         self.last_frame = now;
-        let (meter, reading) = self.meter.record(now); self.meter = meter;
+        let (meter, reading) = self.meter.record(now);
+        self.meter = meter;
         if let Some(reading) = reading {
-            status::text("fps", &format!("{:.0} FPS / {:.1} ms", reading.fps, reading.mean_ms));
-            if let Ok(node) = status::element("fps") { let _ = node.set_attribute("title", &format!("Worst recent frame: {:.1} ms", reading.worst_ms)); }
+            status::text(
+                "fps",
+                &format!("{:.0} FPS / {:.1} ms", reading.fps, reading.mean_ms),
+            );
+            if let Ok(node) = status::element("fps") {
+                let _ = node.set_attribute(
+                    "title",
+                    &format!("Worst recent frame: {:.1} ms", reading.worst_ms),
+                );
+            }
         }
         self.advance(dt)?;
         crate::boot::resize(&self.canvas, &mut self.renderer);

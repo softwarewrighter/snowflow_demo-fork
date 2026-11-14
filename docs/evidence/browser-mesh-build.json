@@ -1,9 +1,9 @@
 {
-  "status": "built preview; final post-publication gate pending; hardware browser/audio acceptance pending",
+  "status": "published; post-publication native gate passed; hardware browser/audio acceptance pending",
   "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
   "wgpu": "24.0.5",
   "rustc": "1.100.0",
-  "native_rust_tests": 27,
+  "native_rust_tests": 39,
   "python_tests": 18,
   "wasm_build": "passed",
   "wasm_clippy": "passed",
@@ -36,5 +36,7 @@
   "shadow_shader_sha256": "9f660d9cce01689e27373f2e672c70ba14f52a89887a6f1cf012de3d2270cbab",
   "favicon": "Snowflake SVG matching the demo colors",
   "streaming": "Stationary deterministic 32m chunks; 25 resident; no finite movement clamp",
-  "tracks_audio": "256 procedural boot-print decals; splash gesture enables walking crunch and landing thud synthesis; muted entry available"
+  "tracks_audio": "256 procedural boot-print decals; splash gesture enables walking crunch and landing thud synthesis; muted entry available",
+  "fps_display": "Rolling RAF FPS and mean milliseconds with 500ms reporting; not GPU timestamps",
+  "downhill_fix": "Native regression reproduced and fixed with pure ground contact tolerance, preserving jump/real fall"
 }

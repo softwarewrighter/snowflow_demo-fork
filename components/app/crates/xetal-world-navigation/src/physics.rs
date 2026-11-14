@@ -9,7 +9,11 @@ pub struct Motion {
 impl Motion {
     pub fn contact(self, floor: f32, jumping: bool) -> Self {
         if self.height < floor || (self.grounded && !jumping && self.height - floor <= 0.4) {
-            return Self { height: floor, velocity: 0.0, grounded: true };
+            return Self {
+                height: floor,
+                velocity: 0.0,
+                grounded: true,
+            };
         }
         self
     }
