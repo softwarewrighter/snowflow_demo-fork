@@ -1,0 +1,12 @@
+[package]
+name = "xetal-world-ribbon"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+xetal-world-model.workspace = true
+xetal-world-surface.workspace = true
+
+[dev-dependencies]
+xetal-linter = { path = "../../../../work/deps/X_eTaL/components/lint/crates/xetal-linter" }

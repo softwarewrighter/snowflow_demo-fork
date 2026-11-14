@@ -4,6 +4,7 @@
 "carve:" u_se< "SweepBrush.xtl"
 "crater:" u_se< "BloomBrush.xtl"
 "brush:" u_se< "TerrainBrush.xtl"
+"score:" u_se< "RibbonBrush.xtl"
 h:h_ash := { (x, z) ->
   k := (a_bs ((x * 73856093) + (z * 19349663))) m_od 104729
   (f_loat (((k * k) + 17389) m_od 104729)) / 104729.0
@@ -30,11 +31,12 @@ l:h_eight := { (x, z) ->
 }
 l:m_esh := { chunk -> l:d_eformed (chunk, carve:s_tart @) }
 l:d_eformed := { (chunk, history) -> l:c_arved (chunk, history, crater:s_tart @) }
-l:c_arved := { ((cx, cz), history, blooms) ->
+l:c_arved := { (chunk, history, blooms) -> l:s_cored (chunk, history, blooms, score:s_tart @) }
+l:s_cored := { ((cx, cz), history, blooms, scores) ->
   k := (r_ange 289) - 1
   x := (2.0 * f_loat (k d_iv 17)) + (32.0 * cx)
   z := (2.0 * f_loat (k m_od 17)) + (32.0 * cz)
-  delta := ((x, z) carve:d_elta history) + ((x, z) crater:d_elta blooms)
+  delta := ((x, z) carve:d_elta history) + ((x, z) crater:d_elta blooms) + ((x, z) score:d_elta scores)
   y := (l:h_eight (x, z)) + brush:b_ound delta
   points := 2 1 t_ranspose (3 289 r_eshape x c_at y c_at z)
   cell := (r_ange 256) - 1

@@ -26,3 +26,16 @@ struct IceVertex { @builtin(position) clip: vec4f, @location(0) world: vec3f }
     let fog = max(1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world)), smoothstep(40.0, 60.0, distance(camera.eye.xz, v.world.xz)));
     return vec4f(mix(tint * light, vec3f(0.47, 0.65, 0.78), fog), 0.98);
 }
+
+@fragment fn water_fragment(v: IceVertex) -> @location(0) vec4f {
+    let n = normalize(cross(dpdx(v.world), dpdy(v.world)));
+    let view = normalize(camera.eye.xyz - v.world);
+    let rim = pow(1.0 - abs(dot(n, view)), 3.0);
+    let light = normalize(vec3f(0.4, 1.0, 0.3));
+    let sheen = pow(abs(dot(n, normalize(view + light))), 44.0);
+    let foam = pow(0.5 + 0.5 * sin(v.world.y * 15.0 + v.world.x * 3.0), 12.0);
+    let water = mix(vec3f(0.08, 0.43, 0.62), vec3f(0.75, 0.93, 1.0), rim);
+    let color = water + vec3f(0.4 * sheen + 0.12 * foam);
+    let fog = max(1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world)), smoothstep(40.0, 60.0, distance(camera.eye.xz, v.world.xz)));
+    return vec4f(mix(color, vec3f(0.47, 0.65, 0.78), fog), 0.65 + 0.3 * rim);
+}

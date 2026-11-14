@@ -11,6 +11,7 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         status::text("pause", if app.paused { "Resume" } else { "Pause" });
     })?;
     button("reset", state.clone(), |app| {
+        app.ribbon_held = false;
         if let Err(error) = app.scene.reset() {
             status::error(error);
         }
@@ -30,6 +31,9 @@ pub(crate) fn install(state: State) -> Result<(), String> {
     button("crystallise", state.clone(), |app| cast(app, "4"))?;
     button("sweep", state.clone(), |app| cast(app, "1"))?;
     button("bloom", state.clone(), |app| cast(app, "3"))?;
+    button("ribbon", state.clone(), |app| {
+        cast(app, if app.ribbon_held { "2-up" } else { "2-down" })
+    })?;
     effect_buttons(state.clone())?;
     keys(state.clone(), true)?;
     keys(state.clone(), false)?;
@@ -60,7 +64,8 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
             if (event.key() == " "
                 || event.key() == "4"
                 || event.key() == "1"
-                || event.key() == "3")
+                || event.key() == "3"
+                || event.key() == "2")
                 && event.repeat()
             {
                 event.prevent_default();
@@ -88,7 +93,9 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
 
 fn blur(state: State) -> Result<(), String> {
     let handler = Closure::<dyn FnMut(web_sys::Event)>::new(move |_| {
-        state.borrow_mut().held = [false; 4];
+        let mut app = state.borrow_mut();
+        app.held = [false; 4];
+        cast(&mut app, "2-up");
     });
     web_sys::window()
         .ok_or("no window")?
@@ -102,6 +109,7 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
     match key {
         " " if pressed => app.jump = true,
         "1" | "3" | "4" if pressed => cast(app, key),
+        "2" => cast(app, if pressed { "2-down" } else { "2-up" }),
         "w" | "W" => app.held[0] = pressed,
         "s" | "S" => app.held[1] = pressed,
         "a" | "A" => app.held[2] = pressed,
@@ -113,6 +121,7 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
             app.scene.walker.pitch = (app.scene.walker.pitch - 0.06).max(-1.2)
         }
         "r" | "Home" if pressed => {
+            app.ribbon_held = false;
             if let Err(error) = app.scene.reset() {
                 status::error(error);
             }
@@ -123,12 +132,15 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
 }
 
 fn cast(app: &mut App, spell: &str) {
-    if !app.started || app.paused {
+    if !app.started || (app.paused && spell != "2-up") {
         return;
     }
     let walker = &app.scene.walker;
     let point = [walker.position[0], walker.position[2]];
-    let result = if spell == "3" {
+    let result = if spell == "2-down" || spell == "2-up" {
+        app.ribbon_held = spell == "2-down";
+        app.scene.ribbon_input(app.ribbon_held)
+    } else if spell == "3" {
         app.scene.cast_bloom()
     } else if spell == "1" {
         app.scene.sweep.cast(point, walker.yaw)

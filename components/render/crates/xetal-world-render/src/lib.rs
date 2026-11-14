@@ -13,6 +13,9 @@ pub use device::Renderer;
 
 #[cfg(target_arch = "wasm32")]
 impl Renderer {
+    pub fn upload_ribbon(&mut self, vertices: &[f32]) -> Result<(), String> {
+        self.ribbon.update(&self.queue, vertices)
+    }
     pub fn upload_particles(&mut self, rows: &[f32]) -> Result<(), String> {
         self.particles.update(&self.queue, rows)
     }

@@ -15,6 +15,9 @@ The demo imports these actual project-local X_eTaL libraries:
 - Bloom: targeted eruption, crater command and particle fallout.
 - BloomBrush: radial crater/rim field, latest-four history and dirty bounds.
 - SnowParticles: pure particle kinematics, variation, fade and render rows.
+- Ribbon: held tip dynamics, path history, inertial release and contact scoring.
+- RibbonSurface: elliptical rings along arbitrary 3D spines.
+- RibbonBrush: shallow contact stamps, bounded history and dirty bounds.
 
 See [library cross-reference](../../../docs/libraries.md) for public APIs,
 Rust backends and tests. Reusable modules can move to their owning X_eTaL

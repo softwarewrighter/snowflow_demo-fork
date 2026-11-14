@@ -2034,6 +2034,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-world-ribbon"
+version = "0.1.0"
+dependencies = [
+ "xetal-linter",
+ "xetal-world-model",
+ "xetal-world-surface",
+]
+
+[[package]]
 name = "xetal-world-surface"
 version = "0.1.0"
 

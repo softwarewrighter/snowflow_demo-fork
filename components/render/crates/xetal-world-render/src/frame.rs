@@ -100,6 +100,7 @@ impl Renderer {
             self.decals.draw(&mut pass);
             self.objects.draw(&mut pass);
             self.slush.draw(&mut pass);
+            self.ribbon.draw(&mut pass);
             self.particles.draw(&mut pass);
         }
     }

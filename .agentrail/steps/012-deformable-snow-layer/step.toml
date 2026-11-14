@@ -1,0 +1,8 @@
+number = 12
+slug = "deformable-snow-layer"
+status = "pending"
+description = "Implement the first RDR2-inspired snow interaction milestone, without claimin..."
+role = "production"
+context_files = []
+created_at = "2026-11-14T13:18:33"
+commits = []

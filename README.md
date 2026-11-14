@@ -86,3 +86,11 @@ column, carve a crater with a raised rim, and release falling snowflake particle
 The latest four craters remain. Reset clears them. Timing, crater shape and
 particle motion live in X_eTaL libraries; a reusable Rust/WGPU particle renderer
 provides the native drawing capability. See [Bloom](docs/bloom.md).
+
+## Ribbon and snow mechanics
+
+Hold **2** to steer Ribbon, then release to throw it along your aim. Click the
+Ribbon button to start a latched hold and click again to throw. The stream leaves
+shallow scores when its tip contacts loaded snow. See [Ribbon](docs/ribbon.md).
+The [snow mechanics roadmap](docs/snow-mechanics.md) describes planned geometric
+boot prints, compaction, deep-powder movement and persistent weathered snow tiles.

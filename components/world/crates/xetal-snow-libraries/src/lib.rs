@@ -9,6 +9,27 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "RibbonBrush",
+        alias: "score",
+        anchor: "ribbon-brush",
+        path: "components/world/libs/RibbonBrush.xtl",
+        source: include_str!("../../../libs/RibbonBrush.xtl"),
+    },
+    Library {
+        name: "Ribbon",
+        alias: "ribbon",
+        anchor: "ribbon",
+        path: "components/world/libs/Ribbon.xtl",
+        source: include_str!("../../../libs/Ribbon.xtl"),
+    },
+    Library {
+        name: "RibbonSurface",
+        alias: "stream",
+        anchor: "ribbon-surface",
+        path: "components/world/libs/RibbonSurface.xtl",
+        source: include_str!("../../../libs/RibbonSurface.xtl"),
+    },
+    Library {
         name: "Bloom",
         alias: "bloom",
         anchor: "bloom",

@@ -1,6 +1,6 @@
 number = 10
 slug = "ribbon-spell"
-status = "pending"
+status = "in-progress"
 description = "Port original spell 2 Ribbon: held aim-tracking stream, curved motion and rel..."
 role = "production"
 context_files = []

@@ -15,6 +15,7 @@ pub(crate) struct App {
     pub held: [bool; 4],
     pub effects: [bool; 2],
     pub jump: bool,
+    pub ribbon_held: bool,
     pub audio: Sound,
     meter: xetal_world_metrics::Meter,
     last_frame: f64,
@@ -33,6 +34,7 @@ impl App {
             held: [false; 4],
             effects: [true; 2],
             jump: false,
+            ribbon_held: false,
             audio: Sound::default(),
             meter: Default::default(),
             last_frame: 0.0,
@@ -90,6 +92,9 @@ impl App {
         if let Some(rows) = update.particles {
             self.renderer.upload_particles(&rows)?;
         }
+        if let Some(mesh) = update.ribbon {
+            self.renderer.upload_ribbon(mesh.positions())?;
+        }
         if let Some(mesh) = update.objects {
             self.renderer.upload_objects(mesh.positions())?;
         }
@@ -121,6 +126,14 @@ impl App {
             .iter()
             .filter(|mark| mark.opacity > 0.01)
             .count();
+        status::text(
+            "ribbon",
+            if self.ribbon_held {
+                "2: Release Ribbon"
+            } else {
+                "2: Ribbon"
+            },
+        );
         if !self.started {
             let loaded = chunks;
             status::text(
@@ -147,6 +160,7 @@ impl App {
                     + scene.spells.positions().len() / 9
                     + scene.sweep.positions().len() / 9
                     + scene.bloom.positions().len() / 9
+                    + scene.ribbon.positions().len() / 9
             ),
         );
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
@@ -174,6 +188,11 @@ impl App {
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
                 ("data-edits", scene.world.edit_revision.to_string()),
+                (
+                    "data-ribbon",
+                    (scene.ribbon.positions().len() / 9).to_string(),
+                ),
+                ("data-ribbon-mode", scene.ribbon.mode().to_string()),
                 (
                     "data-bloom",
                     (scene.bloom.positions().len() / 9).to_string(),

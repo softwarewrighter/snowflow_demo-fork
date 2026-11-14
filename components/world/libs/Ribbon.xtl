@@ -1,0 +1,112 @@
+## Ribbon: held path-history water stream, inertial release and shallow scoring.
+## State: (mode clock released origin aim tip velocity history serial score).
+## Modes: 0 idle, 1 held, 2 thrown, 3 draining. History: [x y z birth speed].
+## Reference: library-reference.html#ribbon
+"stream:" u_se< "RibbonSurface.xtl"
+h:u_nit := { v ->
+  x := 1 s_elect v
+  y := 2 s_elect v
+  z := 3 s_elect v
+  v / ((((x * x) + (y * y) + (z * z)) ^ 0.5) + 0.000000001)
+}
+h:d_irection := { aim ->
+  yaw := 1 s_elect aim
+  pitch := 2 s_elect aim
+  ((s_in yaw) * c_os pitch) c_at (s_in pitch) c_at ((n_eg c_os yaw) * c_os pitch)
+}
+h:h_and := { (origin, aim) ->
+  yaw := 1 s_elect aim
+  right := (c_os yaw) c_at 0.0 c_at (s_in yaw)
+  (origin + (0.4 * right) + (0.8 * h:d_irection aim)) - 0.0 0.35 0.0
+}
+l:s_tart := { @ -> (0, 0.0, 0.0, 0.0 0.0 0.0, 0.0 0.0, 0.0 0.0 0.0, 0.0 0.0 0.0, 0 5 r_eshape 0.0, 0, (0, -1.0, 0.0 0.0 0.0)) }
+l:p_ose := { (origin, aim) (mode, clock, released, old, facing, tip, velocity, history, serial, score) ->
+  mode > 1 ? (mode, clock, released, old, facing, tip, velocity, history, serial, score)
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score)
+}
+l:p_ress := { (origin, aim) state ->
+  (mode, clock, _, _, _, _, _, _, serial, score) := state
+  mode = 1 ? state
+  tip := (h:h_and (origin, aim)) + h:d_irection aim
+  (1, clock, clock, origin, aim, tip, 0.0 0.0 0.0, 1 5 r_eshape tip c_at clock c_at 0.0, serial + 1, score)
+}
+l:r_elease := { state ->
+  (mode, clock, _, origin, aim, tip, velocity, history, serial, score) := state
+  mode = 1 ? (2, clock, clock, origin, aim, tip, velocity, history, serial, score)
+  state
+}
+h:d_rive := { (dt, clock, flight, mode, origin, aim, tip, velocity) ->
+  mode = 3 ? (tip, 0.0 0.0 0.0)
+  forward := h:d_irection aim
+  yaw := 1 s_elect aim
+  right := (c_os yaw) c_at 0.0 c_at (s_in yaw)
+  pitch := 2 s_elect aim
+  up := ((n_eg s_in yaw) * s_in pitch) c_at (c_os pitch) c_at ((c_os yaw) * s_in pitch)
+  mode = 1 ? { @ ->
+    target := (h:h_and (origin, aim)) + (forward * (4.0 + (1.2 * s_in (clock * 0.9)))) + (right * (1.5 * s_in (clock * 3.2))) + (up * (0.8 * s_in (clock * 6.4)))
+    next := velocity + (dt * ((35.0 * (target - tip)) - (8.0 * velocity)))
+    (tip + (dt * next), next)
+  } @
+  direction := h:u_nit (forward + 0.0 0.18 0.0)
+  desired := (21.0 * direction) - (0.0 c_at (3.0 * flight) c_at 0.0)
+  next := velocity + (dt * 5.5 * (desired - velocity))
+  (tip + (dt * next), next)
+}
+h:h_istory := { (clock, tip, velocity, mode) history ->
+  speed := (((1 s_elect velocity) ^ 2) + ((2 s_elect velocity) ^ 2) + ((3 s_elect velocity) ^ 2)) ^ 0.5
+  next := { @ ->
+    mode = 3 ? history
+    history c_at 1 5 r_eshape tip c_at clock c_at speed
+  } @
+  columns := 2 1 t_ranspose next
+  kept := ((clock - 4 s_elect columns) < 1.25) r_eplicate next
+  (f_irst s_hape kept) > 32 ? -32 t_ake kept
+  kept
+}
+l:t_ick := { dt state ->
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score) := state
+  time := clock + dt
+  mode = 0 ? (mode, time, released, origin, aim, tip, velocity, history, serial, score)
+  ((mode = 2) * ((time - released) >= 2.5)) ? (0, time, released, origin, aim, tip, velocity, 0 5 r_eshape 0.0, serial, score)
+  (point, speed) := h:d_rive (dt, time, time - released, mode, origin, aim, tip, velocity)
+  next := (time, point, speed, mode) h:h_istory history
+  (f_irst s_hape next) = 0 ? (0, time, released, origin, aim, point, speed, next, serial, score)
+  (mode, time, released, origin, aim, point, speed, next, serial, score)
+}
+h:s_core := { (clock, tip) (count, last, point) ->
+  delta := tip - point
+  distance := (((1 s_elect delta) ^ 2) + ((3 s_elect delta) ^ 2)) ^ 0.5
+  (clock - last) < 0.12 ? (count, last, point)
+  ((count > 0) * (distance < 0.35)) ? (count, last, point)
+  (count + 1, clock, tip)
+}
+l:c_ontact := { ground state ->
+  (mode, clock, released, origin, aim, tip, velocity, history, serial, score) := state
+  ((mode = 1) + (mode = 2)) = 0 ? state
+  (2 s_elect tip) > (ground + 0.18) ? state
+  point := (1 s_elect tip) c_at (ground + 0.08) c_at (3 s_elect tip)
+  next := (clock, point) h:s_core score
+  motion := (1 s_elect velocity) c_at 0.0 c_at (3 s_elect velocity)
+  rows := (-1 d_rop history) c_at 1 5 r_eshape point c_at clock c_at 0.0
+  mode = 2 ? (3, clock, released, origin, aim, point, motion, rows, serial, next)
+  (mode, clock, released, origin, aim, point, motion, rows, serial, next)
+}
+l:m_esh := { (_, _, _, _, _, _, _, history, _, _) ->
+  n := f_irst s_hape history
+  n < 2 ? 0 3 3 r_eshape 0.0
+  columns := 2 1 t_ranspose history
+  u := (f_loat ((r_ange n) - 1)) / f_loat (n - 1)
+  taper := ((s_in (3.1415926536 * u)) + a_bs s_in (3.1415926536 * u)) / 2.0
+  radius := (0.205 * (taper ^ 0.5)) / (1.0 + (0.03 * 5 s_elect columns))
+  spin := 4.0 * 4 s_elect columns
+  xyz := r_avel 3 t_ake columns
+  stream:m_esh (2 1 t_ranspose ((5 c_at n) r_eshape xyz c_at radius c_at spin))
+}
+l:c_ommand := { (_, _, _, _, _, _, _, _, _, score) ->
+  (count, _, tip) := score
+  (f_loat count) c_at (1 s_elect tip) c_at (3 s_elect tip) c_at 1.6
+}
+l:p_robe := { (mode, _, _, _, _, tip, _, _, _, _) ->
+  (f_loat ((mode = 1) + (mode = 2))) c_at tip
+}
+l:s_tatus := { (mode, _, _, _, _, _, _, history, _, _) -> mode c_at f_irst s_hape history }

@@ -4,6 +4,18 @@ use crate::{
     edits::{regions, send},
 };
 impl World {
+    pub fn ribbon(&mut self, command: [f32; 4]) -> Result<(), String> {
+        if command.iter().any(|v| !v.is_finite())
+            || command[0] <= 0.0
+            || command[0].fract() != 0.0
+            || command[3] <= 0.0
+            || command[3] > 4.0
+        {
+            return Err("invalid Ribbon terrain command".into());
+        }
+        self.pending_ribbon = Some(command);
+        Ok(())
+    }
     pub fn bloom(&mut self, command: [f32; 3]) -> Result<(), String> {
         if command.iter().any(|v| !v.is_finite()) || command[0] <= 0.0 || command[0].fract() != 0.0
         {
@@ -32,6 +44,12 @@ impl World {
         if let Some([id, x, z]) = self.pending_bloom.take() {
             send(&mut self.demo, &format!("move {x} {z}"))?;
             send(&mut self.demo, &format!("click {id} 0"))?;
+            dirty.extend(regions(&self.demo)?);
+        }
+        if let Some([id, x, z, radius]) = self.pending_ribbon.take() {
+            send(&mut self.demo, &format!("move {x} {z}"))?;
+            send(&mut self.demo, &format!("down 0 {radius}"))?;
+            send(&mut self.demo, &format!("tick {id}"))?;
             dirty.extend(regions(&self.demo)?);
         }
         Ok(dirty)

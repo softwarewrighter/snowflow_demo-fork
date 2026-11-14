@@ -1786,6 +1786,7 @@ dependencies = [
  "xetal-world-model",
  "xetal-world-navigation",
  "xetal-world-render",
+ "xetal-world-ribbon",
  "xetal-world-spells",
  "xetal-world-stream",
  "xetal-world-surface",
@@ -2041,6 +2042,14 @@ dependencies = [
  "xetal-world-objects",
  "xetal-world-particles",
  "xetal-world-shadow",
+ "xetal-world-surface",
+]
+
+[[package]]
+name = "xetal-world-ribbon"
+version = "0.1.0"
+dependencies = [
+ "xetal-world-model",
  "xetal-world-surface",
 ]
 

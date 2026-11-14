@@ -1,4 +1,4 @@
-number = 21
+number = 24
 slug = "foundations-review"
 status = "pending"
 description = "Run clean-checkout native/WASM/browser/replay gates for the playable snowy wo..."

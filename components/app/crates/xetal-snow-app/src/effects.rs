@@ -1,7 +1,48 @@
 //! Commit one terrain payload to physics and decal caches together.
 use crate::Scene;
 use xetal_world_surface::Mesh;
+pub(crate) struct SpellUpdates {
+    pub sweep: xetal_world_sweep::Update,
+    pub bloom: xetal_world_bloom::Update,
+    pub ribbon: xetal_world_ribbon::Update,
+}
 impl Scene {
+    pub fn ribbon_input(&mut self, pressed: bool) -> Result<(), String> {
+        let pose = self.ribbon_pose();
+        if pressed {
+            self.ribbon.press(pose)
+        } else {
+            self.ribbon.release(pose)
+        }
+    }
+    fn ribbon_pose(&self) -> xetal_world_ribbon::Pose {
+        xetal_world_ribbon::Pose {
+            origin: self.walker.position,
+            aim: [self.walker.yaw, self.walker.pitch],
+        }
+    }
+    pub(crate) fn advance_spells(&mut self, dt: f32) -> Result<SpellUpdates, String> {
+        let sweep = self.sweep.tick(dt)?;
+        if let Some(brush) = sweep.brush {
+            self.world.sweep(brush)?;
+        }
+        let bloom = self.bloom.tick(dt)?;
+        if let Some(crater) = bloom.crater {
+            self.world.bloom(crater)?;
+        }
+        let pose = self.ribbon_pose();
+        let ribbon = self.ribbon.update(pose, dt, |point| {
+            xetal_world_navigation::floor(&self.terrain, point).map(|y| y - 1.7)
+        })?;
+        if let Some(score) = ribbon.score {
+            self.world.ribbon(score)?;
+        }
+        Ok(SpellUpdates {
+            sweep,
+            bloom,
+            ribbon,
+        })
+    }
     pub fn cast_bloom(&mut self) -> Result<(), String> {
         let walker = &self.walker;
         let [limit, fallback] = self.bloom.targeting();

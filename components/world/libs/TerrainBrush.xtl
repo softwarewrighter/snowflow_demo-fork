@@ -19,3 +19,9 @@ l:r_adial := { (radius, cut, bank) ->
   edge := l:c_lamp (1.0 - (rim * rim))
   (bank * edge * edge) - (cut * center * center)
 }
+l:s_pot := { (radius, cut, bank) ->
+  center := l:c_lamp (1.0 - (radius * radius))
+  ring := (radius - 1.0) / 0.5
+  rim := l:c_lamp (1.0 - (ring * ring))
+  (bank * rim * rim) - (cut * center * center)
+}

@@ -13,6 +13,7 @@ pub struct Scene {
     pub steps: u64,
     pub wind: f32,
     player: Player,
+    pub ribbon: xetal_world_ribbon::Ribbon,
     pub bloom: xetal_world_bloom::Bloom,
     pub sweep: xetal_world_sweep::Sweep,
     pub spells: xetal_world_spells::Spells,
@@ -23,6 +24,7 @@ pub struct Scene {
 pub struct Update {
     pub terrain: Option<xetal_world_surface::Mesh>,
     pub tracks: Option<Vec<f32>>,
+    pub ribbon: Option<xetal_world_surface::Mesh>,
     pub bloom: Option<xetal_world_surface::Mesh>,
     pub particles: Option<Vec<f32>>,
     pub sweep: Option<xetal_world_surface::Mesh>,
@@ -42,6 +44,7 @@ impl Scene {
             terrain_revision: 0,
             sweep: xetal_world_sweep::Sweep::new()?,
             bloom: xetal_world_bloom::Bloom::new()?,
+            ribbon: xetal_world_ribbon::Ribbon::new()?,
             mesh_hash: 0,
             landings: 0,
             steps: 0,
@@ -58,14 +61,7 @@ impl Scene {
         jump: bool,
         paused: bool,
     ) -> Result<Update, String> {
-        let sweep = self.sweep.tick(if paused { 0.0 } else { dt })?;
-        if let Some(brush) = sweep.brush {
-            self.world.sweep(brush)?;
-        }
-        let bloom = self.bloom.tick(if paused { 0.0 } else { dt })?;
-        if let Some(crater) = bloom.crater {
-            self.world.bloom(crater)?;
-        }
+        let effects = self.advance_spells(if paused { 0.0 } else { dt })?;
         let terrain = self.world.step(self.walker.position, 2_000)?;
         self.accept_terrain(terrain.as_ref());
         let (pose, moving) = self.motion(dt, held, jump, paused);
@@ -84,9 +80,10 @@ impl Scene {
         Ok(Update {
             terrain,
             tracks,
-            sweep: sweep.mesh,
-            bloom: bloom.mesh,
-            particles: bloom.particles,
+            sweep: effects.sweep.mesh,
+            bloom: effects.bloom.mesh,
+            particles: effects.bloom.particles,
+            ribbon: effects.ribbon.mesh,
             objects: self.spells.tick(if paused { 0.0 } else { dt })?,
             step,
             landing,
@@ -129,6 +126,7 @@ impl Scene {
         self.spells.clear()?;
         self.sweep.clear()?;
         self.bloom.clear()?;
+        self.ribbon.clear()?;
         self.world.clear_edits();
         self.walker = Walker::default();
         self.clear_tracks()

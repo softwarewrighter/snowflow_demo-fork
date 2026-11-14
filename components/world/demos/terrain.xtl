@@ -3,6 +3,7 @@
 "snow:" u_se< "../libs/SnowTerrain.xtl"
 "carve:" u_se< "../libs/SweepBrush.xtl"
 "crater:" u_se< "../libs/BloomBrush.xtl"
+"score:" u_se< "../libs/RibbonBrush.xtl"
 "host:" u_se< "../libs/SnowHost.xtl"
 initial := snow:m_esh (0.0, 0.0)
 frame! := (initial, 0 4 r_eshape 0.0)
@@ -16,27 +17,36 @@ h:c_raters := { history ->
   (f_irst s_hape history) = 0 ? 0 4 r_eshape 0.0
   (1 4 r_eshape crater:r_egion (1 s_elect history)) c_at h:c_raters (1 d_rop history)
 }
+h:s_cores := { history ->
+  (f_irst s_hape history) = 0 ? 0 4 r_eshape 0.0
+  (1 4 r_eshape score:r_egion (1 s_elect history)) c_at h:s_cores (1 d_rop history)
+}
 u:u_pdate := { (state, mesh, _) event ->
-  (chunk, history, blooms, point, params) := state
+  (chunk, history, blooms, scores, point, params) := state
   kind := []E_KIND event
   at := []E_AT event
   empty := 0 4 r_eshape 0.0
-  kind m_atch "move" ? ((chunk, history, blooms, at, params), mesh, empty)
-  kind m_atch "down" ? ((chunk, history, blooms, point, at), mesh, empty)
+  kind m_atch "move" ? ((chunk, history, blooms, scores, at, params), mesh, empty)
+  kind m_atch "down" ? ((chunk, history, blooms, scores, point, at), mesh, empty)
   kind m_atch "up" ? { @ ->
     row := (f_irst at) c_at point c_at params
     (next, regions) := row carve:u_pdate history
-    ((chunk, next, blooms, point, params), mesh, regions)
+    ((chunk, next, blooms, scores, point, params), mesh, regions)
   } @
   kind m_atch "click" ? { @ ->
     row := (f_irst at) c_at point
     (next, regions) := row crater:u_pdate blooms
-    ((chunk, history, next, point, params), mesh, regions)
+    ((chunk, history, next, scores, point, params), mesh, regions)
   } @
-  kind m_atch "key" ? ((chunk, carve:s_tart @, crater:s_tart @, point, params), mesh, (h:r_egions history) c_at h:c_raters blooms)
+  kind m_atch "tick" ? { @ ->
+    row := (f_irst at) c_at point c_at (2 s_elect params)
+    (next, regions) := row score:u_pdate scores
+    ((chunk, history, blooms, next, point, params), mesh, regions)
+  } @
+  kind m_atch "key" ? ((chunk, carve:s_tart @, crater:s_tart @, score:s_tart @, point, params), mesh, (h:r_egions history) c_at (h:c_raters blooms) c_at h:s_cores scores)
   kind m_atch "choose" ? { @ ->
     next := host:c_hunk event
-    ((next, history, blooms, point, params), snow:c_arved (next, history, blooms), empty)
+    ((next, history, blooms, scores, point, params), snow:s_cored (next, history, blooms, scores), empty)
   } @
   (state, mesh, empty)
 }
@@ -48,4 +58,4 @@ u:l_oop! := { publication ->
   frame! := (mesh, regions)
   u:l_oop! next
 }
-u:l_oop! (((0.0, 0.0), carve:s_tart @, crater:s_tart @, 0.0 0.0, 0.0 0.0), initial, 0 4 r_eshape 0.0)
+u:l_oop! (((0.0, 0.0), carve:s_tart @, crater:s_tart @, score:s_tart @, 0.0 0.0, 0.0 0.0), initial, 0 4 r_eshape 0.0)

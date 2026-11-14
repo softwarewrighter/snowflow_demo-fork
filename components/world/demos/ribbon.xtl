@@ -1,0 +1,38 @@
+#!/usr/bin/env xetal
+## Ribbon composition: immutable path history, typed geometry/scoring and ground probes.
+"ribbon:" u_se< "../libs/Ribbon.xtl"
+"host:" u_se< "../libs/SnowHost.xtl"
+frame! := (0 3 3 r_eshape 0.0, 0.0 0.0 0.0 1.6, 0.0 0.0 0.0 0.0, 0 0)
+u:w_atch := { @ -> frame! }
+'u:w_atch
+u:u_pdate := { (spell, point, ground, aim) event ->
+  kind := []E_KIND event
+  at := []E_AT event
+  kind m_atch "move" ? (spell, at, ground, aim)
+  kind m_atch "down" ? (spell, point, f_irst at, aim)
+  kind m_atch "up" ? (spell, point, ground, at)
+  origin := (f_irst point) c_at ground c_at (2 s_elect point)
+  current := (origin, aim) ribbon:p_ose spell
+  kind m_atch "click" ? { @ ->
+    (f_irst at) > 0.5 ? ((origin, aim) ribbon:p_ress current, point, ground, aim)
+    (ribbon:r_elease current, point, ground, aim)
+  } @
+  kind m_atch "tick" ? ((f_irst at) ribbon:t_ick current, point, ground, aim)
+  kind m_atch "choose" ? ((f_irst at) ribbon:c_ontact spell, point, ground, aim)
+  kind m_atch "key" ? (ribbon:s_tart @, point, ground, aim)
+  (spell, point, ground, aim)
+}
+u:l_oop! := { state ->
+  e := host:n_ext! @
+  kind := []E_KIND e
+  kind m_atch "end" ? @
+  next := state u:u_pdate e
+  (spell, _, _, _) := next
+  refresh := (kind m_atch "tick") + (kind m_atch "click") + (kind m_atch "choose") + (kind m_atch "key")
+  refresh > 0 ? { @ ->
+    frame! := (ribbon:m_esh spell, ribbon:c_ommand spell, ribbon:p_robe spell, ribbon:s_tatus spell)
+    u:l_oop! next
+  } @
+  u:l_oop! next
+}
+u:l_oop! (ribbon:s_tart @, 0.0 0.0, 0.0, 0.0 0.0)

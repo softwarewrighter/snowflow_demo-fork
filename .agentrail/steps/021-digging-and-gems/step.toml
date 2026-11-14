@@ -1,4 +1,4 @@
-number = 18
+number = 21
 slug = "digging-and-gems"
 status = "pending"
 description = "Implement spherical density edits exposing dirt and buried faceted gems, with..."

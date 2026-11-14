@@ -1,0 +1,47 @@
+## RibbonSurface: elliptical rings along an arbitrary 3D spine, with stable frames.
+## Input columns [x y z radius twist]. Reference: library-reference.html#ribbon-surface
+h:f_rames := { spine ->
+  n := f_irst s_hape spine
+  ids := r_ange n
+  previous := (ids - (ids > 1)) s_elect spine
+  following := (ids + (ids < n)) s_elect spine
+  delta := 2 1 t_ranspose (following - previous)
+  dx := 1 s_elect delta
+  dy := 2 s_elect delta
+  dz := 3 s_elect delta
+  length := (((dx * dx) + (dy * dy) + (dz * dz)) ^ 0.5) + 0.000000001
+  tx := dx / length
+  ty := dy / length
+  tz := dz / length
+  vertical := f_loat ((a_bs ty) > 0.9)
+  ax := (n_eg tz) * (1.0 - vertical)
+  ay := tz * vertical
+  az := (tx * (1.0 - vertical)) - (ty * vertical)
+  norm := (((ax * ax) + (ay * ay) + (az * az)) ^ 0.5) + 0.000000001
+  rx := ax / norm
+  ry := ay / norm
+  rz := az / norm
+  ux := (ry * tz) - (rz * ty)
+  uy := (rz * tx) - (rx * tz)
+  uz := (rx * ty) - (ry * tx)
+  2 1 t_ranspose ((6 c_at n) r_eshape rx c_at ry c_at rz c_at ux c_at uy c_at uz)
+}
+l:m_esh := { spine ->
+  n := f_irst s_hape spine
+  n < 2 ? 0 3 3 r_eshape 0.0
+  k := (r_ange (n * 9)) - 1
+  ids := 1 + (k d_iv 9)
+  rows := 2 1 t_ranspose (ids s_elect spine)
+  basis := 2 1 t_ranspose (ids s_elect h:f_rames spine)
+  angle := ((6.2831853072 * f_loat (k m_od 9)) / 8.0) + (5 s_elect rows)
+  side := (1.55 * c_os angle) * (4 s_elect rows)
+  up := (s_in angle) * (4 s_elect rows)
+  x := (1 s_elect rows) + ((1 s_elect basis) * side) + ((4 s_elect basis) * up)
+  y := (2 s_elect rows) + ((2 s_elect basis) * side) + ((5 s_elect basis) * up)
+  z := (3 s_elect rows) + ((3 s_elect basis) * side) + ((6 s_elect basis) * up)
+  points := 2 1 t_ranspose ((3 c_at (n * 9)) r_eshape x c_at y c_at z)
+  cells := (r_ange ((n - 1) * 8)) - 1
+  base := ((cells d_iv 8) * 9) + (cells m_od 8)
+  indices := 1 + r_avel base '+ t_able 0 1 9 1 10 9
+  (((n - 1) * 16) c_at 3 3) r_eshape indices s_elect points
+}

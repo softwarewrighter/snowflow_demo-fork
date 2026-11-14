@@ -1,0 +1,8 @@
+number = 13
+slug = "snow-compaction-contact"
+status = "pending"
+description = "Extend the actual snow layer with compaction and loose-depth channels. Fresh ..."
+role = "production"
+context_files = []
+created_at = "2026-11-14T13:18:33"
+commits = []

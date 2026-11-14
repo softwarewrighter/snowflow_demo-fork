@@ -18,6 +18,7 @@ impl World {
     pub fn clear_edits(&mut self) {
         self.pending_edit = None;
         self.pending_bloom = None;
+        self.pending_ribbon = None;
         self.pending_reset = true;
     }
     pub(crate) fn apply_edits(&mut self) -> Result<Option<Mesh>, String> {
@@ -57,7 +58,7 @@ pub(crate) fn send(demo: &mut Demo, event: &str) -> Result<(), String> {
 }
 pub(crate) fn regions(demo: &Demo) -> Result<Vec<[f64; 4]>, String> {
     let (shape, values) = demo.array(1)?;
-    if shape.len() != 2 || shape[1] != 4 || shape[0] > 12 {
+    if shape.len() != 2 || shape[1] != 4 || shape[0] > 28 {
         return Err("invalid dirty terrain regions".into());
     }
     Ok(values.as_chunks::<4>().0.to_vec())

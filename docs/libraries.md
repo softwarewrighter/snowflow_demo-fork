@@ -126,3 +126,12 @@ The independent `effects` component keeps the existing world/render workspaces
 within their five-crate target. `Demo::array` carries crater and particle arrays
 without numeric text output; input still uses the existing few-scalar Event
 bridge. The live composition source links to each actual imported library.
+
+## Ribbon and snow mechanics
+
+[Ribbon](ribbon.md) maps the actual Ribbon, RibbonSurface and RibbonBrush
+libraries to native transport, water rendering, tests and bounds. The live
+composition source links to their generated reference entries.
+[Snow mechanics](snow-mechanics.md) separately identifies proposed layer,
+compaction, contact and persistence facilities; these planned names are not
+presented as existing live libraries.
