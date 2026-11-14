@@ -1,21 +1,22 @@
 {
-  "status": "published; post-publication native gate passed; hardware browser/audio acceptance pending",
+  "status": "published; full post-publication gate passed; browser/audio/FPS inspection pending",
   "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
   "wgpu": "24.0.5",
   "rustc": "1.100.0",
-  "native_rust_tests": 39,
+  "native_rust_tests": 42,
   "python_tests": 18,
   "wasm_build": "passed",
   "wasm_clippy": "passed",
   "shader_validation": "passed with Naga 24",
-  "program_sha256": "3a2767a30eadb261ca54c1803af7752c45ec5dbbf180e0b58aa05010b87adea7",
+  "program_sha256": "fa022dfe969d17cf631dda308a8f54d11b668cdd6f5b8cff8b47a0cdde9a581e",
   "shader_sha256": "f2173a2e771c5d0834a51a1a6ef800620d081ad0d7255b9a12fd6a077b4aa8d1",
   "artifacts": {
+    "style-c01cdee203025dd1.css": "59ec380e2e449c0bf647f46c928a329a36a0f940ddf058c7b82a1775d9cfe799",
     "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
-    "index.html": "302e8af4b6851c625ff76d6b1fe0cf7af648f154a975b6e47b12eaf67e53313a",
-    "style-9bfbaed096570b35.css": "db065e2d776794a3ac8ada9b6908fa2ee718a4660854e471c7625ed461c562d7",
-    "xetal-snow-app-b5cd101cba2ba2b2.js": "05d491696eda71f884e397245558ca35492ddc3808fb6cea85c73e012eb3b65c",
-    "xetal-snow-app-b5cd101cba2ba2b2_bg.wasm": "26c71c8ab58930cc506d251b2a25902e4f9410b362c1ecaa891bf425db1c8326"
+    "library-reference.html": "db74b035a9dafb98cc9f11a81179f4f6100cd2efeb215361bf0b6b133b94618d",
+    "index.html": "86f4e8c9d2d4df6714cb0d39cb8792b598cc6dd16789a2bedae8d6c8e1055181",
+    "xetal-snow-app-76b148271b491c40_bg.wasm": "ecc0bfb1a63fcb85a1df1c4902dea37f0c58c7420c50eff3377021d357ae3a26",
+    "xetal-snow-app-76b148271b491c40.js": "5ed2a01756a2d456accfd75fa6a20e88b35982c49d6d6b6de7d05ea780a91160"
   },
   "local_url": "http://127.0.0.1:8475/snowflow_demo-fork/",
   "browser_report": "work/demo-browser-result.json",
@@ -38,5 +39,15 @@
   "streaming": "Stationary deterministic 32m chunks; 25 resident; no finite movement clamp",
   "tracks_audio": "256 procedural boot-print decals; splash gesture enables walking crunch and landing thud synthesis; muted entry available",
   "fps_display": "Rolling RAF FPS and mean milliseconds with 500ms reporting; not GPU timestamps",
-  "downhill_fix": "Native regression reproduced and fixed with pure ground contact tolerance, preserving jump/real fall"
+  "downhill_fix": "Native regression reproduced and fixed with pure ground contact tolerance, preserving jump/real fall",
+  "native_test_scope": "Full gate: 41 Rust tests; additional long-walk bound regression passes afterward.",
+  "libraries": {
+    "Footsteps.xtl": "3e224cfb5fdbe438b78c5fa531cf857b229e0dfb38665344dc82acb3a4a1cea2",
+    "SnowAudio.xtl": "cba46cfb11e421913c986bf7c157369945ac6c2402cf7eb76d4f23dfb798e759",
+    "SnowHost.xtl": "a2e83d01a1138ea5f1295f161bbae2e713f3a8dfa5e6ab241cb7fa7858062088",
+    "SnowTerrain.xtl": "d5b69ac875f28606639e912f8c421f708f7d7e55114f542a6712332f8bbc69a9",
+    "SnowWind.xtl": "78f555580326d40f744d024352a60b5f25ce7154c96b04c0dee6a4d7fa59b903"
+  },
+  "ownership": "X_eTaL: terrain, footfall/landing policy, audio commands, gusts/aging/history. Rust: input facts, physics, execution, audio/GPU resources.",
+  "wind": "12s gust period; gradual opacity from accumulated exposure, oldest first; 256-history cap"
 }

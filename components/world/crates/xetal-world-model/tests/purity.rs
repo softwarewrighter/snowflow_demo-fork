@@ -16,7 +16,8 @@ fn assignments(expr: &Expr) -> usize {
 
 #[test]
 fn only_the_effect_loop_may_publish_to_the_mesh_slot() {
-    let loaded = xetal_program::load_with("snowfield.xtl", SOURCE, &xetal_snow_libraries::Embedded).unwrap();
+    let loaded =
+        xetal_program::load_with("snowfield.xtl", SOURCE, &xetal_snow_libraries::Embedded).unwrap();
     let program = loaded.program;
     let mut mutable = Vec::new();
     let mut publications = 0;
@@ -36,7 +37,12 @@ fn only_the_effect_loop_may_publish_to_the_mesh_slot() {
 
 #[test]
 fn shipped_xetal_source_has_no_enabled_lint_findings() {
-    let findings = xetal_linter::lint(concat!(env!("CARGO_MANIFEST_DIR"), "/../../demos/snowfield.xtl"), SOURCE, &[]).unwrap();
+    let findings = xetal_linter::lint(
+        concat!(env!("CARGO_MANIFEST_DIR"), "/../../demos/snowfield.xtl"),
+        SOURCE,
+        &[],
+    )
+    .unwrap();
     assert!(findings.is_empty(), "{findings:#?}");
 }
 

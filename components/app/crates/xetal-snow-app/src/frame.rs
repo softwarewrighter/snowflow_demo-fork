@@ -83,8 +83,12 @@ impl App {
             self.renderer.upload_tracks(&vertices)?;
         }
         let sound = match update.sound[0] {
-            1.0 => self.audio.play(Kind::Step, update.sound[1], update.sound[2]),
-            2.0 => self.audio.play(Kind::Land, update.sound[1], update.sound[2]),
+            1.0 => self
+                .audio
+                .play(Kind::Step, update.sound[1], update.sound[2]),
+            2.0 => self
+                .audio
+                .play(Kind::Land, update.sound[1], update.sound[2]),
             _ => Ok(()),
         };
         if let Err(error) = sound {
@@ -99,8 +103,15 @@ impl App {
 
     fn observe(&self) {
         let scene = &self.scene;
+        let chunks = scene.world.resident();
+        let visible = scene
+            .trail
+            .marks
+            .iter()
+            .filter(|mark| mark.opacity > 0.01)
+            .count();
         if !self.started {
-            let loaded = scene.world.resident();
+            let loaded = chunks;
             status::text(
                 "splash-status",
                 &format!("Preparing nearby snow ({loaded}/25)..."),
@@ -114,27 +125,20 @@ impl App {
                 }
             }
         }
-        if scene.world.resident() > 0 {
+        if chunks > 0 {
             status::progress(self.frames, self.updates, scene.mesh_hash);
         }
-        status::text("triangles", &format!("{}", scene.world.resident() * 512));
-        status::text(
-            "updates",
-            &format!(
-                "{} chunks / {} prints",
-                scene.world.resident(),
-                scene.trail.marks.iter().filter(|mark| mark.opacity > 0.01).count()
-            ),
-        );
+        status::text("triangles", &format!("{}", chunks * 512));
+        status::text("updates", &format!("{chunks} chunks / {visible} prints"));
         if let Ok(element) = status::element("app") {
             for (key, value) in [
                 ("data-position", format!("{:?}", scene.walker.position)),
-                ("data-chunks", scene.world.resident().to_string()),
+                ("data-chunks", chunks.to_string()),
                 (
                     "data-center",
                     format!("[{},{}]", scene.world.center.0, scene.world.center.1),
                 ),
-                ("data-footprints", scene.trail.marks.iter().filter(|mark| mark.opacity > 0.01).count().to_string()),
+                ("data-footprints", visible.to_string()),
                 ("data-steps", scene.steps.to_string()),
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),

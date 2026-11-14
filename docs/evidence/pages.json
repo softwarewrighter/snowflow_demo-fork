@@ -2,14 +2,15 @@
   "url": "https://softwarewrighter.github.io/snowflow_demo-fork/",
   "pages_status": "built",
   "https_enforced": true,
-  "source_commit": "6e24cf673d5e830023d0c5ca87b4fc6a346239c0",
-  "gh_pages_commit": "9c78e23b30446ffc712edf402b5f520bfe1c4b3b",
+  "source_commit": "334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9",
+  "gh_pages_commit": "a40fc332de18d73a49eb629af9376a0343110822",
   "artifact_sha256": {
-    "xetal-snow-app-98059a5dfccddc55_bg.wasm": "fa4b211101ce42e95b6f3d775deef1ce497aa77a2fe7279a7f8543b3d2d9232d",
-    "xetal-snow-app-98059a5dfccddc55.js": "0cfb81ca157e78f306eca890a531bff8939b866775443663dabc3c160a84f935",
+    "style-c01cdee203025dd1.css": "59ec380e2e449c0bf647f46c928a329a36a0f940ddf058c7b82a1775d9cfe799",
     "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
-    "index.html": "d65be226f2ce612bf0d8fdca70b11685b96b081a96a15298bd32ffacd29f830a",
-    "style-20a4bba368198ec2.css": "58c1a883db324e0a6c8e88851753eae62b1694f626a7a51256d8eb59c7849c84"
+    "library-reference.html": "db74b035a9dafb98cc9f11a81179f4f6100cd2efeb215361bf0b6b133b94618d",
+    "index.html": "86f4e8c9d2d4df6714cb0d39cb8792b598cc6dd16789a2bedae8d6c8e1055181",
+    "xetal-snow-app-76b148271b491c40_bg.wasm": "ecc0bfb1a63fcb85a1df1c4902dea37f0c58c7420c50eff3377021d357ae3a26",
+    "xetal-snow-app-76b148271b491c40.js": "5ed2a01756a2d456accfd75fa6a20e88b35982c49d6d6b6de7d05ea780a91160"
   },
   "all_five_assets": "HTTP 200; downloaded hashes match packaged artifact",
   "wasm_content_type": "application/wasm",
@@ -18,5 +19,6 @@
   "functional_state": "Immutable logical state and derived mesh, one host publication slot; exact legacy/native replay passes; browser acceptance pending.",
   "effects": "Live controls/build/asset hashes verified; actual GPU pipeline, visual correctness, jump and FPS comparison pending normal-host browser harness.",
   "favicon": "Snowflake SVG: live HTTP 200, image/svg+xml, hash matches source, linked by the live index",
-  "streaming_audio_fps": "Published stationary streaming, prints/audio splash, downhill contact fix, FPS HUD and project footer; actual device/browser audiovisual proof pending."
+  "streaming_audio_fps": "Published stationary streaming, prints/audio splash, downhill contact fix, FPS HUD and project footer; actual device/browser audiovisual proof pending.",
+  "xetal_libraries": "Five actual modules, generated live reference, linked rendered calls, X_eTaL footsteps/audio policy/wind fill; six live asset hashes verified."
 }

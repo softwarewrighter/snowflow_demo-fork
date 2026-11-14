@@ -10,9 +10,15 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         app.paused = !app.paused;
         status::text("pause", if app.paused { "Resume" } else { "Pause" });
     })?;
-    button("reset", state.clone(), |app| { if let Err(error) = app.scene.reset() { status::error(error); } })?;
+    button("reset", state.clone(), |app| {
+        if let Err(error) = app.scene.reset() {
+            status::error(error);
+        }
+    })?;
     button("clear-tracks", state.clone(), |app| {
-        if let Err(error) = app.scene.clear_tracks() { status::error(error); }
+        if let Err(error) = app.scene.clear_tracks() {
+            status::error(error);
+        }
     })?;
     button("start-sound", state.clone(), |app| {
         crate::boot::enter(app, true)
@@ -119,7 +125,9 @@ fn command(app: &mut App, key: &str, pressed: bool) -> bool {
             app.scene.walker.pitch = (app.scene.walker.pitch - 0.06).max(-1.2)
         }
         "r" | "Home" if pressed => {
-            if let Err(error) = app.scene.reset() { status::error(error); }
+            if let Err(error) = app.scene.reset() {
+                status::error(error);
+            }
         }
         _ => return false,
     }

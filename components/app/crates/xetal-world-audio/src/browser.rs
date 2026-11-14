@@ -42,7 +42,7 @@ impl Sound {
             return Ok(());
         }
         let bank = self.bank.as_ref().ok_or("audio bank unavailable")?;
-        let gain = bank.voice(kind, rate.clamp(0.1,4.0), volume.clamp(0.0,1.0))?;
+        let gain = bank.voice(kind, rate.clamp(0.1, 4.0), volume.clamp(0.0, 1.0))?;
         self.active = Some((kind, gain));
         Ok(())
     }

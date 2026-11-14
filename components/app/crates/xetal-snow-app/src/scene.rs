@@ -22,7 +22,7 @@ pub struct Update {
     pub step: bool,
     pub landing: f32,
     pub moving: bool,
-    pub sound: [f32;3],
+    pub sound: [f32; 3],
 }
 impl Scene {
     pub fn new() -> Result<Self, String> {
@@ -33,7 +33,9 @@ impl Scene {
             terrain: Vec::new(),
             mesh_hash: 0,
             landings: 0,
-            steps: 0, wind: 0.3, player: Player::new()?,
+            steps: 0,
+            wind: 0.3,
+            player: Player::new()?,
             track_revision: u64::MAX,
         })
     }
@@ -52,10 +54,13 @@ impl Scene {
             });
         }
         let (pose, moving) = self.motion(dt, held, jump, paused);
-        let mut sound = [0.0,0.0,1.0];
+        let mut sound = [0.0, 0.0, 1.0];
         if let Some(commands) = self.player.update(pose, if paused { 0.0 } else { dt })? {
             self.trail.replace(&commands.prints, &self.terrain)?;
-            self.steps = commands.steps; self.landings = commands.landings; self.wind = commands.wind; sound = commands.sound;
+            self.steps = commands.steps;
+            self.landings = commands.landings;
+            self.wind = commands.wind;
+            sound = commands.sound;
         }
         let step = sound[0] == 1.0;
         let landing = if sound[0] == 2.0 { sound[1] } else { 0.0 };
@@ -66,7 +71,8 @@ impl Scene {
             tracks,
             step,
             landing,
-            moving, sound,
+            moving,
+            sound,
         })
     }
     fn motion(&mut self, dt: f32, held: [bool; 4], jump: bool, paused: bool) -> (Pose, bool) {
@@ -90,12 +96,31 @@ impl Scene {
             && self.walker.motion.grounded
             && (before[0] - self.walker.position[0]).hypot(before[2] - self.walker.position[2])
                 > 0.0001;
-        (Pose { point: [self.walker.position[0], self.walker.position[2]], yaw: self.walker.yaw, grounded: self.walker.motion.grounded, impact: self.walker.landing_speed }, moving)
+        (
+            Pose {
+                point: [self.walker.position[0], self.walker.position[2]],
+                yaw: self.walker.yaw,
+                grounded: self.walker.motion.grounded,
+                impact: self.walker.landing_speed,
+            },
+            moving,
+        )
     }
-    pub fn reset(&mut self) -> Result<(), String> { self.walker = Walker::default(); self.clear_tracks() }
+    pub fn reset(&mut self) -> Result<(), String> {
+        self.walker = Walker::default();
+        self.clear_tracks()
+    }
     pub fn clear_tracks(&mut self) -> Result<(), String> {
-        self.player.reset(Pose { point: [self.walker.position[0],self.walker.position[2]], yaw: self.walker.yaw, grounded: self.walker.motion.grounded, impact: 0.0 })?;
-        self.trail = Trail::default(); self.steps = 0; self.landings = 0; self.track_revision = u64::MAX;
+        self.player.reset(Pose {
+            point: [self.walker.position[0], self.walker.position[2]],
+            yaw: self.walker.yaw,
+            grounded: self.walker.motion.grounded,
+            impact: 0.0,
+        })?;
+        self.trail = Trail::default();
+        self.steps = 0;
+        self.landings = 0;
+        self.track_revision = u64::MAX;
         Ok(())
     }
 }

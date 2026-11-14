@@ -2,7 +2,11 @@ use xetal_value::Value;
 use xetal_world_surface::{Mesh, from_scene};
 
 pub(crate) fn mesh(value: &Value<'_>) -> Result<Mesh, String> {
-    let value = if let Value::Tuple(fields) = value { fields.first().ok_or("empty frame")? } else { value };
+    let value = if let Value::Tuple(fields) = value {
+        fields.first().ok_or("empty frame")?
+    } else {
+        value
+    };
     let Value::Array(array) = value else {
         return Err("mesh! must be a Scene triangle array".into());
     };
