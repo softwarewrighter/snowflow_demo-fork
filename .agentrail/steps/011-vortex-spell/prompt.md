@@ -1,0 +1,1 @@
+Port original spell 5 Vortex: three snow/slush helices, tangential particle emission, surface snow lifting and settling through shared signed brushes. Keep algorithm, lifecycle and emission in X_eTaL libraries with reusable Rust rendering wrappers. Verify bounded deterministic behavior, publish preview before full gate and document original-demo visual parity limits.

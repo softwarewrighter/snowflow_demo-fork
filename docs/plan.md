@@ -20,16 +20,20 @@ structure; completed work and pending validation are recorded below and in agent
 | 5 | pages-foundation | Publish the built static artifact with trusted HTTPS and verify asset URLs |
 | 6 | xetal-library-app | Actual X_eTaL modules for terrain, feet, sound and wind, generated cross-reference and source links |
 | 7 | crystallise-spell | Port spell 4 with bounded X_eTaL crystal growth and a native ice renderer |
-| 8 | cloudy-day-night | Queued overcast sky, faint sun, night/moon and carried torch |
-| 9 | streaming-tracks-audio | Stationary terrain, bounded endless streaming, footprints and gesture-enabled movement/landing sound |
-| 10 | lightweight-effects | Procedural material detail, fixed-step jumping and cached sun shadows with cost controls |
-| 11 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
-| 12 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
-| 13 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
-| 14 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
-| 15 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
-| 16 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
-| 17 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
+| 8 | sweep-spell | Shared terrain brushes and moving slush crescent that carves channels and banks |
+| 9 | bloom-spell | Targeted eruption, crater/rim and particle fallout shared with snowfall |
+| 10 | ribbon-spell | Held aim-controlled water stream with release trajectory |
+| 11 | vortex-spell | Three snow helices, tangential particles and signed terrain edits |
+| 12 | cloudy-day-night | Queued overcast sky, faint sun, night/moon and carried torch |
+| 13 | streaming-tracks-audio | Stationary terrain, bounded endless streaming, footprints and gesture-enabled movement/landing sound |
+| 14 | lightweight-effects | Procedural material detail, fixed-step jumping and cached sun shadows with cost controls |
+| 15 | browser-mesh-demo | Continuous X_eTaL-driven mesh, Rust renderer, input and error handling in a real browser |
+| 16 | workers-and-replay | Bounded jobs, versioned transfers, cancellation, deterministic fixed-step replay |
+| 17 | smooth-snow-chunks | Endless smooth terrain, snow and ice boulders with matching borders and bounded residency |
+| 18 | digging-and-gems | Spherical edits expose dirt and gems; collision, save/load and collection agree |
+| 19 | flowing-water | Lake breach flows over edited terrain with connected water surfaces and explicit source rules |
+| 20 | torches-and-gem-hunt | Local lights, day/night and fixed-tick gem hunt over the smooth world |
+| 21 | foundations-review | Clean-checkout replay and browser evidence; reusable features and upstream asks reviewed |
 
 Work reusable across applications belongs in the appropriate X_eTaL repository,
 then reaches this app through explicit pin updates. Application adapters are not substitutes for missing language features;

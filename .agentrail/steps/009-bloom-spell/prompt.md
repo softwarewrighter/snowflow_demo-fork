@@ -1,0 +1,1 @@
+Port original spell 3 Bloom using shared terrain brushes, swept surfaces and a reusable bounded particle renderer. X_eTaL owns targeted crater/rim, eruption timeline, particle emission and four-second fallout. Share particle facilities with requested snowfall and wind gusts. Publish usable preview, then gate and fix; document actual library APIs and hardware evidence limits.

@@ -2,17 +2,16 @@
   "url": "https://softwarewrighter.github.io/snowflow_demo-fork/",
   "pages_status": "built",
   "https_enforced": true,
-  "source_commit": "334282e6cf63b645aa9b5fdbd5aaef0a0ef1b8b9",
-  "gh_pages_commit": "a40fc332de18d73a49eb629af9376a0343110822",
+  "source_commit": "9749113a1783af11663a9a0f59d7e27008d4621a",
+  "gh_pages_commit": "26bad08eff0e10fe8d3ef13196848172402d7a6c",
   "artifact_sha256": {
     "style-c01cdee203025dd1.css": "59ec380e2e449c0bf647f46c928a329a36a0f940ddf058c7b82a1775d9cfe799",
+    "xetal-snow-app-e743e8d0ea9248d6.js": "83888d561ed8d5cdeb84195070cd71e01c380ef8200dba0f01ff0e61ea00896f",
     "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
-    "library-reference.html": "db74b035a9dafb98cc9f11a81179f4f6100cd2efeb215361bf0b6b133b94618d",
-    "index.html": "86f4e8c9d2d4df6714cb0d39cb8792b598cc6dd16789a2bedae8d6c8e1055181",
-    "xetal-snow-app-76b148271b491c40_bg.wasm": "ecc0bfb1a63fcb85a1df1c4902dea37f0c58c7420c50eff3377021d357ae3a26",
-    "xetal-snow-app-76b148271b491c40.js": "5ed2a01756a2d456accfd75fa6a20e88b35982c49d6d6b6de7d05ea780a91160"
+    "library-reference.html": "c84ccae759f759e64382c164b6dce076b7250722fc58458282176e0e08436469",
+    "index.html": "31921f355dc3c2690c7bae426dea69971c94fced221742b56488678debc305df",
+    "xetal-snow-app-e743e8d0ea9248d6_bg.wasm": "d9e131bb315d6e050f230cc2713e7213be600f92d98769ecc7fa9d3ce3db4d1b"
   },
-  "all_five_assets": "HTTP 200; downloaded hashes match packaged artifact",
   "wasm_content_type": "application/wasm",
   "browser_rendering": "pending; sandbox local socket creation denied; HTTP verification is not rendering acceptance",
   "source_views": "Semantic highlighting CSS and build identity verified live; native token/escaping tests pass; actual browser appearance pending.",
@@ -20,5 +19,7 @@
   "effects": "Live controls/build/asset hashes verified; actual GPU pipeline, visual correctness, jump and FPS comparison pending normal-host browser harness.",
   "favicon": "Snowflake SVG: live HTTP 200, image/svg+xml, hash matches source, linked by the live index",
   "streaming_audio_fps": "Published stationary streaming, prints/audio splash, downhill contact fix, FPS HUD and project footer; actual device/browser audiovisual proof pending.",
-  "xetal_libraries": "Five actual modules, generated live reference, linked rendered calls, X_eTaL footsteps/audio policy/wind fill; six live asset hashes verified."
+  "xetal_libraries": "Six actual project-local modules including Crystallise; generated API/source links and typed/rendered spell program",
+  "all_six_assets": "HTTP 200; all six downloaded SHA256 hashes match packaged artifact",
+  "crystallise": "Key 4 or button; X_eTaL growth/placement/geometry; four formations, 48 crystals, 864 triangles; browser appearance/FPS pending"
 }

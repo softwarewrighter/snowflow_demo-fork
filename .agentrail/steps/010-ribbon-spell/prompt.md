@@ -1,0 +1,1 @@
+Port original spell 2 Ribbon: held aim-tracking stream, curved motion and release trajectory, using shared swept-surface rendering and terrain brushes. X_eTaL owns all trajectory and casting policy. Rust supplies validated GPU resources and input facts. Preserve bounded resources, native replay tests, clickable source cross-references and publish-before-gate previews.

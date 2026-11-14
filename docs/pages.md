@@ -11,8 +11,9 @@ replace browser rendering and interaction acceptance.
 
 ## Publish an update
 
-Run the repository gate, build with `python3 scripts/build-demo.py`, and commit
-the source changes before preparing the artifact:
+Build with `python3 scripts/build-demo.py` (an optimized release build), and
+commit the source changes before preparing the artifact. Per the preview policy,
+publish the buildable preview first, then run the gate and publish any fixes:
 
 ```sh
 python3 scripts/package-pages.py
