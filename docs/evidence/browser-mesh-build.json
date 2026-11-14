@@ -3,21 +3,24 @@
   "core_commit": "c5750cec6af7063a90818046c7c7945db71b4a36",
   "wgpu": "24.0.5",
   "rustc": "1.100.0",
-  "native_rust_tests": 15,
-  "python_tests": 10,
+  "native_rust_tests": 17,
+  "python_tests": 18,
   "wasm_build": "passed",
   "wasm_clippy": "passed",
   "shader_validation": "passed with Naga 24",
-  "program_sha256": "dbb21dd959684a61e465348f1227981745ecf806dea95eca6b1782101972f614",
-  "shader_sha256": "ae583841b35bf3c644e9633dfd9b891e6faf43c2358946941d9f896a3f8df4e6",
+  "program_sha256": "874fcfb603459c45ffe5c6b8d4357cdbce648c2e3eabc4b00e27adfa4326e539",
+  "shader_sha256": "cbf6166e18022df7cde50c9e865eb51dad11a0807f6a3b1a7bdf4e386b5e34ad",
   "artifacts": {
     "favicon-4e963492c77e259d.ico": "73fa5697357d912a16f8f75fb095a5c55ff85d54ec5d3a24ea9b7900690e51d5",
-    "index.html": "e7464e59d9fbc980be3b82044cf91967a1fd05e46c77daaa4146369098c558b7",
+    "index.html": "5333ed49c79d285fa7136bd652eabec543706c12515abc485654116e716df266",
     "style-9710401d3e16e195.css": "cf92c5ff7b2ae67c97099c0bc741b2fdedef980359d69b4c9fb7d4dcede872d0",
-    "xetal-snow-app-62f7d7e7e4669aa6.js": "354dfb4405802a5b9d3a460564e43524c431fcf0e5d25e041482df7870ad4598",
-    "xetal-snow-app-62f7d7e7e4669aa6_bg.wasm": "f0ffdd29d5b600e3036a81f606246791d582db4715365ef094885d064a511da1"
+    "xetal-snow-app-a42c2b0405a8b957.js": "aa53c9aed8cce49298f99bb956b1fa34d138ce870c29955531bc050510275a96",
+    "xetal-snow-app-a42c2b0405a8b957_bg.wasm": "89e7fe023c3d44d64935cff400d59e6ec47b9d311609050764dd087d7d972f37"
   },
   "local_url": "http://127.0.0.1:8475/snowflow_demo-fork/",
   "browser_report": "work/demo-browser-result.json",
-  "screenshot": "work/demo-screenshot.png"
+  "screenshot": "work/demo-screenshot.png",
+  "triangles": 2048,
+  "preview": "finite walkable snowfield; Rust host navigation",
+  "browser_attempt": "Sandbox socket creation denied with PermissionError; no rendering result."
 }

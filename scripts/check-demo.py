@@ -47,9 +47,18 @@ def interactions(base, session):
         wait(base, session, f'return {updates} > {old}')
         hashes.append(evaluate(base, session, "return document.getElementById('app').dataset.mesh"))
     assert hashes[0] != hashes[1] and hashes[0] == hashes[2], f'input/reset failed: {hashes}'
+    position = "return document.getElementById('app').dataset.position"
+    start = evaluate(base, session, position)
+    evaluate(base, session, "document.getElementById('pause').click();window.dispatchEvent(new KeyboardEvent('keydown',{key:'w'}))")
+    time.sleep(0.5)
+    evaluate(base, session, "window.dispatchEvent(new KeyboardEvent('keyup',{key:'w'}));document.getElementById('pause').click()")
+    moved = evaluate(base, session, position)
+    assert moved != start, 'walking did not change camera position'
+    evaluate(base, session, "document.getElementById('reset').click()")
+    wait(base, session, "return document.getElementById('app').dataset.position === " + json.dumps(start))
     screenshot = request(base, f'/session/{session}/screenshot')
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(screenshot))
-    return {'pause': 'passed', 'input_and_reset': 'passed', 'mesh_hashes': hashes}
+    return {'pause': 'passed', 'walking_and_reset': 'passed', 'input_and_reset': 'passed', 'mesh_hashes': hashes}
 
 
 def browser(base, url, profile):

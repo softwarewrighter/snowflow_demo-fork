@@ -28,7 +28,7 @@ impl Renderer {
         self.depth = resources::depth(&self.device, &self.config);
     }
 
-    pub fn draw(&mut self, angle: f32, tilt: f32) -> Result<(), String> {
+    pub fn draw(&mut self, angle: f32, tilt: f32, eye: [f32; 3]) -> Result<(), String> {
         let frame = match self.surface.get_current_texture() {
             Ok(frame) => frame,
             Err(wgpu::SurfaceError::Timeout) => return Ok(()),
@@ -42,7 +42,7 @@ impl Renderer {
         self.queue.write_buffer(
             &self.uniform,
             0,
-            bytemuck::cast_slice(&[angle, tilt, aspect, 0.0]),
+            bytemuck::cast_slice(&[angle, tilt, aspect, 0.0, eye[0], eye[1], eye[2], 0.0]),
         );
         let view = frame.texture.create_view(&Default::default());
         let mut encoder = self.device.create_command_encoder(&Default::default());
@@ -83,9 +83,9 @@ fn color_attachment(view: &wgpu::TextureView) -> wgpu::RenderPassColorAttachment
         resolve_target: None,
         ops: wgpu::Operations {
             load: wgpu::LoadOp::Clear(wgpu::Color {
-                r: 0.025,
-                g: 0.055,
-                b: 0.095,
+                r: 0.47,
+                g: 0.65,
+                b: 0.78,
                 a: 1.0,
             }),
             store: wgpu::StoreOp::Store,

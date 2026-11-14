@@ -1781,6 +1781,7 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "xetal-world-model",
+ "xetal-world-navigation",
  "xetal-world-render",
 ]
 
@@ -1954,6 +1955,10 @@ dependencies = [
  "xetal-value",
  "xetal-world-surface",
 ]
+
+[[package]]
+name = "xetal-world-navigation"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-world-render"

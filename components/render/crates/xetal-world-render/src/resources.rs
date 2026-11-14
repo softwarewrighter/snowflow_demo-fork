@@ -40,7 +40,7 @@ pub(crate) fn uniforms(
 ) -> (wgpu::Buffer, wgpu::BindGroup, wgpu::BindGroupLayout) {
     let uniform = device.create_buffer(&wgpu::BufferDescriptor {
         label: Some("camera"),
-        size: 16,
+        size: 32,
         usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
         mapped_at_creation: false,
     });
@@ -83,7 +83,7 @@ fn uniform_layout(device: &wgpu::Device) -> wgpu::BindGroupLayout {
         label: None,
         entries: &[wgpu::BindGroupLayoutEntry {
             binding: 0,
-            visibility: wgpu::ShaderStages::VERTEX,
+            visibility: wgpu::ShaderStages::VERTEX_FRAGMENT,
             ty: wgpu::BindingType::Buffer {
                 ty: wgpu::BufferBindingType::Uniform,
                 has_dynamic_offset: false,

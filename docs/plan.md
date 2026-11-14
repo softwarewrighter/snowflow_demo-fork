@@ -109,3 +109,12 @@ GitHub reports built. The index and all five static assets return HTTP 200 with
 matching build hashes; the WASM response uses application/wasm. The deployment
 record is docs/evidence/pages.json. Browser hardware rendering acceptance remains
 the next step and is not inferred from these HTTP checks.
+
+## Walkable preview checkpoint
+
+Step 6 now includes the user-requested finite walkable snowfield before workers.
+The terrain expands to 2,048 X_eTaL-generated triangles, with snow-covered hills
+and two rounded ice formations. Rust host navigation follows the actual triangle
+heights. Native movement tests, shader validation and WASM builds are prerequisites
+for publication; actual browser movement/reset acceptance remains a separate check.
+Endless chunks, digging, gems, water and torches retain their later steps.

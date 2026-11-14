@@ -1,22 +1,24 @@
-struct Camera { angle: f32, tilt: f32, aspect: f32, pad: f32 }
+struct Camera { angle: f32, tilt: f32, aspect: f32, pad: f32, eye: vec4f }
 @group(0) @binding(0) var<uniform> camera: Camera;
 struct Vertex { @builtin(position) clip: vec4f, @location(0) world: vec3f }
 @vertex fn vertex(@location(0) p: vec3f) -> Vertex {
+    let q = p - camera.eye.xyz;
     let c = cos(camera.angle); let s = sin(camera.angle);
-    let r = vec3f(c * p.x - s * p.z, p.y, s * p.x + c * p.z);
+    let r = vec3f(c * q.x + s * q.z, q.y, -s * q.x + c * q.z);
     let t = cos(camera.tilt); let u = sin(camera.tilt);
-    let v = vec3f(r.x, t * r.y - u * r.z, u * r.y + t * r.z);
-    let depth = 3.4 - v.z;
+    let v = vec3f(r.x, t * r.y + u * r.z, -u * r.y + t * r.z);
+    let depth = -v.z;
     var out: Vertex;
-    out.clip = vec4f(1.9 * v.x / camera.aspect, 1.9 * v.y, 1.005 * depth - 0.1005, depth);
+    out.clip = vec4f(1.9 * v.x / camera.aspect, 1.9 * v.y, 1.0005 * depth - 0.050025, depth);
     out.world = p;
     return out;
 }
 @fragment fn fragment(v: Vertex) -> @location(0) vec4f {
     let n = normalize(cross(dpdx(v.world), dpdy(v.world)));
     let light = 0.35 + 0.65 * abs(dot(n, normalize(vec3f(0.4, 1.0, 0.3))));
-    let low = vec3f(0.22, 0.48, 0.68);
-    let high = vec3f(0.91, 0.97, 1.0);
-    let snow = mix(low, high, clamp(0.65 + v.world.y, 0.0, 1.0));
-    return vec4f(snow * light, 1.0);
+    let ice = vec3f(0.25, 0.65, 0.82);
+    let white = vec3f(0.91, 0.97, 1.0);
+    let snow = mix(ice, white, smoothstep(0.45, 0.9, abs(n.y)));
+    let fog = 1.0 - exp(-0.025 * distance(camera.eye.xyz, v.world));
+    return vec4f(mix(snow * light, vec3f(0.47, 0.65, 0.78), fog), 1.0);
 }

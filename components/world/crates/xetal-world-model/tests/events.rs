@@ -14,8 +14,10 @@ fn terrain_is_generated_by_the_persistent_program_and_reset_by_an_event() {
     let mut demo = Demo::new().unwrap();
     settle(&mut demo);
     let original = demo.mesh().unwrap();
-    assert_eq!(original.indices().len(), 128 * 3);
+    assert_eq!(original.indices().len(), 2048 * 3);
     let p = original.positions();
+    assert!(p.as_chunks::<3>().0.iter().any(|p| p[0] == -16.0));
+    assert!(p.as_chunks::<3>().0.iter().any(|p| p[1] > 2.0));
     let normal_y = (p[5] - p[2]) * (p[6] - p[0]) - (p[3] - p[0]) * (p[8] - p[2]);
     assert!(normal_y > 0.0, "terrain triangles must face upward");
     demo.event("tick 0.25").unwrap();

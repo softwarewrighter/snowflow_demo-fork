@@ -11,6 +11,7 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+xetal-world-navigation = { path = "../xetal-world-navigation" }
 xetal-world-model.workspace = true
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]

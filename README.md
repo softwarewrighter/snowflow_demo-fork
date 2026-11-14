@@ -13,7 +13,7 @@ The browser build uses generated loader glue, with no handwritten application
 JavaScript or WebAssembly.
 
 The first local application renders an X_eTaL-generated snow patch with pause,
-ridge input, reset and an orbit camera. The endless world is not implemented yet.
+ridge input, reset and terrain-following WASD navigation. The endless world is not implemented yet.
 The repository also contains validated mesh payloads, a bounded resource store,
 reproducible build tooling and an intact archived reference.
 

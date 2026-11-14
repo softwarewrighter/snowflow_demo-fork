@@ -12,7 +12,10 @@ pub(crate) struct App {
     canvas: web_sys::HtmlCanvasElement,
     pub paused: bool,
     pub pending: Option<String>,
-    pub angle: f32,
+    pub walker: xetal_world_navigation::Walker,
+    pub held: [bool; 4],
+    terrain: Vec<f32>,
+    last_frame: f64,
     waiting: bool,
     last_tick: f64,
     frames: u32,
@@ -28,7 +31,10 @@ impl App {
             canvas,
             paused: false,
             pending: None,
-            angle: 0.6,
+            walker: Default::default(),
+            held: [false; 4],
+            terrain: Vec::new(),
+            last_frame: 0.0,
             waiting: false,
             last_tick: 0.0,
             frames: 0,
@@ -49,13 +55,29 @@ impl App {
         }
         self.advance()?;
         crate::boot::resize(&self.canvas, &mut self.renderer);
-        self.renderer.draw(self.angle, 0.7)?;
+        self.navigate(now);
+        self.renderer
+            .draw(self.walker.yaw, self.walker.pitch, self.walker.position)?;
         self.frames += 1;
         if self.waiting {
             status::progress(self.frames, self.updates, self.mesh_hash);
         }
         Ok(())
     }
+    fn navigate(&mut self, now: f64) {
+        let dt = ((now - self.last_frame) / 1000.0) as f32;
+        self.last_frame = now;
+        if !self.paused {
+            let forward = i32::from(self.held[0]) - i32::from(self.held[1]);
+            let sideways = i32::from(self.held[3]) - i32::from(self.held[2]);
+            self.walker.advance(dt, forward as f32, sideways as f32);
+        }
+        self.walker.ground(&self.terrain);
+        if let Ok(element) = status::element("app") {
+            let _ = element.set_attribute("data-position", &format!("{:?}", self.walker.position));
+        }
+    }
+
     fn advance(&mut self) -> Result<(), String> {
         if !self.waiting {
             match self.demo.step(8_000)? {
@@ -65,6 +87,7 @@ impl App {
                         (hash ^ value.to_bits()).wrapping_mul(16777619)
                     });
                     self.renderer.upload(&mesh)?;
+                    self.terrain = mesh.positions().to_vec();
                     self.waiting = true;
                     self.updates += 1;
                 }
