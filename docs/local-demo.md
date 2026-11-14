@@ -19,9 +19,20 @@ to 0.0.0.0 and prints a Network demo URL, preferring the 192.168.x.x interface.
 Use that printed address from another machine. Use Ctrl-C to stop the server,
 `--port` to select another port, or `--bind 127.0.0.1` for loopback-only serving.
 
-WebGPU needs a secure browser context. For a LAN HTTP preview, use trusted HTTPS
-or a development browser scoped to the preview origin. For example, on the
-browser machine:
+WebGPU needs a secure browser context. For local HTTPS, run:
+
+```sh
+python3 scripts/serve-demo.py --no-build --https
+```
+
+Open the printed HTTPS address and accept the self-signed certificate warning.
+OpenSSL generates a 30-day certificate for the detected LAN IP, localhost and
+127.0.0.1. It and its private key are kept in ignored `work/tls/` and reused;
+the key has mode 0600. No trust store is changed. Stop the HTTP server before
+restarting with HTTPS on the same port. A browser that refuses a certificate
+exception needs a trusted development certificate or the GitHub Pages URL.
+
+For LAN HTTP, a development browser can instead be scoped to the preview origin:
 
 ```sh
 chromium --user-data-dir=/tmp/xetal-lan-preview --unsafely-treat-insecure-origin-as-secure=http://192.168.1.178:8475 http://192.168.1.178:8475/snowflow_demo-fork/
