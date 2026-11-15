@@ -36,7 +36,7 @@ future work. The archived JavaScript is not part of the active application.
 
 ## Verification
 
-The full scripts/gate.sh passes: 101 Rust tests, 18 Python tests, lint, formatting,
+The full scripts/gate.sh passes: 102 Rust tests, 18 Python tests, lint, formatting,
 shader validation and WASM checks. It discovers the new session workspace.
 The suite checks that changing App.xtl's fourth binding to 9 changes actual
 Crystallise dispatch without native changes. Standalone programs serve as

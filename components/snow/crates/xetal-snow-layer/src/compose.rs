@@ -8,8 +8,9 @@ pub fn mesh(
 ) -> Result<Mesh, String> {
     let mut positions = Vec::new();
     let mut indices = Vec::new();
+    let keys = tiles.keys().copied().collect();
     for tile in tiles.values_mut() {
-        *tile = Arc::new(tile.project(coarse));
+        *tile = Arc::new(tile.project(coarse, &keys));
         if tile.heights.iter().any(|y| !y.is_finite()) {
             continue;
         }

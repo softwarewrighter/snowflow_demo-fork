@@ -132,3 +132,37 @@ fn higher_resolution_replay_and_eviction_keep_sampling_repeatable() {
     assert_eq!(layer.floor([1.8, 0.0, 7.0]), original);
     assert!(layer.memory_bytes() < 2 * 1024 * 1024);
 }
+#[test]
+fn outer_detail_boundary_stitches_to_the_coarse_surface() {
+    let mut app = Session::new().unwrap();
+    let mut layer = Layer::default();
+    for z in [8.0, 7.0] {
+        app.pose(Pose {
+            position: [1.95, 4.0, z],
+            aim: [0.0, 0.0],
+            grounded: true,
+            impact: 0.0,
+        })
+        .unwrap();
+    }
+    let base = app.chunk((0, 0)).unwrap();
+    let expected = xetal_world_navigation::floor(base.positions(), [2.0, 0.0, 7.9]).unwrap();
+    let mut frame = app.read().unwrap();
+    frame.detail.config[3] = 1.0;
+    let mesh = layer
+        .update(&mut app, &frame, [1.8, 4.0, 7.0], Some(base))
+        .unwrap()
+        .unwrap();
+    let triangles = mesh
+        .indices()
+        .iter()
+        .flat_map(|i| {
+            mesh.positions()[*i as usize * 3..*i as usize * 3 + 3]
+                .iter()
+                .copied()
+        })
+        .collect::<Vec<_>>();
+    let rendered = xetal_world_navigation::floor(&triangles, [2.0, 0.0, 7.9]).unwrap();
+    assert!((rendered - expected).abs() < 0.00001);
+    assert!((layer.floor([2.0, 0.0, 7.9]).unwrap() - rendered).abs() < 0.00001);
+}

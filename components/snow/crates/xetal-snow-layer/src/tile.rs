@@ -39,13 +39,36 @@ impl Tile {
             n,
         })
     }
-    pub fn project(&self, coarse: &Coarse) -> Self {
+    pub fn project(&self, coarse: &Coarse, keys: &std::collections::BTreeSet<Key>) -> Self {
         let heights = self
             .rows
             .as_chunks::<3>()
             .0
             .iter()
-            .map(|p| coarse.floor(*p).map_or(f32::NAN, |y| y - 1.7 + p[1]))
+            .enumerate()
+            .map(|(i, p)| {
+                let x = i / self.n;
+                let z = i % self.n;
+                let dx = if x == 0 {
+                    -1
+                } else if x == self.n - 1 {
+                    1
+                } else {
+                    0
+                };
+                let dz = if z == 0 {
+                    -1
+                } else if z == self.n - 1 {
+                    1
+                } else {
+                    0
+                };
+                let edge = [(dx, 0), (0, dz), (dx, dz)]
+                    .iter()
+                    .any(|(x, z)| !keys.contains(&(self.key.0 + x, self.key.1 + z)));
+                let delta = if edge { 0.0 } else { p[1] };
+                coarse.floor(*p).map_or(f32::NAN, |y| y - 1.7 + delta)
+            })
             .collect();
         Self {
             key: self.key,
