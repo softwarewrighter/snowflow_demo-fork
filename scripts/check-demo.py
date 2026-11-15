@@ -62,6 +62,7 @@ def interactions(base, session):
     prints = evaluate(base, session, "return Number(document.getElementById('app').dataset.footprints)")
     steps = evaluate(base, session, "return Number(document.getElementById('app').dataset.steps)")
     assert prints > 0 and steps > 0, 'movement did not create footprints/footfalls'
+    wait(base, session, "return Number(document.getElementById('app').dataset.snowTiles)>0 && Number(document.getElementById('app').dataset.snowVersion)>0")
     time.sleep(0.4)
     assert evaluate(base, session, "return Number(document.getElementById('app').dataset.steps)") == steps, 'footfalls continued while idle'
     (ROOT / 'work/demo-tracks-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
@@ -109,13 +110,14 @@ def interactions(base, session):
     wait(base, session, "return document.getElementById('app').dataset.ribbonMode!=='1'")
     click(base, session, 'clear-tracks')
     wait(base, session, "return Number(document.getElementById('app').dataset.footprints)===0")
+    wait(base, session, "return Number(document.getElementById('app').dataset.snowTiles)===0")
     click(base, session, 'reset')
     wait(base, session, "return Number(document.getElementById('app').dataset.chunks)===25 && JSON.parse(document.getElementById('app').dataset.position)[2]===8")
     assert evaluate(base, session, position) == original
     wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===0")
     assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
-    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','ribbon_hold_release_blur':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','vortex':'passed (appearance requires screenshot inspection)','reset':'passed','footprints_after_walk':prints}
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','geometric_snow':'passed (fine resources; appearance requires screenshot inspection)','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','ribbon_hold_release_blur':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','vortex':'passed (appearance requires screenshot inspection)','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):

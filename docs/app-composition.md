@@ -36,7 +36,7 @@ future work. The archived JavaScript is not part of the active application.
 
 ## Verification
 
-The full scripts/gate.sh passes: 96 Rust tests, 18 Python tests, lint, formatting,
+The full scripts/gate.sh passes: 101 Rust tests, 18 Python tests, lint, formatting,
 shader validation and WASM checks. It discovers the new session workspace.
 The suite checks that changing App.xtl's fourth binding to 9 changes actual
 Crystallise dispatch without native changes. Standalone programs serve as
@@ -75,3 +75,10 @@ updates still exceed a 60 FPS frame budget. Coalescing application time to about
 20 Hz limits repeated work, while drawing and native physics retain browser frame
 pacing. Workers and finer dirty-region scheduling remain follow-up work. Do not
 infer 60 FPS from these native measurements.
+
+## Fine displacement capability
+
+Protocol version 2 adds source-configured detail tiles. SnowLayer owns boot
+pressure, raised edges, overlap bounds and quantized aging. Native tiled buffers
+stage one job per update and commit the same indexed geometry and height samples
+to rendering and collision. See [fine snow acceptance and budgets](deformable-snow.md).

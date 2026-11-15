@@ -75,3 +75,17 @@ the snow workspace. Cross-tile replay tests check depression, rims, shared borde
 samples, indexed render/collision agreement, clearing and repeatability.
 The snow_cost native example measures walking and resting Scene updates, including
 streaming, pressure work and wind updates. It excludes GPU and audio work.
+
+## Native acceptance evidence
+
+The full gate passes 101 Rust tests and 18 Python tests, plus formatting, lint,
+shader and WASM checks. Tests also cover 6.25 cm negative-coordinate border replay,
+invalid spacing, pending snapshots, stale-work cancellation, eviction and revisit.
+Actual browser appearance, audiovisual behavior and FPS remain unverified here
+because the sandbox prevents the browser harness's local socket setup.
+
+A native release snow_cost sample measured walking at 4.336 ms median, 6.208 ms
+p95 and 12.804 ms worst. Resting, including quantized wind recovery, measured
+0.627 ms median, 7.943 ms p95 and 10.056 ms worst. The sample ended with six fine
+tiles, 656,736 retained payload bytes and 17,588 terrain triangles. This meets the
+initial native p95 target on this host; it is not a browser FPS measurement.

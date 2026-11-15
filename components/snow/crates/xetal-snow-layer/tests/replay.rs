@@ -57,3 +57,78 @@ fn geometric_boot_field_matches_collision_replay_and_clear() {
         .unwrap();
     assert_eq!(layer.floor([1.8, 0.0, 7.0]).unwrap(), original);
 }
+#[test]
+fn pending_tiles_do_not_change_collision_and_clear_cancels_stale_work() {
+    let mut app = Session::new().unwrap();
+    let mut layer = Layer::default();
+    let base = app.chunk((0, 0)).unwrap();
+    let frame = app.read().unwrap();
+    layer
+        .update(&mut app, &frame, [2.0, 4.0, 7.0], Some(base))
+        .unwrap();
+    let revision = layer.revision;
+    let ground = layer.floor([1.8, 0.0, 7.0]);
+    for z in [8.0, 7.0] {
+        app.pose(Pose {
+            position: [1.95, 4.0, z],
+            aim: [0.0, 0.0],
+            grounded: true,
+            impact: 0.0,
+        })
+        .unwrap();
+    }
+    let frame = app.read().unwrap();
+    assert!(
+        layer
+            .update(&mut app, &frame, [2.0, 4.0, 7.0], None)
+            .unwrap()
+            .is_none()
+    );
+    assert_eq!(layer.revision, revision);
+    assert_eq!(layer.floor([1.8, 0.0, 7.0]), ground);
+    app.input("c", true).unwrap();
+    let frame = app.read().unwrap();
+    layer
+        .update(&mut app, &frame, [2.0, 4.0, 7.0], None)
+        .unwrap();
+    assert_eq!(layer.resident(), 0);
+    assert_eq!(layer.floor([1.8, 0.0, 7.0]), ground);
+}
+#[test]
+fn higher_resolution_replay_and_eviction_keep_sampling_repeatable() {
+    let mut app = Session::new().unwrap();
+    let mut layer = Layer::default();
+    for z in [8.0, 7.0] {
+        app.pose(Pose {
+            position: [1.95, 4.0, z],
+            aim: [0.0, 0.0],
+            grounded: true,
+            impact: 0.0,
+        })
+        .unwrap();
+    }
+    let base = app.chunk((0, 0)).unwrap();
+    let mut frame = app.read().unwrap();
+    frame.detail.config[0] = 0.0625;
+    layer
+        .update(&mut app, &frame, [2.0, 4.0, 7.0], Some(base))
+        .unwrap();
+    for _ in 0..8 {
+        layer
+            .update(&mut app, &frame, [2.0, 4.0, 7.0], None)
+            .unwrap();
+    }
+    let original = layer.floor([1.8, 0.0, 7.0]);
+    assert!(layer.resident() > 0);
+    layer
+        .update(&mut app, &frame, [100.0, 4.0, 100.0], None)
+        .unwrap();
+    assert_eq!(layer.resident(), 0);
+    for _ in 0..8 {
+        layer
+            .update(&mut app, &frame, [2.0, 4.0, 7.0], None)
+            .unwrap();
+    }
+    assert_eq!(layer.floor([1.8, 0.0, 7.0]), original);
+    assert!(layer.memory_bytes() < 2 * 1024 * 1024);
+}

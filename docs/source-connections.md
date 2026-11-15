@@ -51,7 +51,8 @@ machine until the next Event wait, then supplies another queued event.
 
 Controls owns bindings, pause/reset, movement intent and camera increments.
 Player owns footfalls, wind aging and sequenced sound commands. World owns brush
-histories and dirty regions. Spells owns spell selection, dispatch and resource
+histories and dirty regions. SnowLayer owns fine-grid pressure profiles and
+configuration; Rust stages and samples the derived tile buffers. Spells owns spell selection, dispatch and resource
 revisions. AppFrame describes the buttons and source panels shown by the host.
 
 Rust owns native physics integration, chunk residency, GPU/audio resources and
@@ -66,7 +67,9 @@ compiled to WASM or GPU kernels. Worker execution remains future work.
 The Event bridge carries scalar facts with scratch packets: move supplies x/z,
 down supplies y/impact or y/found, up supplies aim, choose supplies a flag.
 Click commits a pose (1), requests a chunk (2), answers a query (3), acknowledges
-a world revision (4), or releases held controls on blur (5). Key and tick carry
+a world revision (4), releases held controls on blur (5), or requests fine
+displacement samples (6). Request 6 uses move for tile coordinates and the second
+click value for spacing. Key and tick carry
 physical keys and elapsed seconds. This is a documented application adapter,
 not the pending generic E1 typed host registration API.
 
@@ -76,3 +79,9 @@ world revision/dirty bounds, source panels and protocol version. Dense numeric
 data stays typed. Only frame! is mutable; logical state is passed through pure
 functions. Old individual demo runners remain reference oracles, outside live
 application composition. See the [library cross-reference](libraries.md).
+
+Protocol version 2 extends the world field with the detail capability: grid
+configuration, conservative bounds and opaque stamp rows. Tile replies use the
+first publication field for typed N-by-3 displacement samples. The native layer
+validates their lattice, projects onto coarse triangles and commits indexed render
+geometry and matching collision heights together. See [fine layer mechanics](deformable-snow.md).
