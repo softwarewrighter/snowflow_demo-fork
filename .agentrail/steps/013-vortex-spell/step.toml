@@ -1,8 +1,9 @@
 number = 13
 slug = "vortex-spell"
-status = "in-progress"
+status = "completed"
 description = "Port original spell 5 Vortex: three snow/slush helices, tangential particle e..."
 role = "production"
 context_files = []
 created_at = "2026-11-14T11:55:55"
-commits = []
+completed_at = "2026-11-14T16:40:58"
+commits = ["be4ff2015ab3f5c96b1a4c57a13e2b73dcf3a942"]
