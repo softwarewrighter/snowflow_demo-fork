@@ -40,7 +40,7 @@ def click(base, session, element_id):
 
 def interactions(base, session):
     wait(base, session, "const a=document.getElementById('app');if(a.dataset.state==='error')throw Error(document.getElementById('status').textContent);return a.dataset.state==='ready' && Number(a.dataset.chunks)===25")
-    panels = evaluate(base, session, "return Array.from(document.querySelectorAll('.source-views pre[id$=\"-rendered\"]'),p=>({id:p.id,shared:p.classList.contains('rendered-source'),colors:['c-builtin','c-userfunc','c-number','c-string','c-doc'].map(c=>{const token=p.querySelector('.'+c);return token?getComputedStyle(token).color:null})}))")
+    panels = evaluate(base, session, "return Array.from(document.querySelectorAll('.source-views pre[id$=\"-rendered\"]'),p=>({id:p.id,shared:p.classList.contains('rendered-source'),colors:['c-builtin','c-userfunc','c-number','c-string','c-doc'].map(c=>{const token=p.querySelector(c==='c-userfunc'?'.c-userfunc,.c-libfunc':'.'+c);return token?getComputedStyle(token).color:null})}))")
     assert len(panels) >= 5, panels
     for panel in panels:
         assert panel['shared'] and None not in panel['colors'] and len(set(panel['colors'])) == 5, panel

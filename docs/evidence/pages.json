@@ -2,24 +2,24 @@
   "url": "https://softwarewrighter.github.io/snowflow_demo-fork/",
   "pages_status": "built",
   "https_enforced": true,
-  "source_commit": "5b2d57bf5ed068023efdf2ccfde8d3c5eb45d5f6",
-  "gh_pages_commit": "27007464cc7ef96498ff4837d50447d8e573ba2d",
+  "source_commit": "8e956d7bdc98fa8c55cecd4cc016f70cdbb9a82e",
+  "gh_pages_commit": "26160201390761c8dc58f7999c304766c7479635",
   "artifact_sha256": {
+    "xetal-snow-app-38b5c3033cec520b_bg.wasm": "d297788bd2f7bf5b344cc3c77d10ec0989e26de72c53c78ac1b3938eed2a0001",
     "style-4c186e7bf37a063a.css": "261c549cd11aed0afde9d79fd38e8a563225b8c3e84a39543f340041f56f2333",
     "favicon-2cadeb99509d00bc.svg": "1a7932d4f373d596e55327158e5be747accb8ac7e522bd2d033a290496071f30",
-    "library-reference.html": "971457d736ceccebbeeacf90e3fb7c4bf36ec2f2ea612ace41a25e75a8b9a495",
-    "xetal-snow-app-16aa7ae6ab76c00c_bg.wasm": "51dc2689c85c5894272cd335428ecc74a1ede04d374734117b9078ab7fa14c81",
-    "index.html": "eaacbca241f3d22d3fbaedcce12d476a0cfd1bc33c1a0f42c7d63115c4769480",
-    "xetal-snow-app-16aa7ae6ab76c00c.js": "6b1ecdf4b56bdbf609dd55687829dfd1616ee574f20279417f13b1956696d29b"
+    "library-reference.html": "77347a58f8e609a8350aaa2c80ac9e377f7fdda6c76237cd143e7f6ed2d19b4b",
+    "xetal-snow-app-38b5c3033cec520b.js": "87b981f8ea151b11411ecc1fbe884778c406abc52f73182f08281bc4f297b2d2",
+    "index.html": "35da866dca5ad92fa3a032959f25ae9eae2446a9445747aa6a13caa467f193bf"
   },
   "wasm_content_type": "application/wasm",
   "browser_rendering": "pending; sandbox local socket creation denied; HTTP verification is not rendering acceptance",
-  "source_views": "Shared rendered-source palette and link styles cover world/player plus all four spell panels; live HTML/CSS and hashes verified; computed-color browser regression pending sandbox socket permissions",
+  "source_views": "Five metadata-driven source panels show App.xtl, Spells, World, Player and Controls using JuliaMono and shared syntax palette. Generated highlighted tokens verified; browser computed-color acceptance remains pending.",
   "functional_state": "Immutable logical state and derived mesh, one host publication slot; exact legacy/native replay passes; browser acceptance pending.",
   "effects": "Live controls/build/asset hashes verified; actual GPU pipeline, visual correctness, jump and FPS comparison pending normal-host browser harness.",
   "favicon": "Snowflake SVG: live HTTP 200, image/svg+xml, hash matches source, linked by the live index",
   "streaming_audio_fps": "Published stationary streaming, prints/audio splash, downhill contact fix, FPS HUD and project footer; actual device/browser audiovisual proof pending.",
-  "xetal_libraries": "Sixteen actual project-local libraries with generated API/source links; Ribbon, RibbonSurface and RibbonBrush added",
+  "xetal_libraries": "Twenty-one actual project-local libraries; generated API/source cross-reference includes composition modules.",
   "all_six_assets": "HTTP 200; all six downloaded SHA256 hashes match packaged artifact",
   "crystallise": "Key 4 or button; X_eTaL growth/placement/geometry; four formations, 48 crystals, 864 triangles; browser appearance/FPS pending",
   "sweep": "Key 1/button; bounded moving slush, channel/banks, eight retained casts, exact edited seams, shared collision mesh; browser appearance/FPS pending",
@@ -31,5 +31,8 @@
     "bloom",
     "crystallise"
   ],
-  "source_connections": "Plain-language live explanation and linked docs trace actual Rust/evaluator/library/GPU wiring; X_eTaL-owned composition planned next"
+  "source_connections": "App.xtl imports Spells.xtl, owns the entry loop and composes controls/player/world. One Rust Session resumes the evaluator; no per-spell native constructors or key dispatch.",
+  "application_composition": "Published and HTTP verified. Configurable bindings, input dispatch, queries, resource revisions, brush histories and sequenced audio belong to X_eTaL. See docs/app-composition.md.",
+  "validation": "Full gate: 92 Rust tests, 18 Python tests, lint, formatting, shaders and WASM checks passed. Actual browser audiovisual/FPS acceptance remains pending sandbox socket restrictions.",
+  "checked_at": "2026-11-15T00:21:08.884935+00:00"
 }
