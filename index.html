@@ -7,8 +7,8 @@
   <title>X_eTaL snow field</title>
   
 <script type="module">
-import init, * as bindings from '/snowflow_demo-fork/xetal-snow-app-d1b5885f10b661ef.js';
-const wasm = await init({ module_or_path: '/snowflow_demo-fork/xetal-snow-app-d1b5885f10b661ef_bg.wasm' });
+import init, * as bindings from '/snowflow_demo-fork/xetal-snow-app-b18c7b0001ea3a23.js';
+const wasm = await init({ module_or_path: '/snowflow_demo-fork/xetal-snow-app-b18c7b0001ea3a23_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -20,7 +20,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   <link rel="stylesheet" href="/snowflow_demo-fork/style-4c186e7bf37a063a.css" integrity="sha384-bBHezmL7G7CC9PZObvYxLWzv/VYKq4+ZagUZoQxI7xIcqn9n9G9Z/q6T6SCya25z"/>
   <link rel="icon" href="/snowflow_demo-fork/favicon-2cadeb99509d00bc.svg" integrity="sha384-V2yryBZsj2qm/0xHZWcTjOx+IxM5TEZO8zurNbMgGmGzF9//k+6zW+Z0o/oogv96"/>
   
-<link rel="modulepreload" href="/snowflow_demo-fork/xetal-snow-app-d1b5885f10b661ef.js" crossorigin="anonymous" integrity="sha384-w0q1/2CQWVzvBJUJQf+uERvrPkDO2Z3fJuAnQO/aF7jVhSmwlyLhBnkHR0k4ONiw"><link rel="preload" href="/snowflow_demo-fork/xetal-snow-app-d1b5885f10b661ef_bg.wasm" crossorigin="anonymous" integrity="sha384-UU+XE6cDt6NRgkZn1ch8nD6flsHrJEPxq0W0zzEtrmJw6C1gH3ujCWXkJ6kB7B+K" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="/snowflow_demo-fork/xetal-snow-app-b18c7b0001ea3a23.js" crossorigin="anonymous" integrity="sha384-w0q1/2CQWVzvBJUJQf+uERvrPkDO2Z3fJuAnQO/aF7jVhSmwlyLhBnkHR0k4ONiw"><link rel="preload" href="/snowflow_demo-fork/xetal-snow-app-b18c7b0001ea3a23_bg.wasm" crossorigin="anonymous" integrity="sha384-97BbAXadQfH68pNCLa0N8Dy/ciTzLo1l5jDniRAgusHKYP4JFwcgXZXd+tnr8FrW" as="fetch" type="application/wasm"></head>
 <body>
 <div id="app" data-state="loading">
   <div id="splash" class="splash" role="dialog" aria-modal="true" aria-labelledby="splash-title">
