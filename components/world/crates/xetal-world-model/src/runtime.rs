@@ -70,6 +70,11 @@ impl Demo {
         snapshot::array(parts.get(index).ok_or("missing publication field")?)
     }
 
+    /// Clone the typed application publication without text serialization.
+    pub fn publication(&self) -> Result<xetal_value::Value<'static>, String> {
+        capture::mesh(&self.captured)
+    }
+
     pub fn mesh(&self) -> Result<Mesh, String> {
         snapshot::mesh(&capture::mesh(&self.captured)?)
     }

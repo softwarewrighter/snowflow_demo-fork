@@ -1,0 +1,9 @@
+[package]
+name = "xetal-app-tiles"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+xetal-world-surface.workspace = true
+xetal-app-session = { path = "../xetal-app-session" }

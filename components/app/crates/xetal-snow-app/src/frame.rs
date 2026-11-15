@@ -10,12 +10,8 @@ pub(crate) struct App {
     pub scene: Scene,
     renderer: Renderer,
     canvas: web_sys::HtmlCanvasElement,
-    pub paused: bool,
     pub started: bool,
-    pub held: [bool; 4],
     pub effects: [bool; 2],
-    pub jump: bool,
-    pub ribbon_held: bool,
     pub audio: Sound,
     meter: xetal_world_metrics::Meter,
     last_frame: f64,
@@ -29,12 +25,8 @@ impl App {
             scene,
             renderer,
             canvas,
-            paused: false,
             started: false,
-            held: [false; 4],
             effects: [true; 2],
-            jump: false,
-            ribbon_held: false,
             audio: Sound::default(),
             meter: Default::default(),
             last_frame: 0.0,
@@ -73,10 +65,7 @@ impl App {
     }
 
     fn advance(&mut self, dt: f32) -> Result<(), String> {
-        let update = self
-            .scene
-            .update(dt, self.held, self.jump, self.paused || !self.started)?;
-        self.jump = false;
+        let update = self.scene.update(dt, !self.started)?;
         if let Some(mesh) = update.terrain {
             self.renderer.upload(&mesh)?;
             self.updates += 1;
@@ -84,19 +73,16 @@ impl App {
         if let Some(vertices) = update.tracks {
             self.renderer.upload_tracks(&vertices)?;
         }
-        if update.sweep.is_some() || update.bloom.is_some() {
-            let mut vertices = self.scene.sweep.positions().to_vec();
-            vertices.extend_from_slice(self.scene.bloom.positions());
-            self.renderer.upload_sweep(&vertices)?;
+        for resource in update.resources {
+            match resource.material.as_str() {
+                "ice" => self.renderer.upload_objects(resource.mesh.positions())?,
+                "slush" => self.renderer.upload_sweep(resource.mesh.positions())?,
+                "water" => self.renderer.upload_ribbon(resource.mesh.positions())?,
+                _ => return Err("unsupported material".into()),
+            }
         }
         if let Some(rows) = update.particles {
             self.renderer.upload_particles(&rows)?;
-        }
-        if let Some(mesh) = update.ribbon {
-            self.renderer.upload_ribbon(mesh.positions())?;
-        }
-        if let Some(mesh) = update.objects {
-            self.renderer.upload_objects(mesh.positions())?;
         }
         let sound = match update.sound[0] {
             1.0 => self
@@ -126,14 +112,9 @@ impl App {
             .iter()
             .filter(|mark| mark.opacity > 0.01)
             .count();
-        status::text(
-            "ribbon",
-            if self.ribbon_held {
-                "2: Release Ribbon"
-            } else {
-                "2: Ribbon"
-            },
-        );
+        for button in &scene.frame.buttons {
+            status::text(&button.id, &button.label);
+        }
         if !self.started {
             let loaded = chunks;
             status::text(
@@ -157,10 +138,12 @@ impl App {
             &format!(
                 "{}",
                 chunks * 512
-                    + scene.spells.positions().len() / 9
-                    + scene.sweep.positions().len() / 9
-                    + scene.bloom.positions().len() / 9
-                    + scene.ribbon.positions().len() / 9
+                    + scene
+                        .frame
+                        .resources
+                        .iter()
+                        .map(|r| r.mesh.indices().len() / 3)
+                        .sum::<usize>()
             ),
         );
         status::text("updates", &format!("{chunks} chunks / {visible} prints"));
@@ -188,31 +171,13 @@ impl App {
                 ("data-landings", scene.landings.to_string()),
                 ("data-wind", scene.wind.to_string()),
                 ("data-edits", scene.world.edit_revision.to_string()),
-                (
-                    "data-ribbon",
-                    (scene.ribbon.positions().len() / 9).to_string(),
-                ),
-                ("data-ribbon-mode", scene.ribbon.mode().to_string()),
-                (
-                    "data-bloom",
-                    (scene.bloom.positions().len() / 9).to_string(),
-                ),
-                (
-                    "data-particles",
-                    (scene.bloom.particles().len() / 6).to_string(),
-                ),
-                (
-                    "data-sweep",
-                    (scene.sweep.positions().len() / 9).to_string(),
-                ),
-                (
-                    "data-crystals",
-                    (scene.spells.positions().len() / 162).to_string(),
-                ),
                 ("data-audio", self.audio.state().to_string()),
                 ("data-grounded", scene.walker.motion.grounded.to_string()),
             ] {
                 let _ = element.set_attribute(key, &value);
+            }
+            for (key, value) in &scene.frame.stats {
+                let _ = element.set_attribute(&format!("data-{key}"), &value.to_string());
             }
         }
     }

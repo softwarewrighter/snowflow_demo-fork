@@ -4,28 +4,37 @@ fn bloom_targets_loaded_ground_updates_once_and_reset_clears_particles_and_crate
     let mut scene = Scene::new().unwrap();
     let mut original = 0;
     for _ in 0..1000 {
-        scene.update(0.0, [false; 4], false, true).unwrap();
+        scene.update(0.0, true).unwrap();
         if scene.world.resident() == 25 {
             original = scene.mesh_hash;
             break;
         }
     }
-    scene.cast_bloom().unwrap();
-    let first = scene.update(0.1, [false; 4], false, false).unwrap();
-    assert!(first.bloom.is_some() && first.particles.is_some());
+    scene.input("3", true).unwrap();
+    let first = scene.update(0.1, false).unwrap();
+    assert!(!first.resources.is_empty() && first.particles.is_some());
     assert_ne!(scene.mesh_hash, original);
     let revision = scene.world.edit_revision;
     for _ in 0..10 {
-        scene.update(0.1, [false; 4], false, false).unwrap();
+        scene.update(0.1, false).unwrap();
     }
     assert_eq!(revision, scene.world.edit_revision);
-    let frozen = scene.bloom.particles().to_vec();
-    let paused = scene.update(0.1, [false; 4], false, true).unwrap();
-    assert!(paused.bloom.is_none() && paused.particles.is_none());
-    assert_eq!(frozen, scene.bloom.particles());
-    scene.reset().unwrap();
-    let reset = scene.update(0.0, [false; 4], false, true).unwrap();
-    assert!(reset.bloom.unwrap().positions().is_empty());
+    let frozen = scene.frame.particles.as_slice().to_vec();
+    let paused = scene.update(0.1, true).unwrap();
+    assert!(paused.resources.is_empty() && paused.particles.is_none());
+    assert_eq!(frozen, scene.frame.particles.as_slice());
+    scene.input("r", true).unwrap();
+    let reset = scene.update(0.0, true).unwrap();
+    assert!(
+        reset
+            .resources
+            .iter()
+            .find(|r| r.material == "slush")
+            .unwrap()
+            .mesh
+            .positions()
+            .is_empty()
+    );
     assert!(reset.particles.unwrap().is_empty());
     assert_eq!(scene.mesh_hash, original);
 }

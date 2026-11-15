@@ -4,16 +4,16 @@ use xetal_snow_app::Scene;
 fn main() {
     let mut scene = Scene::new().unwrap();
     for _ in 0..1000 {
-        scene.update(0.0, [false; 4], false, true).unwrap();
+        scene.update(0.0, true).unwrap();
         if scene.world.resident() == 25 {
             break;
         }
     }
-    scene.cast_bloom().unwrap();
+    scene.input("3", true).unwrap();
     let mut phases = [Vec::new(), Vec::new(), Vec::new()];
     for tick in 0..140 {
         let start = Instant::now();
-        scene.update(0.05, [false; 4], false, false).unwrap();
+        scene.update(0.05, false).unwrap();
         let phase = if tick < 35 {
             0
         } else if tick < 115 {

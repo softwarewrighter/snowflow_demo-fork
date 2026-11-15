@@ -1,0 +1,14 @@
+[workspace]
+resolver = "3"
+members = ["crates/xetal-app-protocol", "crates/xetal-app-session", "crates/xetal-app-tiles"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[workspace.dependencies]
+xetal-world-model = { path = "../world/crates/xetal-world-model" }
+xetal-world-surface = { path = "../surface/crates/xetal-world-surface" }
+xetal-value = { path = "../../work/deps/X_eTaL/components/eval/crates/xetal-value" }
+xetal-snow-libraries = { path = "../world/crates/xetal-snow-libraries" }

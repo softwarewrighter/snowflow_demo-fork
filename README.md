@@ -97,7 +97,8 @@ boot prints, compaction, deep-powder movement and persistent weathered snow tile
 
 ## Reading the source panels
 
-Each source panel shows a real program embedded in the demo. The Rust browser
-loop keeps the programs loaded and sends time/input facts; X_eTaL libraries
-return updated state, geometry and commands. See [how the sources connect](docs/source-connections.md)
+The first source panel shows [App.xtl](components/world/demos/App.xtl), the one
+persistent application. It imports Spells.xtl to configure and dispatch the
+spell set. Rust forwards time/input/physics facts and displays typed resources.
+The other panels show its actual composition libraries, with syntax colors. See [how the sources connect](docs/source-connections.md)
 for a simple Ribbon walkthrough and links to the actual call sites.

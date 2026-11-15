@@ -15,24 +15,6 @@ pub(crate) async fn start() -> Result<(), String> {
             env!("BUILD_TIMESTAMP")
         ),
     );
-    status::text("source", crate::SOURCE);
-    status::element("source-rendered")?.set_inner_html(&xetal_world_model::highlighted_source());
-    status::text("spell-source", xetal_world_spells::SOURCE);
-    status::element("spell-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
-        xetal_world_spells::SOURCE,
-    ));
-    status::text("sweep-source", xetal_world_sweep::SOURCE);
-    status::element("sweep-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
-        xetal_world_sweep::SOURCE,
-    ));
-    status::text("bloom-source", xetal_world_bloom::SOURCE);
-    status::element("bloom-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
-        xetal_world_bloom::SOURCE,
-    ));
-    status::text("ribbon-source", xetal_world_ribbon::SOURCE);
-    status::element("ribbon-rendered")?.set_inner_html(&xetal_world_model::highlighted_text(
-        xetal_world_ribbon::SOURCE,
-    ));
     let window = web_sys::window().ok_or("no browser window")?;
     let gpu = js_sys::Reflect::get(&window.navigator(), &"gpu".into()).unwrap_or_default();
     if gpu.is_undefined() || gpu.is_null() {
@@ -42,6 +24,7 @@ pub(crate) async fn start() -> Result<(), String> {
     status::text("status", "Creating WebGPU device...");
     let renderer = Renderer::new(canvas.clone(), status::error).await?;
     let scene = Scene::new()?;
+    views(&scene)?;
     let state = Rc::new(RefCell::new(frame::App::new(scene, renderer, canvas)));
     input::install(state.clone())?;
     status::text("splash-status", "Generating nearby snow...");
@@ -71,7 +54,6 @@ pub(crate) fn canvas() -> Result<web_sys::HtmlCanvasElement, String> {
 
 pub(crate) fn enter(app: &mut frame::App, with_sound: bool) {
     app.started = true;
-    app.paused = false;
     if with_sound {
         if !app.audio.enabled {
             sound(app);
@@ -108,4 +90,64 @@ pub(crate) fn sound(app: &mut frame::App) {
         }
         Err(error) => status::text("sound-status", &format!("Audio unavailable: {error}")),
     }
+}
+
+fn views(scene: &Scene) -> Result<(), String> {
+    let document = web_sys::window()
+        .and_then(|w| w.document())
+        .ok_or("no document")?;
+    let controls = status::element("game-controls")?;
+    for button in &scene.frame.buttons {
+        let node = document
+            .create_element("button")
+            .map_err(|e| format!("{e:?}"))?;
+        node.set_id(&button.id);
+        node.set_text_content(Some(&button.label));
+        controls.append_child(&node).map_err(|e| format!("{e:?}"))?;
+    }
+    let panels = status::element("source-panels")?;
+    for source in &scene.frame.sources {
+        let panel = source_panel(&document, source)?;
+        panels.append_child(&panel).map_err(|e| format!("{e:?}"))?;
+    }
+    Ok(())
+}
+
+fn source_panel(
+    document: &web_sys::Document,
+    source: &xetal_app_session::Source,
+) -> Result<web_sys::Element, String> {
+    let text = if source.name == "entry" {
+        crate::SOURCE
+    } else {
+        xetal_snow_libraries::LIBRARIES
+            .iter()
+            .find(|l| l.name == source.name)
+            .ok_or("unknown source module")?
+            .source
+    };
+    let panel = document
+        .create_element("details")
+        .map_err(|e| format!("{e:?}"))?;
+    panel.set_inner_html(r#"<summary></summary><div class="source-views"><section><h2>As typed</h2><pre tabindex="0"></pre></section><section><h2>As rendered</h2><pre tabindex="0" class="rendered-source"></pre></section></div>"#);
+    panel
+        .query_selector("summary")
+        .map_err(|e| format!("{e:?}"))?
+        .ok_or("missing summary")?
+        .set_text_content(Some(&source.title));
+    let typed = panel
+        .query_selector("section:first-child pre")
+        .map_err(|e| format!("{e:?}"))?
+        .ok_or("missing typed source")?;
+    typed.set_text_content(Some(text));
+    let rendered = panel
+        .query_selector(".rendered-source")
+        .map_err(|e| format!("{e:?}"))?
+        .ok_or("missing rendered source")?;
+    rendered.set_inner_html(&xetal_world_model::highlighted_text(text));
+    if source.name == "entry" {
+        typed.set_id("source");
+        rendered.set_id("source-rendered");
+    }
+    Ok(panel)
 }

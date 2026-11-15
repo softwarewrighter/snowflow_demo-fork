@@ -11,13 +11,11 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-xetal-world-ribbon = { path = "../../../effects/crates/xetal-world-ribbon" }
-xetal-world-bloom = { path = "../../../effects/crates/xetal-world-bloom" }
-xetal-world-sweep = { path = "../../../world/crates/xetal-world-sweep" }
-xetal-world-spells = { path = "../../../world/crates/xetal-world-spells" }
+xetal-app-session = { path = "../../../session/crates/xetal-app-session" }
+xetal-app-tiles = { path = "../../../session/crates/xetal-app-tiles" }
+xetal-snow-libraries = { path = "../../../world/crates/xetal-snow-libraries" }
 xetal-world-metrics = { path = "../xetal-world-metrics" }
 xetal-world-surface = { path = "../../../surface/crates/xetal-world-surface" }
-xetal-world-stream = { path = "../../../world/crates/xetal-world-stream" }
 xetal-world-trail = { path = "../xetal-world-trail" }
 xetal-world-navigation = { path = "../xetal-world-navigation" }
 xetal-world-model.workspace = true

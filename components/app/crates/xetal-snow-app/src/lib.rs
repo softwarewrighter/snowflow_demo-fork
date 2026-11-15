@@ -1,5 +1,5 @@
 //! Browser composition for the X_eTaL procedural surface demo.
-pub use xetal_world_model::SOURCE;
+pub use xetal_app_session::SOURCE;
 #[cfg(target_arch = "wasm32")]
 mod boot;
 #[cfg(target_arch = "wasm32")]

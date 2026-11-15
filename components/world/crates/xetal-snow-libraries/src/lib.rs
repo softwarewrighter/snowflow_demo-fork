@@ -9,6 +9,41 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "Controls",
+        alias: "controls",
+        anchor: "controls",
+        path: "components/world/libs/Controls.xtl",
+        source: include_str!("../../../libs/Controls.xtl"),
+    },
+    Library {
+        name: "Player",
+        alias: "player",
+        anchor: "player",
+        path: "components/world/libs/Player.xtl",
+        source: include_str!("../../../libs/Player.xtl"),
+    },
+    Library {
+        name: "World",
+        alias: "world",
+        anchor: "world",
+        path: "components/world/libs/World.xtl",
+        source: include_str!("../../../libs/World.xtl"),
+    },
+    Library {
+        name: "Spells",
+        alias: "spells",
+        anchor: "spells",
+        path: "components/world/libs/Spells.xtl",
+        source: include_str!("../../../libs/Spells.xtl"),
+    },
+    Library {
+        name: "AppFrame",
+        alias: "app",
+        anchor: "appframe",
+        path: "components/world/libs/AppFrame.xtl",
+        source: include_str!("../../../libs/AppFrame.xtl"),
+    },
+    Library {
         name: "RibbonBrush",
         alias: "score",
         anchor: "ribbon-brush",

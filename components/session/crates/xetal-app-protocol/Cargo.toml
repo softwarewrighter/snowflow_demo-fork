@@ -1,0 +1,9 @@
+[package]
+name = "xetal-app-protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+xetal-value.workspace = true
+xetal-world-surface.workspace = true

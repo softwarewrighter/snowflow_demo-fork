@@ -1,113 +1,78 @@
 # How the sources connect
 
-Think of the app as a clock, several little machines, and a drawing desk.
-The Rust browser loop is the clock. Each X_eTaL program is a machine that stays
-loaded, remembers its state, and waits for messages. The Rust/WGPU renderer is
-the drawing desk: it displays the geometry the programs produce.
+Think of App.xtl as the conductor. Rust provides the clock, keyboard, drawing
+and sound equipment. The conductor chooses the players and tells them what to
+do. The source panels show that actual application and its composition libraries.
 
 ```mermaid
 flowchart TD
-  Key[Hold or release key 2] --> Input[Rust input adapter]
-  Clock[Browser animation frame] --> Scene[Rust Scene update]
-  Input --> Spell[Persistent ribbon.xtl evaluator]
-  Scene --> Spell
-  Spell --> Libraries[Ribbon.xtl and RibbonSurface.xtl]
-  Libraries --> State[New state and typed triangle data]
-  State --> GPU[Rust WGPU renderer]
-  GPU --> Screen[Screen]
-  Spell --> Probe[Request ground-height fact]
-  Probe --> Physics[Rust collision query]
-  Physics --> Spell
-  Spell --> Score[Terrain score command]
-  Score --> Terrain[X_eTaL terrain and brush libraries]
-  Terrain --> Shared[Shared visible and collision mesh]
+  Input[Browser input and clock] --> Host[Rust Session transport]
+  Host --> App[One persistent App.xtl evaluator]
+  App --> Spells[Spells.xtl]
+  App --> Controls[Controls.xtl]
+  App --> Player[Player.xtl]
+  Spells --> Libraries[Sweep / Ribbon / Bloom / Crystallise]
+  Spells --> World[World.xtl and terrain brush libraries]
+  App --> Frame[AppFrame.xtl typed publication]
+  Frame --> GPU[Rust WebGPU and WebAudio resources]
+  Frame --> Query[Rust physics facts]
+  Query --> App
 ```
+
+## Where the program set is configured
+
+[App.xtl](../components/world/demos/App.xtl) imports Spells.xtl with
+`"spells:" u_se< "../libs/Spells.xtl"`. Its bindings value configures keys
+1, 2, 3 and 4. [Spells.xtl](../components/world/libs/Spells.xtl) imports the
+actual spell libraries and dispatches those keys. Changing the fourth binding
+to 9 changes the key that casts Crystallise without changing Rust; an executable
+[composition test](../components/session/crates/xetal-app-session/tests/composition.rs)
+checks this behavior.
+
+[Session](../components/session/crates/xetal-app-session/src/session.rs) embeds
+App.xtl once and loads it through Demo::from_source. The source's final expression
+starts u:l_oop!. Rust never looks up a function named loop. It resumes the saved
+machine until the next Event wait, then supplies another queued event.
 
 ## Ribbon, one message at a time
 
-1. During startup, [Scene::new](../components/app/crates/xetal-snow-app/src/scene.rs)
-   creates a Ribbon instance. Its [constructor](../components/effects/crates/xetal-world-ribbon/src/transport.rs)
-   loads the actual embedded `ribbon.xtl` source into a persistent evaluator.
-   It is loaded once, not restarted each frame.
-2. Holding 2 reaches the [input adapter](../components/app/crates/xetal-snow-app/src/input.rs),
-   then `Scene::ribbon_input`, then the native `Ribbon::press` method. The
-   [native input wrapper](../components/effects/crates/xetal-world-ribbon/src/input.rs)
-   supplies pose facts and a start message. Releasing the key sends a release message.
-3. The [X_eTaL composition program](../components/world/demos/ribbon.xtl) wakes
-   from `host:n_ext!`, examines the message and calls its imported
-   [Ribbon library](../components/world/libs/Ribbon.xtl). That library owns
-   holding, tip motion, history, release direction and retirement.
-4. On each browser animation frame, [App::tick and App::advance](../components/app/crates/xetal-snow-app/src/frame.rs)
-   call `Scene::update`. Its [advance_spells helper](../components/app/crates/xetal-snow-app/src/effects.rs)
-   supplies current pose and elapsed time to each spell adapter.
-   Ribbon coalesces time updates to about 20 per second; GPU drawing can happen
-   on every browser animation frame, reusing the latest geometry.
-5. The spell computes its next immutable state. [RibbonSurface](../components/world/libs/RibbonSurface.xtl)
-   turns the saved tip path into a triangle array. The composition program
-   publishes `(mesh, score, probe, status)` through `frame!`, then waits again.
-6. The [native output adapter](../components/effects/crates/xetal-world-ribbon/src/output.rs)
-   reads and validates those numeric arrays. The browser app uploads changed
-   triangles and calls the renderer. The shader handles material lighting.
-   A score command instead goes to the terrain program and its brush libraries.
+1. The browser forwards a key-down event for 2. App.xtl passes it to Spells.xtl.
+2. Spells uses its configured binding to call Ribbon's press function with the
+   current pose. Ribbon returns a new immutable state.
+3. Native animation frames send elapsed time, coalesced to roughly 20 updates
+   per second. App.xtl advances the libraries and publishes typed resource data.
+4. RibbonSurface turns the saved path into triangles. Rust validates the
+   published water material capability and uploads changed geometry to WebGPU.
+5. Releasing 2 reaches the same X_eTaL dispatch and calls Ribbon's release.
+   A later ground probe asks Rust for a terrain fact. The X_eTaL callback decides
+   whether to score the snow, and World.xtl records that edit.
 
-## What is currently Rust, and what is X_eTaL?
+## Ownership and current limits
 
-The outer scheduler is currently Rust. The world source shown in the first panel
-does not itself call every spell. Terrain, player footsteps/audio policy and
-each spell run as separate persistent evaluators within the same Rust/WASM app.
-They currently execute on the browser main thread, not separate worker threads.
+Controls owns bindings, pause/reset, movement intent and camera increments.
+Player owns footfalls, wind aging and sequenced sound commands. World owns brush
+histories and dirty regions. Spells owns spell selection, dispatch and resource
+revisions. AppFrame describes the buttons and source panels shown by the host.
 
-X_eTaL programs contain the algorithms and gameplay rules. Their imported `.xtl`
-files are real library dependencies, resolved by the embedded source catalog.
-These programs are interpreted by the Rust evaluator compiled to WASM; they are
-not individually compiled to native WASM or GPU shaders in this implementation.
+Rust owns native physics integration, chunk residency, GPU/audio resources and
+browser scheduling. It supports three material capabilities: ice, slush and
+water. Adding a new material or host service requires extending that backend;
+adding a spell using existing capabilities does not require a native dispatcher.
 
-The source panels show copies of the same embedded program text that startup
-loads. Rendering that text with typography and syntax colors is a separate UI
-operation; it does not execute the displayed panel as a second game.
+The libraries execute in one interpreted X_eTaL machine compiled into the Rust
+WASM application, currently on the browser main thread. They are not separately
+compiled to WASM or GPU kernels. Worker execution remains future work.
 
-The bridge currently sends a few scalar input facts through queued Event messages
-and reads typed output arrays through the captured publication slot. `frame!` is
-that publication slot, not the spell's logical state. The state is passed into
-pure functions, and those functions return its successor. This adapter is not
-the still-pending generic E1 typed host registration API.
+The Event bridge carries scalar facts with scratch packets: move supplies x/z,
+down supplies y/impact or y/found, up supplies aim, choose supplies a flag.
+Click commits a pose (1), requests a chunk (2), answers a query (3), acknowledges
+a world revision (4), or releases held controls on blur (5). Key and tick carry
+physical keys and elapsed seconds. This is a documented application adapter,
+not the pending generic E1 typed host registration API.
 
-See [library cross-reference](libraries.md) for source, backend and test mappings.
-
-## Where the program set is configured today
-
-It is statically wired in [Scene::new](../components/app/crates/xetal-snow-app/src/scene.rs),
-not in a X_eTaL configuration file. That constructor creates these six runners:
-
-| Rust runner | Embedded program | Role |
-| --- | --- | --- |
-| World | world/demos/terrain.xtl | Streamed terrain and shared brush histories |
-| Player | world/demos/snowfield.xtl | Footsteps, sound commands and wind aging |
-| xetal-world-spells::Spells | world/demos/crystallise.xtl | Crystallise only |
-| Sweep | world/demos/sweep.xtl | Sweep |
-| Bloom | world/demos/bloom.xtl | Bloom |
-| Ribbon | world/demos/ribbon.xtl | Ribbon |
-
-The paths above are relative to components/. Each native wrapper has a `SOURCE`
-constant, populated with Rust `include_str!`, which selects its embedded program.
-`Demo::from_source(SOURCE)` parses/loads that program into an evaluator. The
-program's own final expression starts its `u:l_oop!`. Rust never searches for
-or calls a X_eTaL function named loop; `Machine::run` resumes the loaded program
-at its saved instruction position. Its next event wait yields back to Rust.
-
-There is currently no `u_se< "spells"` import. `xetal-world-spells` is a misleading
-native crate name: it hosts Crystallise, not a spell registry. Also, the embedded
-library catalog resolves library imports; adding a library there does not start
-another program.
-
-## Planned X_eTaL-owned composition
-
-Selecting the spell set and dispatching application actions belong in X_eTaL.
-The next architectural step, before Vortex, is an actual App.xtl entrypoint and
-Spells.xtl composition library. App.xtl should own state and event dispatch,
-importing the existing pure spell libraries. The Rust host should load one app
-entrypoint and supply generic browser timing/input, rendering/audio resources
-and physics queries. Separate spell programs can remain focused examples/tests.
-
-This is planned work. A data-only manifest that still leaves per-spell dispatch
-hard-coded in Rust would not complete that refactor. See [the plan](plan.md).
+The 12-field publication contains terrain, material resources, particles,
+footprints, sequenced audio, statistics, physics requests, buttons, navigation,
+world revision/dirty bounds, source panels and protocol version. Dense numeric
+data stays typed. Only frame! is mutable; logical state is passed through pure
+functions. Old individual demo runners remain reference oracles, outside live
+application composition. See the [library cross-reference](libraries.md).

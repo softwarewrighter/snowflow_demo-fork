@@ -4,17 +4,17 @@ use xetal_snow_app::Scene;
 fn main() {
     let mut scene = Scene::new().unwrap();
     for _ in 0..1000 {
-        scene.update(0.0, [false; 4], false, true).unwrap();
+        scene.update(0.0, true).unwrap();
         if scene.world.resident() == 25 {
             break;
         }
     }
     for cast in 1..=8 {
-        scene.sweep.cast([0.0, 8.0], 0.0).unwrap();
+        scene.input("1", true).unwrap();
         let mut samples = Vec::new();
         for _ in 0..24 {
             let start = Instant::now();
-            scene.update(0.1, [false; 4], false, false).unwrap();
+            scene.update(0.1, false).unwrap();
             samples.push(start.elapsed().as_secs_f64() * 1000.0);
         }
         samples.sort_by(f64::total_cmp);

@@ -1,78 +1,69 @@
-//! Commit one terrain payload to physics and decal caches together.
+//! Generic physics queries, movement facts and committed terrain resources.
 use crate::Scene;
+use xetal_world_navigation::{Walker, floor, raycast};
 use xetal_world_surface::Mesh;
-pub(crate) struct SpellUpdates {
-    pub sweep: xetal_world_sweep::Update,
-    pub bloom: xetal_world_bloom::Update,
-    pub ribbon: xetal_world_ribbon::Update,
-}
 impl Scene {
-    pub fn ribbon_input(&mut self, pressed: bool) -> Result<(), String> {
-        let pose = self.ribbon_pose();
-        if pressed {
-            self.ribbon.press(pose)
-        } else {
-            self.ribbon.release(pose)
-        }
-    }
-    fn ribbon_pose(&self) -> xetal_world_ribbon::Pose {
-        xetal_world_ribbon::Pose {
-            origin: self.walker.position,
-            aim: [self.walker.yaw, self.walker.pitch],
-        }
-    }
-    pub(crate) fn advance_spells(&mut self, dt: f32) -> Result<SpellUpdates, String> {
-        let sweep = self.sweep.tick(dt)?;
-        if let Some(brush) = sweep.brush {
-            self.world.sweep(brush)?;
-        }
-        let bloom = self.bloom.tick(dt)?;
-        if let Some(crater) = bloom.crater {
-            self.world.bloom(crater)?;
-        }
-        let pose = self.ribbon_pose();
-        let ribbon = self.ribbon.update(pose, dt, |point| {
-            xetal_world_navigation::floor(&self.terrain, point).map(|y| y - 1.7)
-        })?;
-        if let Some(score) = ribbon.score {
-            self.world.ribbon(score)?;
-        }
-        Ok(SpellUpdates {
-            sweep,
-            bloom,
-            ribbon,
-        })
-    }
-    pub fn cast_bloom(&mut self) -> Result<(), String> {
-        let walker = &self.walker;
-        let [limit, fallback] = self.bloom.targeting();
-        let (s, c) = walker.yaw.sin_cos();
-        let (up, flat) = walker.pitch.sin_cos();
-        let direction = [s * flat, up, -c * flat];
-        let target =
-            xetal_world_navigation::raycast(&self.terrain, walker.position, direction, limit)
-                .or_else(|| {
-                    let point = [
-                        walker.position[0] + s * fallback,
+    pub(crate) fn services(&mut self) -> Result<(), String> {
+        for _ in 0..16 {
+            let frame = self.app.read()?;
+            let Some(q) = frame.requests.as_chunks::<10>().0.first() else {
+                return Ok(());
+            };
+            let origin = [q[2], q[3], q[4]];
+            let point = match q[1] {
+                1.0 => raycast(&self.terrain, origin, [q[5], q[6], q[7]], q[8]).or_else(|| {
+                    let length = q[5].hypot(q[7]).max(0.0001);
+                    let p = [
+                        origin[0] + q[5] * q[9] / length,
                         0.0,
-                        walker.position[2] - c * fallback,
+                        origin[2] + q[7] * q[9] / length,
                     ];
-                    xetal_world_navigation::floor(&self.terrain, point)
-                        .map(|y| [point[0], y - 1.7, point[2]])
-                })
-                .ok_or("Bloom target is outside loaded terrain")?;
-        self.bloom.cast(target)
+                    floor(&self.terrain, p).map(|y| [p[0], y - 1.7, p[2]])
+                }),
+                2.0 => floor(&self.terrain, origin).map(|y| [origin[0], y - 1.7, origin[2]]),
+                _ => return Err("unsupported physics capability".into()),
+            };
+            self.app.respond(q[0] as u32, point)?;
+        }
+        Err("application query budget exceeded".into())
+    }
+    pub(crate) fn motion(&mut self, dt: f32, suspended: bool) -> Result<bool, String> {
+        let frame = self.app.read()?;
+        let nav = frame.navigation;
+        if nav[6] != self.reset_sequence {
+            self.walker = Walker::default();
+            self.reset_sequence = nav[6];
+            self.jump_sequence = nav[3];
+        }
+        self.walker.yaw = nav[4] as f32;
+        self.walker.pitch = nav[5] as f32;
+        let before = self.walker.position;
+        let paused = suspended || nav[0] != 0.0;
+        if !paused {
+            self.walker.advance(dt, nav[1] as f32, nav[2] as f32);
+            if floor(&self.terrain, self.walker.position).is_none() {
+                self.walker.position = before;
+            }
+        }
+        self.walker.simulate(
+            if paused { 0.0 } else { dt },
+            !paused && nav[3] != self.jump_sequence,
+            &self.terrain,
+        );
+        self.jump_sequence = nav[3];
+        self.app.pose(self.pose())?;
+        Ok(!paused
+            && self.walker.motion.grounded
+            && (before[0] - self.walker.position[0]).hypot(before[2] - self.walker.position[2])
+                > 0.0001)
     }
     pub(crate) fn accept_terrain(&mut self, mesh: Option<&Mesh>) {
         if let Some(mesh) = mesh {
             self.terrain = mesh.positions().to_vec();
-            self.mesh_hash = mesh.positions().iter().fold(2166136261_u32, |hash, value| {
+            self.mesh_hash = self.terrain.iter().fold(2166136261_u32, |hash, value| {
                 (hash ^ value.to_bits()).wrapping_mul(16777619)
             });
-        }
-        if self.terrain_revision != self.world.edit_revision {
             self.trail.redrape(&self.terrain);
-            self.terrain_revision = self.world.edit_revision;
         }
     }
 }

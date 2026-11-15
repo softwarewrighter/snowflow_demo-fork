@@ -1,0 +1,53 @@
+## World: all spell brush histories, deduplication, versioned dirty regions and chunks.
+## Reference: library-reference.html#world
+"snow:" u_se< "SnowTerrain.xtl"
+"carve:" u_se< "SweepBrush.xtl"
+"crater:" u_se< "BloomBrush.xtl"
+"score:" u_se< "RibbonBrush.xtl"
+l:s_tart := { @ -> (carve:s_tart @, crater:s_tart @, score:s_tart @, 0.0 0.0 0.0 0.0 0.0, 0.0 0.0 0.0, 0.0 0.0 0.0 1.6, 0, 0 4 r_eshape 0.0) }
+h:b_ounds := { next old ->
+  all := old c_at next
+  (f_irst s_hape all) > 64 ? 1 4 r_eshape -1000000000000.0 1000000000000.0 -1000000000000.0 1000000000000.0
+  all
+}
+h:s_weep := { row state ->
+  (a, b, c, old, bb, cc, rev, dirty) := state
+  (f_irst row) = 0.0 ? state
+  row m_atch old ? state
+  (next, bounds) := row carve:u_pdate a
+  (next, b, c, row, bb, cc, rev + 1, bounds h:b_ounds dirty)
+}
+h:b_loom := { row state ->
+  (a, b, c, aa, old, cc, rev, dirty) := state
+  (f_irst row) = 0.0 ? state
+  row m_atch old ? state
+  (next, bounds) := row crater:u_pdate b
+  (a, next, c, aa, row, cc, rev + 1, bounds h:b_ounds dirty)
+}
+h:s_core := { row state ->
+  (a, b, c, aa, bb, old, rev, dirty) := state
+  (f_irst row) = 0.0 ? state
+  row m_atch old ? state
+  (next, bounds) := row score:u_pdate c
+  (a, b, next, aa, bb, row, rev + 1, bounds h:b_ounds dirty)
+}
+l:u_pdate := { (a, b, c) state -> c h:s_core (b h:b_loom (a h:s_weep state)) }
+h:r_egions := { kind rows ->
+  (f_irst s_hape rows) = 0 ? 0 4 r_eshape 0.0
+  row := 1 s_elect rows
+  region := { @ -> kind = 1 ? carve:r_egion row; kind = 2 ? crater:r_egion row; score:r_egion row } @
+  (1 4 r_eshape region) c_at (kind h:r_egions (1 d_rop rows))
+}
+l:c_lear := { state ->
+  (a, b, c, _, _, _, rev, dirty) := state
+  bounds := ((1 h:r_egions a) c_at (2 h:r_egions b) c_at (3 h:r_egions c)) h:b_ounds dirty
+  (aa, bb, cc, x, y, z, _, _) := l:s_tart @
+  (aa, bb, cc, x, y, z, rev + 1, bounds)
+}
+l:a_ck := { version state ->
+  (a, b, c, x, y, z, rev, dirty) := state
+  version = rev ? (a, b, c, x, y, z, rev, 0 4 r_eshape 0.0)
+  state
+}
+l:v_iew := { (_, _, _, _, _, _, rev, dirty) -> (rev, dirty) }
+l:c_hunk := { chunk (a, b, c, _, _, _, _, _) -> snow:s_cored (chunk, a, b, c) }

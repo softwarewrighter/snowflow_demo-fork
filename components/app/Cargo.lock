@@ -1368,6 +1368,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-app-protocol"
+version = "0.1.0"
+dependencies = [
+ "xetal-value",
+ "xetal-world-surface",
+]
+
+[[package]]
+name = "xetal-app-session"
+version = "0.1.0"
+dependencies = [
+ "xetal-app-protocol",
+ "xetal-snow-libraries",
+ "xetal-value",
+ "xetal-world-model",
+ "xetal-world-surface",
+]
+
+[[package]]
+name = "xetal-app-tiles"
+version = "0.1.0"
+dependencies = [
+ "xetal-app-session",
+ "xetal-world-surface",
+]
+
+[[package]]
 name = "xetal-arith"
 version = "0.1.0"
 dependencies = [
@@ -1780,17 +1807,15 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
+ "xetal-app-session",
+ "xetal-app-tiles",
+ "xetal-snow-libraries",
  "xetal-world-audio",
- "xetal-world-bloom",
  "xetal-world-metrics",
  "xetal-world-model",
  "xetal-world-navigation",
  "xetal-world-render",
- "xetal-world-ribbon",
- "xetal-world-spells",
- "xetal-world-stream",
  "xetal-world-surface",
- "xetal-world-sweep",
  "xetal-world-trail",
 ]
 
@@ -1969,14 +1994,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xetal-world-bloom"
-version = "0.1.0"
-dependencies = [
- "xetal-world-model",
- "xetal-world-surface",
-]
-
-[[package]]
 name = "xetal-world-camera"
 version = "0.1.0"
 
@@ -2046,14 +2063,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xetal-world-ribbon"
-version = "0.1.0"
-dependencies = [
- "xetal-world-model",
- "xetal-world-surface",
-]
-
-[[package]]
 name = "xetal-world-shadow"
 version = "0.1.0"
 dependencies = [
@@ -2062,32 +2071,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "xetal-world-spells"
-version = "0.1.0"
-dependencies = [
- "xetal-world-model",
- "xetal-world-surface",
-]
-
-[[package]]
-name = "xetal-world-stream"
-version = "0.1.0"
-dependencies = [
- "xetal-world-model",
- "xetal-world-surface",
-]
-
-[[package]]
 name = "xetal-world-surface"
 version = "0.1.0"
-
-[[package]]
-name = "xetal-world-sweep"
-version = "0.1.0"
-dependencies = [
- "xetal-world-model",
- "xetal-world-surface",
-]
 
 [[package]]
 name = "xetal-world-trail"

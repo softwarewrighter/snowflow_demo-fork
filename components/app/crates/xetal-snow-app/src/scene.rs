@@ -1,147 +1,126 @@
-//! Native-testable streaming, navigation and grounded-footfall coordination.
-use xetal_world_model::{Player, Pose};
-use xetal_world_navigation::{Walker, floor};
-use xetal_world_stream::World;
+//! Browser physics and capability resources for one X_eTaL application.
+use std::collections::BTreeMap;
+use xetal_app_session::{Frame, Session};
+use xetal_app_tiles::Tiles;
+use xetal_world_navigation::Walker;
+use xetal_world_surface::Mesh;
 use xetal_world_trail::Trail;
-
 pub struct Scene {
-    pub world: World,
+    pub app: Session,
+    pub world: Tiles,
     pub walker: Walker,
     pub trail: Trail,
+    pub frame: Frame,
     pub mesh_hash: u32,
-    pub landings: u64,
     pub steps: u64,
+    pub landings: u64,
     pub wind: f32,
-    player: Player,
-    pub ribbon: xetal_world_ribbon::Ribbon,
-    pub bloom: xetal_world_bloom::Bloom,
-    pub sweep: xetal_world_sweep::Sweep,
-    pub spells: xetal_world_spells::Spells,
     pub(crate) terrain: Vec<f32>,
-    pub(crate) terrain_revision: u64,
-    track_revision: u64,
+    pub(crate) uploaded: BTreeMap<String, u64>,
+    pub(crate) audio_sequence: u64,
+    pub(crate) particles_revision: u64,
+    pub(crate) track_revision: u64,
+    pub(crate) jump_sequence: f64,
+    pub(crate) reset_sequence: f64,
+    pub(crate) elapsed: f32,
 }
 pub struct Update {
-    pub terrain: Option<xetal_world_surface::Mesh>,
+    pub terrain: Option<Mesh>,
     pub tracks: Option<Vec<f32>>,
-    pub ribbon: Option<xetal_world_surface::Mesh>,
-    pub bloom: Option<xetal_world_surface::Mesh>,
+    pub resources: Vec<xetal_app_session::Resource>,
     pub particles: Option<Vec<f32>>,
-    pub sweep: Option<xetal_world_surface::Mesh>,
-    pub objects: Option<xetal_world_surface::Mesh>,
-    pub step: bool,
-    pub landing: f32,
     pub moving: bool,
     pub sound: [f32; 3],
 }
 impl Scene {
     pub fn new() -> Result<Self, String> {
+        let mut app = Session::new()?;
+        let frame = app.read()?;
         Ok(Self {
-            world: World::new()?,
+            app,
+            frame,
+            world: Tiles::default(),
             walker: Walker::default(),
             trail: Trail::default(),
             terrain: Vec::new(),
-            terrain_revision: 0,
-            sweep: xetal_world_sweep::Sweep::new()?,
-            bloom: xetal_world_bloom::Bloom::new()?,
-            ribbon: xetal_world_ribbon::Ribbon::new()?,
+            uploaded: BTreeMap::new(),
             mesh_hash: 0,
-            landings: 0,
             steps: 0,
+            landings: 0,
             wind: 0.3,
-            player: Player::new()?,
-            spells: xetal_world_spells::Spells::new()?,
+            audio_sequence: 0,
+            particles_revision: u64::MAX,
             track_revision: u64::MAX,
+            jump_sequence: 0.0,
+            reset_sequence: 0.0,
+            elapsed: 0.0,
         })
     }
-    pub fn update(
-        &mut self,
-        dt: f32,
-        held: [bool; 4],
-        jump: bool,
-        paused: bool,
-    ) -> Result<Update, String> {
-        let effects = self.advance_spells(if paused { 0.0 } else { dt })?;
-        let terrain = self.world.step(self.walker.position, 2_000)?;
-        self.accept_terrain(terrain.as_ref());
-        let (pose, moving) = self.motion(dt, held, jump, paused);
-        let mut sound = [0.0, 0.0, 1.0];
-        if let Some(commands) = self.player.update(pose, if paused { 0.0 } else { dt })? {
-            self.trail.replace(&commands.prints, &self.terrain)?;
-            self.steps = commands.steps;
-            self.landings = commands.landings;
-            self.wind = commands.wind;
-            sound = commands.sound;
+    pub fn input(&mut self, key: &str, pressed: bool) -> Result<(), String> {
+        self.app.pose(self.pose())?;
+        self.app.input(key, pressed)?;
+        self.services()?;
+        self.frame = self.app.read()?;
+        Ok(())
+    }
+    pub fn update(&mut self, dt: f32, suspended: bool) -> Result<Update, String> {
+        let dt = dt.clamp(0.0, 0.1);
+        self.elapsed += if suspended { 0.0 } else { dt };
+        if self.elapsed >= 0.05 {
+            self.app.tick(self.elapsed)?;
+            self.elapsed = 0.0;
         }
-        let step = sound[0] == 1.0;
-        let landing = if sound[0] == 2.0 { sound[1] } else { 0.0 };
+        self.services()?;
+        let terrain = self.world.step(&mut self.app, self.walker.position)?;
+        self.accept_terrain(terrain.as_ref());
+        let moving = self.motion(dt, suspended)?;
+        self.services()?;
+        self.frame = self.app.read()?;
+        self.feedback()?;
+        let resources = self
+            .frame
+            .resources
+            .iter()
+            .filter(|r| self.uploaded.get(&r.id) != Some(&r.revision))
+            .cloned()
+            .collect::<Vec<_>>();
+        for r in &resources {
+            self.uploaded.insert(r.id.clone(), r.revision);
+        }
+        let particles = (self.particles_revision != self.frame.particles_revision)
+            .then(|| self.frame.particles.clone());
+        self.particles_revision = self.frame.particles_revision;
         let tracks = (self.track_revision != self.trail.revision).then(|| self.trail.vertices());
         self.track_revision = self.trail.revision;
+        let sound = if self.audio_sequence != self.frame.audio_sequence {
+            self.frame.audio
+        } else {
+            [0.0, 0.0, 1.0]
+        };
+        self.audio_sequence = self.frame.audio_sequence;
         Ok(Update {
             terrain,
             tracks,
-            sweep: effects.sweep.mesh,
-            bloom: effects.bloom.mesh,
-            particles: effects.bloom.particles,
-            ribbon: effects.ribbon.mesh,
-            objects: self.spells.tick(if paused { 0.0 } else { dt })?,
-            step,
-            landing,
+            resources,
+            particles,
             moving,
             sound,
         })
     }
-    fn motion(&mut self, dt: f32, held: [bool; 4], jump: bool, paused: bool) -> (Pose, bool) {
-        let before = self.walker.position;
-        if !paused {
-            self.walker.advance(
-                dt,
-                (i32::from(held[0]) - i32::from(held[1])) as f32,
-                (i32::from(held[3]) - i32::from(held[2])) as f32,
-            );
-            if floor(&self.terrain, self.walker.position).is_none() {
-                self.walker.position = before;
-            }
-        }
-        self.walker.simulate(
-            if paused { 0.0 } else { dt },
-            jump && !paused,
-            &self.terrain,
-        );
-        let moving = !paused
-            && self.walker.motion.grounded
-            && (before[0] - self.walker.position[0]).hypot(before[2] - self.walker.position[2])
-                > 0.0001;
-        (
-            Pose {
-                point: [self.walker.position[0], self.walker.position[2]],
-                yaw: self.walker.yaw,
-                grounded: self.walker.motion.grounded,
-                impact: self.walker.landing_speed,
-            },
-            moving,
-        )
-    }
-    pub fn reset(&mut self) -> Result<(), String> {
-        self.spells.clear()?;
-        self.sweep.clear()?;
-        self.bloom.clear()?;
-        self.ribbon.clear()?;
-        self.world.clear_edits();
-        self.walker = Walker::default();
-        self.clear_tracks()
-    }
-    pub fn clear_tracks(&mut self) -> Result<(), String> {
-        self.player.reset(Pose {
-            point: [self.walker.position[0], self.walker.position[2]],
-            yaw: self.walker.yaw,
+    pub(crate) fn pose(&self) -> xetal_app_session::Pose {
+        xetal_app_session::Pose {
+            position: self.walker.position,
+            aim: [self.walker.yaw, self.walker.pitch],
             grounded: self.walker.motion.grounded,
-            impact: 0.0,
-        })?;
-        self.trail = Trail::default();
-        self.steps = 0;
-        self.landings = 0;
-        self.track_revision = u64::MAX;
+            impact: self.walker.landing_speed,
+        }
+    }
+    pub(crate) fn feedback(&mut self) -> Result<(), String> {
+        self.trail
+            .replace(self.frame.prints.as_chunks::<6>().0, &self.terrain)?;
+        self.steps = self.frame.stats.get("steps").copied().unwrap_or(0.0) as u64;
+        self.landings = self.frame.stats.get("landings").copied().unwrap_or(0.0) as u64;
+        self.wind = self.frame.stats.get("wind").copied().unwrap_or(0.0) as f32;
         Ok(())
     }
 }

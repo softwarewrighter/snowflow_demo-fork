@@ -1,0 +1,14 @@
+## Typed application publication. Rust validates capability data, not spell identities.
+"spells:" u_se< "Spells.xtl"
+"player:" u_se< "Player.xtl"
+"world:" u_se< "World.xtl"
+"controls:" u_se< "Controls.xtl"
+l:v_iew := { (pose, control, spells, player, world, mesh, _) ->
+  (mesh, spells:r_esources spells, spells:p_articles spells,
+   player:p_rints player, player:a_udio player,
+   (spells:s_tats spells, player:s_tats player), pose spells:q_ueries spells,
+   (spells:b_uttons spells, controls:b_uttons control), controls:n_av control,
+   world:v_iew world,
+   (("entry", "Application", "entry"), ("spells", "Spell composition", "Spells"),
+    ("world", "World", "World"), ("player", "Player", "Player"), ("controls", "Controls", "Controls")), 1)
+}

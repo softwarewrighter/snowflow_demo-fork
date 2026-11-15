@@ -6,21 +6,7 @@ use wasm_bindgen::{JsCast, closure::Closure};
 type State = Rc<RefCell<App>>;
 
 pub(crate) fn install(state: State) -> Result<(), String> {
-    button("pause", state.clone(), |app| {
-        app.paused = !app.paused;
-        status::text("pause", if app.paused { "Resume" } else { "Pause" });
-    })?;
-    button("reset", state.clone(), |app| {
-        app.ribbon_held = false;
-        if let Err(error) = app.scene.reset() {
-            status::error(error);
-        }
-    })?;
-    button("clear-tracks", state.clone(), |app| {
-        if let Err(error) = app.scene.clear_tracks() {
-            status::error(error);
-        }
-    })?;
+    game_buttons(state.clone())?;
     button("start-sound", state.clone(), |app| {
         crate::boot::enter(app, true)
     })?;
@@ -28,12 +14,6 @@ pub(crate) fn install(state: State) -> Result<(), String> {
         crate::boot::enter(app, false)
     })?;
     button("sound", state.clone(), crate::boot::sound)?;
-    button("crystallise", state.clone(), |app| cast(app, "4"))?;
-    button("sweep", state.clone(), |app| cast(app, "1"))?;
-    button("bloom", state.clone(), |app| cast(app, "3"))?;
-    button("ribbon", state.clone(), |app| {
-        cast(app, if app.ribbon_held { "2-up" } else { "2-down" })
-    })?;
     effect_buttons(state.clone())?;
     keys(state.clone(), true)?;
     keys(state.clone(), false)?;
@@ -61,21 +41,14 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
             }) {
                 return;
             }
-            if (event.key() == " "
-                || event.key() == "4"
-                || event.key() == "1"
-                || event.key() == "3"
-                || event.key() == "2")
-                && event.repeat()
-            {
-                event.prevent_default();
+            if event.repeat() {
                 return;
             }
             let mut app = state.borrow_mut();
             if !app.started {
                 return;
             }
-            if !command(&mut app, &event.key(), pressed) {
+            if app.scene.app.input(&event.key(), pressed).is_err() {
                 return;
             }
             event.prevent_default();
@@ -94,8 +67,9 @@ fn keys(state: State, pressed: bool) -> Result<(), String> {
 fn blur(state: State) -> Result<(), String> {
     let handler = Closure::<dyn FnMut(web_sys::Event)>::new(move |_| {
         let mut app = state.borrow_mut();
-        app.held = [false; 4];
-        cast(&mut app, "2-up");
+        if let Err(error) = app.scene.app.blur() {
+            status::error(error);
+        }
     });
     web_sys::window()
         .ok_or("no window")?
@@ -105,51 +79,32 @@ fn blur(state: State) -> Result<(), String> {
     Ok(())
 }
 
-fn command(app: &mut App, key: &str, pressed: bool) -> bool {
-    match key {
-        " " if pressed => app.jump = true,
-        "1" | "3" | "4" if pressed => cast(app, key),
-        "2" => cast(app, if pressed { "2-down" } else { "2-up" }),
-        "w" | "W" => app.held[0] = pressed,
-        "s" | "S" => app.held[1] = pressed,
-        "a" | "A" => app.held[2] = pressed,
-        "d" | "D" => app.held[3] = pressed,
-        "ArrowLeft" if pressed => app.scene.walker.yaw -= 0.10,
-        "ArrowRight" if pressed => app.scene.walker.yaw += 0.10,
-        "ArrowUp" if pressed => app.scene.walker.pitch = (app.scene.walker.pitch + 0.06).min(1.2),
-        "ArrowDown" if pressed => {
-            app.scene.walker.pitch = (app.scene.walker.pitch - 0.06).max(-1.2)
-        }
-        "r" | "Home" if pressed => {
-            app.ribbon_held = false;
-            if let Err(error) = app.scene.reset() {
+fn game_buttons(state: State) -> Result<(), String> {
+    let buttons = state.borrow().scene.frame.buttons.clone();
+    for spec in buttons {
+        let state = state.clone();
+        let node = status::element(&spec.id)?;
+        let handler = Closure::<dyn FnMut(web_sys::Event)>::new(move |_| {
+            let mut app = state.borrow_mut();
+            if !app.started {
+                return;
+            }
+            let active = app
+                .scene
+                .frame
+                .buttons
+                .iter()
+                .find(|b| b.id == spec.id)
+                .is_some_and(|b| b.active);
+            if let Err(error) = app.scene.input(&spec.key, !spec.held || !active) {
                 status::error(error);
             }
-        }
-        _ => return false,
+        });
+        node.add_event_listener_with_callback("click", handler.as_ref().unchecked_ref())
+            .map_err(|e| format!("{e:?}"))?;
+        handler.forget();
     }
-    true
-}
-
-fn cast(app: &mut App, spell: &str) {
-    if !app.started || (app.paused && spell != "2-up") {
-        return;
-    }
-    let walker = &app.scene.walker;
-    let point = [walker.position[0], walker.position[2]];
-    let result = if spell == "2-down" || spell == "2-up" {
-        app.ribbon_held = spell == "2-down";
-        app.scene.ribbon_input(app.ribbon_held)
-    } else if spell == "3" {
-        app.scene.cast_bloom()
-    } else if spell == "1" {
-        app.scene.sweep.cast(point, walker.yaw)
-    } else {
-        app.scene.spells.cast(point, walker.yaw)
-    };
-    if let Err(error) = result {
-        status::error(error);
-    }
+    Ok(())
 }
 
 fn effect_buttons(state: State) -> Result<(), String> {

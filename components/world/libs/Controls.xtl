@@ -1,0 +1,38 @@
+## Controls: X_eTaL owns movement bindings, camera actions, pause/reset and UI controls.
+## State: (held yaw pitch jump reset clear paused spaceDown).
+## Reference: library-reference.html#controls
+l:s_tart := { @ -> (0.0 0.0 0.0 0.0, 0.0, -0.12, 0, 0, 0, 0, 0) }
+h:h_eld := { (key, pressed) held ->
+  v := f_loat pressed
+  key m_atch "w" ? v c_at 2 3 4 s_elect held
+  key m_atch "s" ? (1 s_elect held) c_at v c_at 3 4 s_elect held
+  key m_atch "a" ? (1 2 s_elect held) c_at v c_at (4 s_elect held)
+  key m_atch "d" ? (1 2 3 s_elect held) c_at v
+  held
+}
+l:i_nput := { (key, pressed) state ->
+  (held, yaw, pitch, jump, reset, clear, paused, space) := state
+  char := []K_CHAR key
+  next := (char, pressed) h:h_eld held
+  char m_atch " " ? (next, yaw, pitch, jump + (pressed * (1 - space)), reset, clear, paused, pressed)
+  pressed = 0 ? (next, yaw, pitch, jump, reset, clear, paused, space)
+  ((char m_atch "r") + (key = []K_NAMED 10)) > 0 ? (0.0 0.0 0.0 0.0, 0.0, -0.12, jump, reset + 1, clear, 0, 0)
+  char m_atch "c" ? (next, yaw, pitch, jump, reset, clear + 1, paused, space)
+  char m_atch "p" ? (next, yaw, pitch, jump, reset, clear, 1 - paused, space)
+  key = []K_NAMED 3 ? (next, yaw - 0.1, pitch, jump, reset, clear, paused, space)
+  key = []K_NAMED 4 ? (next, yaw + 0.1, pitch, jump, reset, clear, paused, space)
+  key = []K_NAMED 1 ? (next, yaw, 1.2 - ((1.2 - (pitch + 0.06)) + a_bs (1.2 - (pitch + 0.06))) / 2.0, jump, reset, clear, paused, space)
+  key = []K_NAMED 2 ? (next, yaw, -1.2 + (((pitch - 0.06) + 1.2) + a_bs ((pitch - 0.06) + 1.2)) / 2.0, jump, reset, clear, paused, space)
+  (next, yaw, pitch, jump, reset, clear, paused, space)
+}
+l:b_lur := { (_, yaw, pitch, jump, reset, clear, paused, _) -> (0.0 0.0 0.0 0.0, yaw, pitch, jump, reset, clear, paused, 0) }
+l:p_aused := { (_, _, _, _, _, _, paused, _) -> paused }
+l:e_pochs := { (_, _, _, _, reset, clear, _, _) -> (reset, clear) }
+l:n_av := { (held, yaw, pitch, jump, reset, clear, paused, _) ->
+  (paused, (1 s_elect held) - (2 s_elect held), (4 s_elect held) - (3 s_elect held), jump, yaw, pitch, reset, clear)
+}
+h:p_ause := { state ->
+  (l:p_aused state) = 1 ? "Resume"
+  "Pause"
+}
+l:b_uttons := { state -> (("pause", "p", h:p_ause state, 0, 0), ("reset", "r", "Reset", 0, 0), ("clear-tracks", "c", "Clear tracks", 0, 0)) }

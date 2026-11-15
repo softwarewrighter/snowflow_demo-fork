@@ -11,6 +11,7 @@ or from inside a component; `.cargo/config.toml` selects the shared `target/`.
 | world | Density, materials, chunks, editing, water and gameplay contracts |
 | surface | Smooth meshing and surface contracts |
 | render | GPU buffers, textures, pipelines and rendering integration |
+| session | One application evaluator, validated publication protocol and bounded chunk residency |
 | app | Browser composition, input wiring and inspection UI |
 | evidence | Replays, captures and performance evidence |
 

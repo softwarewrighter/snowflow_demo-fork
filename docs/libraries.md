@@ -1,6 +1,6 @@
 # Libraries used by the snowfield
 
-The live program is [snowfield.xtl](../components/world/demos/snowfield.xtl).
+The live entrypoint is [App.xtl](../components/world/demos/App.xtl).
 It imports actual project-local X_eTaL modules. Their public functions and
 rendered source are generated into the demo's library-reference.html page;
 rendered calls link directly to their module. These are app modules, not
@@ -8,6 +8,11 @@ claims that new packages have already shipped in X_eTaL-libraries.
 
 | Module | Alias | Public API and responsibility | Source |
 | --- | --- | --- | --- |
+| Spells | spells: | Composition, configured key dispatch, queries and material resources | [Spells.xtl](../components/world/libs/Spells.xtl) |
+| Controls | controls: | Movement intent, camera, pause/reset and button metadata | [Controls.xtl](../components/world/libs/Controls.xtl) |
+| Player | player: | Footsteps, wind and durable audio sequence composition | [Player.xtl](../components/world/libs/Player.xtl) |
+| World | world: | Brush histories, revision/dirty-region ownership and chunk generation | [World.xtl](../components/world/libs/World.xtl) |
+| AppFrame | app: | Versioned typed frame, controls and source metadata | [AppFrame.xtl](../components/world/libs/AppFrame.xtl) |
 | SnowTerrain | snow: | h_eight and m_esh; deterministic world-space terrain arrays | [SnowTerrain.xtl](../components/world/libs/SnowTerrain.xtl) |
 | Footsteps | feet: | s_tart, u_pdate, t_ick, v_iew, c_ount, l_ands, w_ind; stride, alternating soles, airborne suppression, landings and bounded history | [Footsteps.xtl](../components/world/libs/Footsteps.xtl) |
 | SnowAudio | sfx: | c_ommand and s_ilent; walking versus landing buffer, gain and playback rate | [SnowAudio.xtl](../components/world/libs/SnowAudio.xtl) |
@@ -17,16 +22,17 @@ claims that new packages have already shipped in X_eTaL-libraries.
 Footsteps and SnowAudio now own the decisions previously implemented in
 Rust Trail::update and Scene::motion. Rust no longer decides stride timing,
 which foot to stamp, when a semantic snow sound occurs or its artistic gain.
-The world and player evaluator instances use the same library-led program:
-one receives chunk requests; the other receives pose and time updates.
+One persistent application owns all gameplay state. The individual spell/player
+runners are retained as reference oracles, outside production composition.
 
 ## Host contract and native backends
 
-The immutable model emits one typed frame:
-(mesh, print rows, audio command, step count, landing count, wind strength).
-Only frame! is mutable, to publish that value through the current evaluator
-hook. Mesh and command arrays are copied/narrowed under the host's checks;
-there is no dense numeric text serialization.
+[Session](../components/session/crates/xetal-app-session/src/session.rs) loads
+one entrypoint. The [protocol decoder](../components/session/crates/xetal-app-protocol/src/frame.rs)
+validates its typed publication. [Tiles](../components/session/crates/xetal-app-tiles/src/tiles.rs)
+keeps 25 chunks resident and commits replacement terrain atomically. The
+[connection guide](source-connections.md) documents every publication field and
+scalar Event packet. Only frame! is mutable; logical state remains functional.
 
 Print rows are [x, z, yaw, side, birth exposure, opacity]. The print backend
 caches terrain-draped vertices and uses the supplied opacity. Audio commands
@@ -38,19 +44,16 @@ when a player should step or land.
 | --- | --- | --- |
 | X_eTaL evaluation and checking | [runtime adapter](../components/world/crates/xetal-world-model/src/runtime.rs) | Pinned X_eTaL evaluator, macro loader and type checker |
 | Embedded library lookup | [catalog](../components/world/crates/xetal-snow-libraries/src/lib.rs) | Real library sources available in native and WASM builds |
-| Pose transport | [player adapter](../components/world/crates/xetal-world-model/src/player.rs) | Encodes a few native facts into queued Events, coalesces poses and transports typed output |
+| Event transport | [Session](../components/session/crates/xetal-app-session/src/session.rs) | Supplies input/time/pose facts and consumes application publications |
 | Navigation physics | [navigation](../components/app/crates/xetal-world-navigation/src/lib.rs), [pure motion](../components/app/crates/xetal-world-navigation/src/physics.rs) | Native position, yaw, grounded flag and impact speed |
 | GPU print cache | [trail backend](../components/app/crates/xetal-world-trail/src/recorder.rs) | Geometry caching; no stride or aging policy |
 | Audio execution | [WebAudio](../components/app/crates/xetal-world-audio/src/browser.rs), [buffer/node ownership](../components/app/crates/xetal-world-audio/src/bank.rs), [DSP](../components/app/crates/xetal-world-audio/src/synth.rs) | Gesture-enabled audio, procedural waveform buffers and node cleanup |
 | Drawing and depth maps | [render](../components/render/crates/xetal-world-render/src/lib.rs), [decals](../components/render/crates/xetal-world-decals/src/lib.rs), [shadows](../components/render/crates/xetal-world-shadow/src/lib.rs) | WebGPU resource ownership and shaders |
 
-SnowHost currently uses the existing Event transport: choose carries chunk
-coordinates, move carries player x/z, down/up carries grounded/airborne yaw
-and impact, and tick carries elapsed time. These are documented adapter
-messages, not a newly registered native-function API. The generic typed
-host-binding feature E1 remains an [upstream requirement](xetal-asks.md).
-Physics and camera control remain native wrappers; this release moves the
-footstep, sound-command and snow-aging policies into X_eTaL.
+SnowHost supplies the existing queued Event primitive. This adapter is not the
+still-pending generic [E1 host binding API](xetal-asks.md). Native physics supplies
+facts; the X_eTaL application owns input policy, camera increments, spell dispatch,
+footfall timing, sound selection, terrain brush history and wind aging.
 
 ## Wind and aging
 

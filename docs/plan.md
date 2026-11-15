@@ -186,3 +186,14 @@ The [snow mechanics roadmap](snow-mechanics.md) proposes a fine near-player snow
 layer, compaction, displaced powder, depth-sensitive movement/audio and persistent
 weathered tiles. These are queued after the original five spells. Current
 footprints remain decals; the roadmap does not claim those mechanics exist yet.
+
+## Application composition refactor
+
+App.xtl and Spells.xtl now own application selection and key dispatch. The new
+session component replaces live per-spell runners with one evaluator, typed
+capability publications and a generic chunk cache. Native composition tests
+verify that changing a key binding in X_eTaL changes actual dispatch. Scene
+regressions cover all four spells, shared terrain, stationary ground, walking,
+footprints and one-shot landing audio. Preview publication precedes the full
+gate under the project release policy; remaining validation is recorded in the
+active agentrail step until completion.

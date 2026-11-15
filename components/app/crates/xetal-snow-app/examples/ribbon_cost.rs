@@ -4,23 +4,32 @@ use xetal_snow_app::Scene;
 fn main() {
     let mut scene = Scene::new().unwrap();
     for _ in 0..1000 {
-        scene.update(0.0, [false; 4], false, true).unwrap();
+        scene.update(0.0, true).unwrap();
         if scene.world.resident() == 25 {
             break;
         }
     }
-    scene.ribbon_input(true).unwrap();
+    scene.input("2", true).unwrap();
     for phase in ["held", "released"] {
         if phase == "released" {
-            scene.ribbon_input(false).unwrap();
+            scene.input("2", false).unwrap();
         }
         let mut samples = Vec::new();
         for i in 0..80 {
             if phase == "held" {
-                scene.walker.yaw = (i as f32 * 0.08).sin() * 0.35;
+                scene
+                    .input(
+                        if i % 12 < 6 {
+                            "ArrowLeft"
+                        } else {
+                            "ArrowRight"
+                        },
+                        true,
+                    )
+                    .unwrap();
             }
             let start = Instant::now();
-            scene.update(0.05, [false; 4], false, false).unwrap();
+            scene.update(0.05, false).unwrap();
             samples.push(start.elapsed().as_secs_f64() * 1000.0);
         }
         samples.sort_by(f64::total_cmp);

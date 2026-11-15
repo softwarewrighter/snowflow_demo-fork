@@ -1,6 +1,6 @@
 number = 12
 slug = "xetal-app-composition"
-status = "pending"
+status = "in-progress"
 description = "Move application composition and spell dispatch into an actual X_eTaL App.xtl..."
 role = "production"
 context_files = []
