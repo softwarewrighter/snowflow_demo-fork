@@ -1,6 +1,6 @@
 "vortex:" u_se< "Vortex.xtl"
 ## Spells: X_eTaL chooses components, controls dispatch, queries and render resources.
-## State: (bindings ice sweep bloom ribbon cache pendingQueries).
+## State: (bindings ice sweep bloom ribbon cache pendingQueries vortex).
 ## Reference: library-reference.html#spells
 "ice:" u_se< "Crystallise.xtl"
 "sweep:" u_se< "Sweep.xtl"

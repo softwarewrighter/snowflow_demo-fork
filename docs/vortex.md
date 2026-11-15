@@ -64,3 +64,27 @@ Use python3 scripts/build-demo.py to rebuild the preview. The generated library
 reference and the Vortex source panel show the actual library and public API.
 Actual appearance, sound interaction and FPS require the browser harness and
 human inspection on a host permitting WebGPU and local sockets.
+
+## Validation and CPU sample
+
+The full gate passed 96 Rust tests and 18 Python tests, with lint, formatting,
+shader and WASM checks. Additional tests cover deterministic grains, following
+player position, pause, repeated casts, and preserving existing carved terrain
+through settling. Browser audiovisual and FPS acceptance remain pending.
+
+The native release vortex_cost example measured the following Scene update
+CPU times on this host, including resident terrain rebuilds:
+
+| Phase | Median ms | p95 ms | Worst ms |
+| --- | --- | --- | --- |
+| Ramp and hold | 9.381 | 17.702 | 26.329 |
+| Fade and particle tail | 17.242 | 19.183 | 19.695 |
+| Settled | 0.471 | 0.858 | 0.899 |
+
+These samples exclude GPU work, audio and browser frame pacing. Vortex can
+cause frame-time spikes, especially while the signed terrain profile settles.
+The application coalesces simulation updates to roughly 20 Hz but draws each
+browser frame. This does not establish 60 FPS. Worker execution and finer dirty
+region scheduling remain future work. Reproduce with cargo run --release
+--offline --manifest-path components/app/Cargo.toml -p xetal-snow-app
+--example vortex_cost.
