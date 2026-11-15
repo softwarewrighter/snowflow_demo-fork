@@ -3,6 +3,6 @@ mod frame;
 mod metadata;
 mod resources;
 mod value;
-pub use frame::{Frame, decode};
+pub use frame::{Detail, Frame, decode};
 pub use metadata::{Button, Source};
 pub use resources::{Cache, Resource};

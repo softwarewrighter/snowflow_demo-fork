@@ -112,3 +112,9 @@ Press 5 or click Vortex for three rotating snow helices and tangential grains.
 The spell follows the player, lifts a ring of surface snow and lets it settle
 back. All five spell buttons are ordered numerically. The [Vortex library and
 parity notes](docs/vortex.md) describe this bounded procedural implementation.
+
+## Geometric footprints
+
+Bootprints now depress a local fine snow grid and raise powder edges. Clear tracks
+removes those impressions. The [snow layer guide](docs/deformable-snow.md) covers
+10 cm and 6.25 cm configurations, render/collision agreement, budgets and limits.

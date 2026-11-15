@@ -1,0 +1,48 @@
+## SnowLayer: fine boot pressure profiles over immutable world-space tile coordinates.
+## Config: spacing, tile width, local radius, resident tile cap. Reference: library-reference.html#snow-layer
+"brush:" u_se< "TerrainBrush.xtl"
+l:c_onfig := { @ -> 0.1 2.0 6.0 36.0 }
+l:s_tamps := { prints ->
+  n := f_irst s_hape prints
+  c := 2 1 t_ranspose prints
+  strength := (f_loat f_loor ((8.0 * 6 s_elect c) + 0.5)) / 8.0
+  rows := 2 1 t_ranspose ((6 c_at n) r_eshape (r_avel 5 t_ake c) c_at strength)
+  (strength > 0.0) r_eplicate rows
+}
+l:b_ounds := { rows ->
+  n := f_irst s_hape rows
+  c := 2 1 t_ranspose rows
+  x := 1 s_elect c
+  z := 2 s_elect c
+  2 1 t_ranspose ((4 c_at n) r_eshape (x - 0.45) c_at (x + 0.45) c_at (z - 0.45) c_at (z + 0.45))
+}
+h:p_ressure := { (x, z) row ->
+  yaw := 3 s_elect row
+  side := 4 s_elect row
+  dx := x - ((1 s_elect row) + (0.12 * side * c_os yaw))
+  dz := z - ((2 s_elect row) + (0.12 * side * s_in yaw))
+  across := ((dx * c_os yaw) + (dz * s_in yaw)) / 0.095
+  along := ((dx * s_in yaw) - (dz * c_os yaw)) / 0.20
+  radius := ((across * across) + (along * along)) ^ 0.5
+  sole := brush:c_lamp (1.0 - (radius * radius))
+  rim := brush:c_lamp (1.0 - (((radius - 1.12) / 0.28) ^ 2.0))
+  ((0.012 * rim * rim) - (0.055 * sole * sole)) * 6 s_elect row
+}
+h:s_um := { points rows ->
+  (x, _) := points
+  (f_irst s_hape rows) = 0 ? (0.0 * x)
+  (points h:p_ressure (1 s_elect rows)) + (points h:s_um (1 d_rop rows))
+}
+l:t_ile := { ((cx, cz), spacing, prints) ->
+  rows := l:s_tamps prints
+  columns := 2 1 t_ranspose rows
+  near := ((a_bs ((1 s_elect columns) - ((2.0 * cx) + 1.0))) < 1.45) * ((a_bs ((2 s_elect columns) - ((2.0 * cz) + 1.0))) < 1.45)
+  local := near r_eplicate rows
+  count := 1 + f_loor (2.0 / spacing)
+  k := (r_ange (count * count)) - 1
+  x := (2.0 * cx) + (spacing * f_loat (k d_iv count))
+  z := (2.0 * cz) + (spacing * f_loat (k m_od count))
+  raw := (x, z) h:s_um local
+  delta := (0.10 * brush:c_lamp ((raw + 0.075) / 0.10)) - 0.075
+  2 1 t_ranspose ((3 c_at (count * count)) r_eshape x c_at delta c_at z)
+}

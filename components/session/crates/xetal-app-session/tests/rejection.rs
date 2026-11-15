@@ -36,7 +36,7 @@ fn malformed_publications_are_rejected_before_native_capabilities() {
         panic!()
     };
     let cases = [
-        replace(&valid, 11, Value::Int(2)),
+        replace(&valid, 11, Value::Int(99)),
         replace(&valid, 8, replace(&f[8], 4, Value::Float(f64::NAN))),
         replace(&valid, 8, replace(&f[8], 3, Value::Int(-1))),
         replace(&valid, 4, bad_audio),

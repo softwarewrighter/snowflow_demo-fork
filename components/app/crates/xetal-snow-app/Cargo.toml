@@ -11,6 +11,7 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+xetal-snow-layer = { path = "../../../snow/crates/xetal-snow-layer" }
 xetal-app-session = { path = "../../../session/crates/xetal-app-session" }
 xetal-app-tiles = { path = "../../../session/crates/xetal-app-tiles" }
 xetal-snow-libraries = { path = "../../../world/crates/xetal-snow-libraries" }

@@ -1,0 +1,9 @@
+[package]
+name = "xetal-snow-layer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+[dependencies]
+xetal-app-session.workspace = true
+xetal-world-surface.workspace = true
+xetal-world-navigation.workspace = true

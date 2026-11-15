@@ -28,7 +28,8 @@ fn sweep_changes_the_shared_collision_surface_and_pause_freezes_it() {
     for _ in 0..120 {
         scene.update(1.0 / 60.0, false).unwrap();
     }
-    assert!((scene.walker.position[1] - floor).abs() < 0.001);
+    let contact = scene.detail.floor(scene.walker.position).unwrap();
+    assert!((scene.walker.position[1] - contact).abs() < 0.001);
     let revision = scene.world.edit_revision;
     for _ in 0..10 {
         assert!(scene.update(0.1, true).unwrap().resources.is_empty());

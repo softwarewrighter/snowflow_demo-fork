@@ -11,7 +11,9 @@ pub struct Scene {
     pub walker: Walker,
     pub trail: Trail,
     pub frame: Frame,
+    pub detail: xetal_snow_layer::Layer,
     pub mesh_hash: u32,
+    pub terrain_triangles: usize,
     pub steps: u64,
     pub landings: u64,
     pub wind: f32,
@@ -40,12 +42,14 @@ impl Scene {
         Ok(Self {
             app,
             frame,
+            detail: Default::default(),
             world: Tiles::default(),
             walker: Walker::default(),
             trail: Trail::default(),
             terrain: Vec::new(),
             uploaded: BTreeMap::new(),
             mesh_hash: 0,
+            terrain_triangles: 0,
             steps: 0,
             landings: 0,
             wind: 0.3,
@@ -74,6 +78,10 @@ impl Scene {
         }
         self.services()?;
         let terrain = self.world.step(&mut self.app, self.walker.position)?;
+        let snapshot = self.app.read()?;
+        let terrain =
+            self.detail
+                .update(&mut self.app, &snapshot, self.walker.position, terrain)?;
         self.accept_terrain(terrain.as_ref());
         let moving = self.motion(dt, suspended)?;
         self.services()?;
@@ -92,7 +100,7 @@ impl Scene {
         let particles = (self.particles_revision != self.frame.particles_revision)
             .then(|| self.frame.particles.clone());
         self.particles_revision = self.frame.particles_revision;
-        let tracks = (self.track_revision != self.trail.revision).then(|| self.trail.vertices());
+        let tracks = (self.track_revision != self.trail.revision).then(Vec::new);
         self.track_revision = self.trail.revision;
         let sound = if self.audio_sequence != self.frame.audio_sequence {
             self.frame.audio

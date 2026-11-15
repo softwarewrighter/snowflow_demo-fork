@@ -56,8 +56,12 @@ impl Walker {
     }
 
     pub fn simulate(&mut self, seconds: f32, jump: bool, positions: &[f32]) {
+        self.simulate_floor(seconds, jump, collision::floor(positions, self.position));
+    }
+
+    pub fn simulate_floor(&mut self, seconds: f32, jump: bool, ground: Option<f32>) {
         self.landing_speed = 0.0;
-        let Some(floor) = collision::floor(positions, self.position) else {
+        let Some(floor) = ground else {
             return;
         };
         self.accumulated += seconds.clamp(0.0, 0.1);

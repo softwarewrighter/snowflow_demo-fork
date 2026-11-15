@@ -2,7 +2,7 @@
 mod session;
 mod transport;
 pub use session::Session;
-pub use xetal_app_protocol::{Button, Frame, Resource, Source};
+pub use xetal_app_protocol::{Button, Detail, Frame, Resource, Source};
 pub const SOURCE: &str = include_str!("../../../../world/demos/App.xtl");
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Pose {

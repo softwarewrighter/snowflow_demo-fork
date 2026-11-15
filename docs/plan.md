@@ -209,3 +209,10 @@ particle builders, and a reversible signed surface profile. All five buttons
 are configured in App.xtl/Spells.xtl and remain numerically ordered. The generic
 slush capacity expands to 2,400 triangles; no native spell dispatcher is added.
 [Vortex notes](vortex.md) record sampling, particle and surface parity limits.
+
+## Fine snow milestone
+
+A sparse local SnowLayer now supplies 10 cm pressure tiles over the coarse world,
+with a 6.25 cm option, bounded native staging and exact shared triangle sampling.
+[Mechanical acceptance and budgets](deformable-snow.md) are separate from material
+appearance. Compaction/contact and durable weathered storage remain later steps.

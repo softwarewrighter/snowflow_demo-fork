@@ -9,6 +9,13 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "SnowLayer",
+        alias: "layer",
+        anchor: "snow-layer",
+        path: "components/world/libs/SnowLayer.xtl",
+        source: include_str!("../../../libs/SnowLayer.xtl"),
+    },
+    Library {
         name: "Vortex",
         alias: "vortex",
         anchor: "vortex",

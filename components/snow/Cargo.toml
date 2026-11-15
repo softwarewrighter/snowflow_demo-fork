@@ -1,0 +1,11 @@
+[workspace]
+resolver = "3"
+members = ["crates/xetal-snow-layer"]
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+[workspace.dependencies]
+xetal-app-session = { path = "../session/crates/xetal-app-session" }
+xetal-world-surface = { path = "../surface/crates/xetal-world-surface" }
+xetal-world-navigation = { path = "../app/crates/xetal-world-navigation" }

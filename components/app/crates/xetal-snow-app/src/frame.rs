@@ -137,7 +137,7 @@ impl App {
             "triangles",
             &format!(
                 "{}",
-                chunks * 512
+                scene.terrain_triangles
                     + scene
                         .frame
                         .resources
@@ -160,6 +160,9 @@ impl App {
             .count();
         if let Ok(element) = status::element("app") {
             for (key, value) in [
+                ("data-snow-tiles", scene.detail.resident().to_string()),
+                ("data-snow-version", scene.detail.revision.to_string()),
+                ("data-snow-bytes", scene.detail.memory_bytes().to_string()),
                 ("data-position", format!("{:?}", scene.walker.position)),
                 ("data-chunks", chunks.to_string()),
                 (

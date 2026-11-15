@@ -1,6 +1,6 @@
 number = 14
 slug = "deformable-snow-layer"
-status = "pending"
+status = "in-progress"
 description = "Implement the first RDR2-inspired snow interaction milestone, without claimin..."
 role = "production"
 context_files = []

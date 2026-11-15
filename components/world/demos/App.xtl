@@ -1,5 +1,6 @@
 #!/usr/bin/env xetal
 ## One persistent application: X_eTaL owns composition, input policy and state transitions.
+"layer:" u_se< "../libs/SnowLayer.xtl"
 "spells:" u_se< "../libs/Spells.xtl"
 "player:" u_se< "../libs/Player.xtl"
 "world:" u_se< "../libs/World.xtl"
@@ -34,6 +35,7 @@ u:c_lick := { at state ->
     (next, control, spells, next player:p_ose player, world, mesh, scratch)
   } @
   op = 2 ? (pose, control, spells, player, world, (f_irst xz, 2 s_elect xz) world:c_hunk world, scratch)
+  op = 6 ? (pose, control, spells, player, world, layer:t_ile ((f_irst xz, 2 s_elect xz), 2 s_elect at, player:p_rints player), scratch)
   op = 3 ? { @ ->
     point := (f_irst xz) c_at (f_irst yi) c_at (2 s_elect xz)
     next := (f_loor (2 s_elect at), f_loor (2 s_elect yi), point) spells:r_esponse spells

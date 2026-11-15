@@ -8,6 +8,7 @@ claims that new packages have already shipped in X_eTaL-libraries.
 
 | Module | Alias | Public API and responsibility | Source |
 | --- | --- | --- | --- |
+| SnowLayer | layer: | c_onfig, s_tamps, b_ounds, t_ile; pure fine pressure sampling, boot depth, rims and bounded overlap | [SnowLayer.xtl](../components/world/libs/SnowLayer.xtl) |
 | Vortex | vortex: | s_tart, c_ast, t_ick, s_trength, a_ctive, m_esh, p_articles, c_ommand; three helices, tangential grains and temporary surface lift | [Vortex.xtl](../components/world/libs/Vortex.xtl) |
 | VortexBrush | lift: | r_egion, d_elta; signed annular snow displacement with exact restoration | [VortexBrush.xtl](../components/world/libs/VortexBrush.xtl) |
 | Spells | spells: | Composition, configured key dispatch, queries and material resources | [Spells.xtl](../components/world/libs/Spells.xtl) |
@@ -145,3 +146,6 @@ presented as existing live libraries.
 
 [Vortex behavior and parity limits](vortex.md) describe the fifth spell, its
 shared resources, deterministic grains, reversible snow lift and tests.
+
+[Fine snow mechanics](deformable-snow.md) maps the pure layer to tiled buffers,
+indexed geometry and shared collision sampling.

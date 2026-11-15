@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use xetal_value::Value;
 #[derive(Clone)]
 pub struct Frame {
+    pub detail: Detail,
     pub resources: Vec<Resource>,
     pub particles_revision: u64,
     pub particles: Vec<f32>,
@@ -17,9 +18,60 @@ pub struct Frame {
     pub dirty: Vec<f32>,
     pub sources: Vec<Source>,
 }
+#[derive(Clone)]
+pub struct Detail {
+    pub config: [f32; 4],
+    pub bounds: Vec<f32>,
+    pub stamps: Vec<f32>,
+}
+fn detail(value: &Value<'_>) -> Result<Detail, String> {
+    let f = tuple(value, 3)?;
+    let Value::Array(config) = &f[0] else {
+        return Err("invalid grid config".into());
+    };
+    if config.shape() != [4] {
+        return Err("invalid grid config shape".into());
+    }
+    let values = config
+        .data()
+        .iter()
+        .map(number)
+        .collect::<Result<Vec<_>, _>>()?;
+    let c = values.iter().map(|n| *n as f32).collect::<Vec<_>>();
+    if !(0.05..=0.1).contains(&c[0])
+        || c[1] != 2.0
+        || !(2.0..=8.0).contains(&c[2])
+        || !(1.0..=36.0).contains(&c[3])
+        || c[3].fract() != 0.0
+    {
+        return Err("detail grid budget exceeded".into());
+    }
+    if ((2.0 / c[0]) - (2.0 / c[0]).round()).abs() > 0.0001 {
+        return Err("detail spacing must divide the tile".into());
+    }
+    let bounds = array(&f[1], 4, 256)?;
+    let stamps = array(&f[2], 6, 256)?;
+    if bounds.len() / 4 != stamps.len() / 6 {
+        return Err("detail bounds/stamps mismatch".into());
+    }
+    if bounds.as_chunks::<4>().0.iter().any(|b| {
+        b[0] > b[1]
+            || b[2] > b[3]
+            || b[1] - b[0] > 2.0
+            || b[3] - b[2] > 2.0
+            || b.iter().any(|v| v.abs() > 10000000.0)
+    }) {
+        return Err("invalid detail bounds".into());
+    }
+    Ok(Detail {
+        config: c.try_into().map_err(|_| "invalid grid config")?,
+        bounds,
+        stamps,
+    })
+}
 pub fn decode(v: &Value<'_>, cache: &mut Cache) -> Result<Frame, String> {
     let f = tuple(v, 12)?;
-    if sequence(&f[11])? != 1 {
+    if sequence(&f[11])? != 2 {
         return Err("unsupported application protocol".into());
     }
     let particles = tuple(&f[2], 2)?;
@@ -39,12 +91,13 @@ pub fn decode(v: &Value<'_>, cache: &mut Cache) -> Result<Frame, String> {
         .iter()
         .map(number)
         .collect::<Result<Vec<_>, _>>()?;
-    let world = tuple(&f[9], 2)?;
+    let world = tuple(&f[9], 3)?;
     let mut stats = BTreeMap::new();
     metadata::stats(&f[5], &mut stats)?;
     let mut buttons = Vec::new();
     metadata::buttons(&f[7], &mut buttons)?;
     let mut frame = Frame {
+        detail: detail(&world[2])?,
         resources: Vec::new(),
         particles_revision: sequence(&particles[0])?,
         particles: array(&particles[1], 6, 1024)?,

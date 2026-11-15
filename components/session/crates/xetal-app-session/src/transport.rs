@@ -15,6 +15,22 @@ impl Session {
         self.demo.event(event)?;
         self.settle()
     }
+    pub fn detail_tile(&mut self, key: (i32, i32), spacing: f32) -> Result<Vec<f32>, String> {
+        if !spacing.is_finite()
+            || !(0.05..=0.1).contains(&spacing)
+            || ((2.0 / spacing) - (2.0 / spacing).round()).abs() > 0.0001
+        {
+            return Err("invalid detail spacing".into());
+        }
+        self.send(&format!("move {} {}", key.0, key.1))?;
+        self.send(&format!("click 6 {spacing}"))?;
+        let (shape, values) = self.demo.array(0)?;
+        let width = (2.0 / spacing).round() as usize + 1;
+        if shape != [width * width, 3] {
+            return Err("invalid detail tile shape".into());
+        }
+        Ok(values.into_iter().map(|n| n as f32).collect())
+    }
     pub fn acknowledge(&mut self, version: u64) -> Result<(), String> {
         self.send(&format!("click 4 {version}"))
     }

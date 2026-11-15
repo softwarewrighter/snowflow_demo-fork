@@ -8,10 +8,11 @@ what this demo can build with X_eTaL and Rust.
 
 ## Current limits
 
-Boot prints are projected decals with wind-driven opacity aging. Sweep, Bloom
+Boot prints now use the [fine geometric layer](deformable-snow.md), with
+X_eTaL boot depressions, raised rims and quantized wind-driven recovery. Sweep, Bloom
 and Ribbon perform real height edits, but the base grid is two meters wide per
-cell and retains bounded spell descriptors. It cannot represent boot-scale
-impressions or a persistent deep-snow trail. Snow currently has no loose-depth,
+cell and retains bounded spell descriptors. The separate near-player layer represents boot-scale impressions; persistent
+deep-snow trails remain future work. Snow currently has no loose-depth,
 compaction or density state, and walking does not depend on snow depth.
 
 ## First mechanical milestone
@@ -77,8 +78,8 @@ kernels need reference-oracle and tolerance tests against the pure library rules
 | Snow tile storage | Rust extension | Browser persistence, versioning and resource lifecycle |
 | Rendering/animation backend | Rust extension | Displacement, normals, shadows and eventual character/IK capability |
 
-These names are planned facilities, not existing APIs in the live library
-catalog. Extend actual TerrainBrush and SnowParticles primitives where suitable.
+SnowLayer now exists in the live catalog; SnowWeather, material compaction and
+durable tile storage remain planned facilities. Extend actual TerrainBrush and SnowParticles primitives where suitable.
 Generic typed host bindings and faster array execution remain forcing functions;
 do not hide the workload by moving application policy into Rust.
 

@@ -41,14 +41,14 @@ impl Scene {
         let paused = suspended || nav[0] != 0.0;
         if !paused {
             self.walker.advance(dt, nav[1] as f32, nav[2] as f32);
-            if floor(&self.terrain, self.walker.position).is_none() {
+            if self.detail.floor(self.walker.position).is_none() {
                 self.walker.position = before;
             }
         }
-        self.walker.simulate(
+        self.walker.simulate_floor(
             if paused { 0.0 } else { dt },
             !paused && nav[3] != self.jump_sequence,
-            &self.terrain,
+            self.detail.floor(self.walker.position),
         );
         self.jump_sequence = nav[3];
         let pose = self.pose();
@@ -63,7 +63,16 @@ impl Scene {
     }
     pub(crate) fn accept_terrain(&mut self, mesh: Option<&Mesh>) {
         if let Some(mesh) = mesh {
-            self.terrain = mesh.positions().to_vec();
+            self.terrain_triangles = mesh.indices().len() / 3;
+            self.terrain = mesh
+                .indices()
+                .iter()
+                .flat_map(|i| {
+                    mesh.positions()[*i as usize * 3..*i as usize * 3 + 3]
+                        .iter()
+                        .copied()
+                })
+                .collect();
             self.mesh_hash = self.terrain.iter().fold(2166136261_u32, |hash, value| {
                 (hash ^ value.to_bits()).wrapping_mul(16777619)
             });

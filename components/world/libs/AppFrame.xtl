@@ -1,14 +1,17 @@
+"layer:" u_se< "SnowLayer.xtl"
 ## Typed application publication. Rust validates capability data, not spell identities.
 "spells:" u_se< "Spells.xtl"
 "player:" u_se< "Player.xtl"
 "world:" u_se< "World.xtl"
 "controls:" u_se< "Controls.xtl"
 l:v_iew := { (pose, control, spells, player, world, mesh, _) ->
+  (rev, dirty) := world:v_iew world
+  stamps := layer:s_tamps player:p_rints player
   (mesh, spells:r_esources spells, spells:p_articles spells,
    player:p_rints player, player:a_udio player,
    (spells:s_tats spells, player:s_tats player), pose spells:q_ueries spells,
    (spells:b_uttons spells, controls:b_uttons control), controls:n_av control,
-   world:v_iew world,
+   (rev, dirty, (layer:c_onfig @, layer:b_ounds stamps, stamps)),
    (("entry", "Application", "entry"), ("spells", "Spell composition", "Spells"),
-    ("world", "World", "World"), ("player", "Player", "Player"), ("controls", "Controls", "Controls"), ("vortex", "Vortex", "Vortex")), 1)
+    ("world", "World", "World"), ("player", "Player", "Player"), ("controls", "Controls", "Controls"), ("vortex", "Vortex", "Vortex"), ("snow-layer", "Snow layer", "SnowLayer")), 2)
 }
