@@ -80,9 +80,11 @@ streaming, pressure work and wind updates. It excludes GPU and audio work.
 
 ## Native acceptance evidence
 
-The full gate passes 102 Rust tests and 18 Python tests, plus formatting, lint,
+The full gate passes 103 Rust tests and 18 Python tests, plus formatting, lint,
 shader and WASM checks. Tests also cover 6.25 cm negative-coordinate border replay,
 invalid spacing, pending snapshots, stale-work cancellation, eviction and revisit.
+Rejected tile replies leave the pending batch retryable and cannot commit a
+partial field.
 Actual browser appearance, audiovisual behavior and FPS remain unverified here
 because the sandbox prevents the browser harness's local socket setup.
 

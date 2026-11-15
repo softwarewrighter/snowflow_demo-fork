@@ -166,3 +166,37 @@ fn outer_detail_boundary_stitches_to_the_coarse_surface() {
     assert!((rendered - expected).abs() < 0.00001);
     assert!((layer.floor([2.0, 0.0, 7.9]).unwrap() - rendered).abs() < 0.00001);
 }
+#[test]
+fn rejected_tile_replies_never_commit_partial_batches() {
+    let source = xetal_app_session::SOURCE.replace(
+        "layer:t_ile ((f_irst xz, 2 s_elect xz), 2 s_elect at, player:p_rints player)",
+        "0 3 r_eshape 0.0",
+    );
+    let mut app = Session::from_source(&source).unwrap();
+    let mut layer = Layer::default();
+    let base = app.chunk((0, 0)).unwrap();
+    let frame = app.read().unwrap();
+    layer
+        .update(&mut app, &frame, [2.0, 4.0, 7.0], Some(base))
+        .unwrap();
+    let revision = layer.revision;
+    for z in [8.0, 7.0] {
+        app.pose(Pose {
+            position: [1.95, 4.0, z],
+            aim: [0.0, 0.0],
+            grounded: true,
+            impact: 0.0,
+        })
+        .unwrap();
+    }
+    let frame = app.read().unwrap();
+    for _ in 0..10 {
+        assert!(
+            layer
+                .update(&mut app, &frame, [2.0, 4.0, 7.0], None)
+                .is_err()
+        );
+        assert_eq!(layer.revision, revision);
+        assert_eq!(layer.resident(), 0);
+    }
+}

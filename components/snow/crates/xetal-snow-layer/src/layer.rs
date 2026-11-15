@@ -41,12 +41,11 @@ impl Layer {
             self.pending = Some(plan::pending(desired, signature, &self.tiles));
         }
         if let Some(p) = self.pending.as_mut() {
-            if let Some((key, hash)) = p.jobs.pop() {
+            if let Some(&(key, hash)) = p.jobs.last() {
                 let rows = app.detail_tile(key, frame.detail.config[0])?;
-                p.tiles.insert(
-                    key,
-                    Arc::new(Tile::new(key, frame.detail.config[0], hash, rows)?),
-                );
+                let tile = Tile::new(key, frame.detail.config[0], hash, rows)?;
+                p.jobs.pop();
+                p.tiles.insert(key, Arc::new(tile));
             }
             if p.jobs.is_empty() {
                 let p = self.pending.take().ok_or("missing pending field")?;
