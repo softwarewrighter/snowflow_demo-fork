@@ -16,34 +16,40 @@ fn assignments(expr: &Expr) -> usize {
 
 #[test]
 fn only_the_effect_loop_may_publish_to_the_mesh_slot() {
-    let loaded =
-        xetal_program::load_with("snowfield.xtl", SOURCE, &xetal_snow_libraries::Embedded).unwrap();
-    let program = loaded.program;
-    let mut mutable = Vec::new();
-    let mut publications = 0;
-    for item in &program.items {
-        match item {
-            Item::Let { name, .. } if name.ends_with('!') => mutable.push(name.as_str()),
-            Item::Def { name, value } if name == "u:l_oop!" => publications += assignments(value),
-            Item::Def { value, .. } | Item::Let { value, .. } | Item::Eval(value) => {
-                assert_eq!(assignments(value), 0)
+    for source in [SOURCE, include_str!("../../../demos/App.xtl")] {
+        let loaded =
+            xetal_program::load_with("snowfield.xtl", source, &xetal_snow_libraries::Embedded)
+                .unwrap();
+        let program = loaded.program;
+        let mut mutable = Vec::new();
+        let mut publications = 0;
+        for item in &program.items {
+            match item {
+                Item::Let { name, .. } if name.ends_with('!') => mutable.push(name.as_str()),
+                Item::Def { name, value } if name == "u:l_oop!" => {
+                    publications += assignments(value)
+                }
+                Item::Def { value, .. } | Item::Let { value, .. } | Item::Eval(value) => {
+                    assert_eq!(assignments(value), 0)
+                }
+                Item::Set { .. } => panic!("no top-level reassignment allowed"),
             }
-            Item::Set { .. } => panic!("no top-level reassignment allowed"),
         }
+        assert_eq!(mutable, ["frame!"]);
+        assert_eq!(publications, 1);
     }
-    assert_eq!(mutable, ["frame!"]);
-    assert_eq!(publications, 1);
 }
 
 #[test]
 fn shipped_xetal_source_has_no_enabled_lint_findings() {
-    let findings = xetal_linter::lint(
-        concat!(env!("CARGO_MANIFEST_DIR"), "/../../demos/snowfield.xtl"),
-        SOURCE,
-        &[],
-    )
-    .unwrap();
-    assert!(findings.is_empty(), "{findings:#?}");
+    for (name, source) in [
+        ("snowfield.xtl", SOURCE),
+        ("App.xtl", include_str!("../../../demos/App.xtl")),
+    ] {
+        let path = format!("{}/../../demos/{name}", env!("CARGO_MANIFEST_DIR"));
+        let findings = xetal_linter::lint(&path, source, &[]).unwrap();
+        assert!(findings.is_empty(), "{findings:#?}");
+    }
 }
 
 #[test]

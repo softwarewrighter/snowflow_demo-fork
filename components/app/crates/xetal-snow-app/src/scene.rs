@@ -23,6 +23,7 @@ pub struct Scene {
     pub(crate) jump_sequence: f64,
     pub(crate) reset_sequence: f64,
     pub(crate) elapsed: f32,
+    pub(crate) last_pose: Option<xetal_app_session::Pose>,
 }
 pub struct Update {
     pub terrain: Option<Mesh>,
@@ -54,6 +55,7 @@ impl Scene {
             jump_sequence: 0.0,
             reset_sequence: 0.0,
             elapsed: 0.0,
+            last_pose: None,
         })
     }
     pub fn input(&mut self, key: &str, pressed: bool) -> Result<(), String> {

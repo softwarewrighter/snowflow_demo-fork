@@ -5,6 +5,8 @@ use xetal_world_surface::Mesh;
 pub struct Session {
     pub(crate) demo: Demo,
     cache: Cache,
+    publication: Option<xetal_value::Value<'static>>,
+    frame: Option<Frame>,
 }
 impl Session {
     pub fn new() -> Result<Self, String> {
@@ -14,12 +16,24 @@ impl Session {
         let mut app = Self {
             demo: Demo::from_source(source)?,
             cache: Cache::default(),
+            publication: None,
+            frame: None,
         };
         app.settle()?;
         Ok(app)
     }
     pub fn read(&mut self) -> Result<Frame, String> {
-        decode(&self.demo.publication()?, &mut self.cache)
+        let next = self.demo.publication()?;
+        if let (Some(xetal_value::Value::Tuple(old)), xetal_value::Value::Tuple(new), Some(frame)) =
+            (&self.publication, &next, &self.frame)
+            && std::rc::Rc::ptr_eq(old, new)
+        {
+            return Ok(frame.clone());
+        }
+        let frame = decode(&next, &mut self.cache)?;
+        self.publication = Some(next);
+        self.frame = Some(frame.clone());
+        Ok(frame)
     }
     pub fn tick(&mut self, dt: f32) -> Result<(), String> {
         if !dt.is_finite() || !(0.0..=0.25).contains(&dt) {

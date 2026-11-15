@@ -51,7 +51,11 @@ impl Scene {
             &self.terrain,
         );
         self.jump_sequence = nav[3];
-        self.app.pose(self.pose())?;
+        let pose = self.pose();
+        if self.last_pose != Some(pose) {
+            self.app.pose(pose)?;
+            self.last_pose = Some(pose);
+        }
         Ok(!paused
             && self.walker.motion.grounded
             && (before[0] - self.walker.position[0]).hypot(before[2] - self.walker.position[2])

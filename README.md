@@ -102,3 +102,6 @@ persistent application. It imports Spells.xtl to configure and dispatch the
 spell set. Rust forwards time/input/physics facts and displays typed resources.
 The other panels show its actual composition libraries, with syntax colors. See [how the sources connect](docs/source-connections.md)
 for a simple Ribbon walkthrough and links to the actual call sites.
+
+See [application composition and CPU evidence](docs/app-composition.md) for the
+current host contract, verification and measured overhead.

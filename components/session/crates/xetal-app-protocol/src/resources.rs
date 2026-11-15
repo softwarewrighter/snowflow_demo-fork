@@ -30,6 +30,9 @@ impl Cache {
             if !["ice", "slush", "water"].contains(&material.as_str()) {
                 return Err("unsupported material capability".into());
             }
+            if result.iter().any(|r| r.material == material) {
+                return Err("duplicate material slot".into());
+            }
             let revision = sequence(&fields[2])?;
             let mesh = self.mesh(&id, &material, revision, &fields[3])?;
             result.push(Resource {

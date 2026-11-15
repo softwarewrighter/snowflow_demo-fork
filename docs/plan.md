@@ -195,5 +195,9 @@ capability publications and a generic chunk cache. Native composition tests
 verify that changing a key binding in X_eTaL changes actual dispatch. Scene
 regressions cover all four spells, shared terrain, stationary ground, walking,
 footprints and one-shot landing audio. Preview publication precedes the full
-gate under the project release policy; remaining validation is recorded in the
-active agentrail step until completion.
+gate under the project release policy. The final gate passes 92 Rust and
+18 Python tests, lint, formatting, shaders and WASM checks; actual browser
+visual/audio/FPS acceptance remains pending normal-host execution.
+
+[Application composition evidence](app-composition.md) records capability limits,
+replay/rejection tests and CPU overhead for the single-session implementation.

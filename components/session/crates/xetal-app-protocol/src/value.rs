@@ -20,7 +20,7 @@ pub(crate) fn number(v: &Value<'_>) -> Result<f64, String> {
 }
 pub(crate) fn sequence(v: &Value<'_>) -> Result<u64, String> {
     let n = number(v)?;
-    if n >= 0.0 && n.fract() == 0.0 {
+    if (0.0..=(1_u64 << 53) as f64).contains(&n) && n.fract() == 0.0 {
         Ok(n as u64)
     } else {
         Err("invalid sequence".into())

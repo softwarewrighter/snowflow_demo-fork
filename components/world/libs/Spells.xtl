@@ -14,18 +14,22 @@ h:s_weep := { (serial, time, _, _) -> (serial > 0) * (time < 2.4) }
 h:c_olumn := { state -> (serial, _, _, _) := state; (serial > 0) * ((bloom:a_ge state) < 1.75) }
 h:f_allout := { state -> (serial, _, _, _) := state; (serial > 0) * ((bloom:a_ge state) < 5.75) }
 h:i_ce := { (before, after) (rev, mesh) ->
+  before m_atch after ? (rev, mesh)
   ((ice:g_rowing before) + ice:g_rowing after) > 0 ? (rev + 1, ice:m_esh after)
   (rev, mesh)
 }
 h:w_et := { ((s0, b0), (s1, b1)) (rev, mesh) ->
+  (s0, b0) m_atch (s1, b1) ? (rev, mesh)
   ((h:s_weep s0) + (h:s_weep s1) + (h:c_olumn b0) + (h:c_olumn b1)) > 0 ? (rev + 1, (sweep:m_esh s1) c_at bloom:m_esh b1)
   (rev, mesh)
 }
 h:r_ib := { (before, after) (rev, mesh) ->
+  before m_atch after ? (rev, mesh)
   ((f_irst ribbon:s_tatus before) + f_irst ribbon:s_tatus after) > 0 ? (rev + 1, ribbon:m_esh after)
   (rev, mesh)
 }
 h:p_articles := { (before, after) (rev, rows) ->
+  before m_atch after ? (rev, rows)
   ((h:f_allout before) + h:f_allout after) > 0 ? (rev + 1, bloom:p_articles after)
   (rev, rows)
 }

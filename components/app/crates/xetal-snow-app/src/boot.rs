@@ -145,6 +145,8 @@ fn source_panel(
         .map_err(|e| format!("{e:?}"))?
         .ok_or("missing rendered source")?;
     rendered.set_inner_html(&xetal_world_model::highlighted_text(text));
+    typed.set_id(&format!("{}-source", source.id));
+    rendered.set_id(&format!("{}-rendered", source.id));
     if source.name == "entry" {
         typed.set_id("source");
         rendered.set_id("source-rendered");
