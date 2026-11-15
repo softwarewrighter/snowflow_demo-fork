@@ -1,6 +1,6 @@
 number = 13
 slug = "vortex-spell"
-status = "pending"
+status = "in-progress"
 description = "Port original spell 5 Vortex: three snow/slush helices, tangential particle e..."
 role = "production"
 context_files = []

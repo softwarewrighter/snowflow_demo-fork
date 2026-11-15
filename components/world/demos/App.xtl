@@ -6,7 +6,7 @@
 "controls:" u_se< "../libs/Controls.xtl"
 "app:" u_se< "../libs/AppFrame.xtl"
 "host:" u_se< "../libs/SnowHost.xtl"
-bindings := "1" "2" "3" "4"
+bindings := "1" "2" "3" "4" "5"
 u:s_tart := { @ ->
   ((0.0 4.0 8.0, 0.0 -0.12, 1, 0.0), controls:s_tart @,
    spells:s_tart bindings, player:s_tart 0.0 8.0, world:s_tart @,

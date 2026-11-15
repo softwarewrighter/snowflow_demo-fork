@@ -201,3 +201,11 @@ visual/audio/FPS acceptance remains pending normal-host execution.
 
 [Application composition evidence](app-composition.md) records capability limits,
 replay/rejection tests and CPU overhead for the single-session implementation.
+
+## Vortex port
+
+The fifth spell uses X_eTaL Vortex and VortexBrush libraries, existing tube and
+particle builders, and a reversible signed surface profile. All five buttons
+are configured in App.xtl/Spells.xtl and remain numerically ordered. The generic
+slush capacity expands to 2,400 triangles; no native spell dispatcher is added.
+[Vortex notes](vortex.md) record sampling, particle and surface parity limits.

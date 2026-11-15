@@ -9,6 +9,20 @@ pub struct Library {
 }
 pub const LIBRARIES: &[Library] = &[
     Library {
+        name: "Vortex",
+        alias: "vortex",
+        anchor: "vortex",
+        path: "components/world/libs/Vortex.xtl",
+        source: include_str!("../../../libs/Vortex.xtl"),
+    },
+    Library {
+        name: "VortexBrush",
+        alias: "lift",
+        anchor: "vortex-brush",
+        path: "components/world/libs/VortexBrush.xtl",
+        source: include_str!("../../../libs/VortexBrush.xtl"),
+    },
+    Library {
         name: "Controls",
         alias: "controls",
         anchor: "controls",

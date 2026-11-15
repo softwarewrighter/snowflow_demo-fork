@@ -1,0 +1,62 @@
+## Vortex: three rotating snow helices, deterministic tangential grains and reversible lift.
+## State: (serial age spin playerXYZ). Reference: library-reference.html#vortex
+"brush:" u_se< "TerrainBrush.xtl"
+"stream:" u_se< "RibbonSurface.xtl"
+"powder:" u_se< "SnowParticles.xtl"
+l:s_tart := { @ -> (0, 6.0, 0.0, 0.0 1.7 8.0) }
+l:c_ast := { position (serial, _, _, _) -> (serial + 1, 0.0, 0.0, position) }
+h:s_mooth := { x -> t := brush:c_lamp x; t * t * (3.0 - (2.0 * t)) }
+l:s_trength := { (_, age, _, _) -> (h:s_mooth (age / 0.55)) * (1.0 - h:s_mooth ((age - 3.55) / 1.1)) }
+l:a_ctive := { (serial, age, _, _) -> (serial > 0) * (age < 5.25) }
+l:t_ick := { (dt, pose) state ->
+  (serial, age, spin, _) := state
+  (position, _, _, _) := pose
+  (l:a_ctive state) = 0 ? state
+  next := age + dt
+  (serial, next, spin + (dt * (5.2 + (2.4 * l:s_trength state))), position)
+}
+h:r_adius := { h -> (2.55 - (1.15 * h)) * (0.78 + (0.34 * s_in (3.1415926536 * brush:c_lamp (h * 1.2)))) }
+h:s_trand := { strand state ->
+  (_, age, spin, point) := state
+  env := l:s_trength state
+  h := (f_loat ((r_ange 33) - 1)) / 32.0
+  angle := (strand * 2.0943951024) + spin + (h * 8.4823001647)
+  r := h:r_adius h
+  x := (1 s_elect point) + (r * c_os angle)
+  z := (3 s_elect point) + (r * s_in angle)
+  y := ((2 s_elect point) - 1.65) + (4.8 * h * env)
+  radius := (0.125 * env * s_in (3.1415926536 * ((h * 0.92) + 0.04))) * (0.78 + (0.34 * s_in ((h * 3.4) + (age * 2.2) + strand)))
+  twist := (0.0 * h) + (age * 0.7) + (strand * 2.1)
+  stream:m_esh (2 1 t_ranspose (5 33 r_eshape x c_at y c_at z c_at radius c_at twist))
+}
+l:m_esh := { state ->
+  (l:s_trength state) < 0.000001 ? 0 3 3 r_eshape 0.0
+  (0.0 h:s_trand state) c_at (1.0 h:s_trand state) c_at (2.0 h:s_trand state)
+}
+l:c_ommand := { state ->
+  (serial, _, _, position) := state
+  serial = 0 ? 0.0 0.0 0.0 0.0
+  (f_loat serial) c_at (1 3 s_elect position) c_at l:s_trength state
+}
+l:p_articles := { state ->
+  (serial, age, spin, point) := state
+  (l:a_ctive state) = 0 ? 0 6 r_eshape 0.0
+  k := (r_ange 512) - 1
+  seed := k + (serial * 701)
+  a := powder:h_ash seed
+  b := powder:h_ash (seed + 1297)
+  c := powder:h_ash (seed + 3571)
+  elapsed := (age + (0.55 * a)) - (0.56 * f_loat f_loor ((age + (0.55 * a)) / 0.56))
+  born := age - elapsed
+  env := (h:s_mooth (born / 0.55)) * (1.0 - h:s_mooth ((born - 3.55) / 1.1))
+  h := b * b
+  angle := ((f_loat (k m_od 3)) * 2.0943951024) + spin + (h * 8.4823001647) - (7.6 * elapsed)
+  r := (h:r_adius h) * (0.85 + (0.35 * c))
+  ox := (1 s_elect point) + (r * c_os angle)
+  oz := (3 s_elect point) + (r * s_in angle)
+  oy := ((2 s_elect point) - 1.64) + (4.8 * h * env)
+  speed := 7.5 - (2.6 * h)
+  p := powder:b_allistic ((ox, oy, oz), ((n_eg s_in angle) * speed, 1.4 + (3.4 * c) + (2.5 * (1.0 - h)), (c_os angle) * speed), elapsed, 3.0)
+  alpha := env * powder:f_ade (elapsed, 0.56)
+  powder:r_ows (p, 0.028 + (0.062 * a), alpha, angle + elapsed)
+}

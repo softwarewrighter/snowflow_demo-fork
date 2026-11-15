@@ -10,5 +10,5 @@ l:v_iew := { (pose, control, spells, player, world, mesh, _) ->
    (spells:b_uttons spells, controls:b_uttons control), controls:n_av control,
    world:v_iew world,
    (("entry", "Application", "entry"), ("spells", "Spell composition", "Spells"),
-    ("world", "World", "World"), ("player", "Player", "Player"), ("controls", "Controls", "Controls")), 1)
+    ("world", "World", "World"), ("player", "Player", "Player"), ("controls", "Controls", "Controls"), ("vortex", "Vortex", "Vortex")), 1)
 }

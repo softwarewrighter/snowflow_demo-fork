@@ -8,6 +8,8 @@ claims that new packages have already shipped in X_eTaL-libraries.
 
 | Module | Alias | Public API and responsibility | Source |
 | --- | --- | --- | --- |
+| Vortex | vortex: | s_tart, c_ast, t_ick, s_trength, a_ctive, m_esh, p_articles, c_ommand; three helices, tangential grains and temporary surface lift | [Vortex.xtl](../components/world/libs/Vortex.xtl) |
+| VortexBrush | lift: | r_egion, d_elta; signed annular snow displacement with exact restoration | [VortexBrush.xtl](../components/world/libs/VortexBrush.xtl) |
 | Spells | spells: | Composition, configured key dispatch, queries and material resources | [Spells.xtl](../components/world/libs/Spells.xtl) |
 | Controls | controls: | Movement intent, camera, pause/reset and button metadata | [Controls.xtl](../components/world/libs/Controls.xtl) |
 | Player | player: | Footsteps, wind and durable audio sequence composition | [Player.xtl](../components/world/libs/Player.xtl) |
@@ -138,3 +140,8 @@ composition source links to their generated reference entries.
 [Snow mechanics](snow-mechanics.md) separately identifies proposed layer,
 compaction, contact and persistence facilities; these planned names are not
 presented as existing live libraries.
+
+## Vortex spell
+
+[Vortex behavior and parity limits](vortex.md) describe the fifth spell, its
+shared resources, deterministic grains, reversible snow lift and tests.

@@ -11,7 +11,7 @@ flowchart TD
   App --> Spells[Spells.xtl]
   App --> Controls[Controls.xtl]
   App --> Player[Player.xtl]
-  Spells --> Libraries[Sweep / Ribbon / Bloom / Crystallise]
+  Spells --> Libraries[Sweep / Ribbon / Bloom / Crystallise / Vortex]
   Spells --> World[World.xtl and terrain brush libraries]
   App --> Frame[AppFrame.xtl typed publication]
   Frame --> GPU[Rust WebGPU and WebAudio resources]
@@ -23,7 +23,7 @@ flowchart TD
 
 [App.xtl](../components/world/demos/App.xtl) imports Spells.xtl with
 `"spells:" u_se< "../libs/Spells.xtl"`. Its bindings value configures keys
-1, 2, 3 and 4. [Spells.xtl](../components/world/libs/Spells.xtl) imports the
+1, 2, 3, 4 and 5. [Spells.xtl](../components/world/libs/Spells.xtl) imports the
 actual spell libraries and dispatches those keys. Changing the fourth binding
 to 9 changes the key that casts Crystallise without changing Rust; an executable
 [composition test](../components/session/crates/xetal-app-session/tests/composition.rs)

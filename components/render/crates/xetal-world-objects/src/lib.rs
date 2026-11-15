@@ -1,6 +1,6 @@
 //! Bounded procedural object geometry rendered with a faceted ice material.
 pub const SHADER: &str = include_str!("ice.wgsl");
-pub const MAX_VERTICES: usize = 4 * 12 * 18 * 3;
+pub const MAX_VERTICES: usize = 2400 * 3;
 #[cfg(target_arch = "wasm32")]
 mod gpu;
 #[cfg(target_arch = "wasm32")]

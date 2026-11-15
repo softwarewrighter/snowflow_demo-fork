@@ -1,0 +1,15 @@
+## VortexBrush: transient signed snow lift; zero strength restores underlying edits exactly.
+## Row: [serial x z strength]. Reference: library-reference.html#vortex-brush
+"brush:" u_se< "TerrainBrush.xtl"
+l:r_egion := { row ->
+  x := 2 s_elect row
+  z := 3 s_elect row
+  (x - 4.5) c_at (x + 4.5) c_at (z - 4.5) c_at (z + 4.5)
+}
+l:d_elta := { (x, z) row ->
+  dx := x - 2 s_elect row
+  dz := z - 3 s_elect row
+  distance := ((dx * dx) + (dz * dz)) ^ 0.5
+  ring := brush:c_lamp (1.0 - (((distance - 2.2) / 1.8) ^ 2.0))
+  (n_eg 0.32 * 4 s_elect row) * ring * ring
+}

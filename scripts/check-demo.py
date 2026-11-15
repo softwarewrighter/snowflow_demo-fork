@@ -44,8 +44,8 @@ def interactions(base, session):
     assert len(panels) >= 5, panels
     for panel in panels:
         assert panel['shared'] and None not in panel['colors'] and len(set(panel['colors'])) == 5, panel
-    order = evaluate(base, session, "return Array.from(document.querySelectorAll('.controls button')).filter(b=>['sweep','ribbon','bloom','crystallise'].includes(b.id)).map(b=>b.id)")
-    assert order == ['sweep', 'ribbon', 'bloom', 'crystallise'], order
+    order = evaluate(base, session, "return Array.from(document.querySelectorAll('.controls button')).filter(b=>['sweep','ribbon','bloom','crystallise','vortex'].includes(b.id)).map(b=>b.id)")
+    assert order == ['sweep', 'ribbon', 'bloom', 'crystallise', 'vortex'], order
     click(base, session, 'start-sound')
     wait(base, session, "return document.getElementById('app').dataset.audio==='running'")
     position = "return JSON.parse(document.getElementById('app').dataset.position)"
@@ -71,6 +71,10 @@ def interactions(base, session):
     time.sleep(0.2)
     assert evaluate(base, session, position)[1] > ground + 0.3, 'jump did not lift the camera'
     wait(base, session, f"return Number(document.getElementById('app').dataset.landings)>{before_landings} && document.getElementById('app').dataset.grounded==='true'")
+    click(base, session, 'vortex')
+    wait(base, session, "return Number(document.getElementById('app').dataset.vortex)===1536")
+    (ROOT / 'work/demo-vortex-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
+    wait(base, session, "return Number(document.getElementById('app').dataset.vortex)===0 && Number(document.getElementById('app').dataset.particles)===0")
     for button in ['textures', 'shadows', 'sound']:
         label = evaluate(base, session, f"return document.getElementById('{button}').textContent")
         click(base, session, button)
@@ -111,7 +115,7 @@ def interactions(base, session):
     wait(base, session, "return Number(document.getElementById('app').dataset.crystals)===0")
     assert evaluate(base, session, "return document.getElementById('app').dataset.audio") == 'running'
     (ROOT / 'work/demo-screenshot.png').write_bytes(base64.b64decode(request(base, f'/session/{session}/screenshot')))
-    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','ribbon_hold_release_blur':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','reset':'passed','footprints_after_walk':prints}
+    return {'syntax_highlighting':'passed','gesture_audio_context':'passed (audibility requires human inspection)','idle_stability':'passed','streamed_walk':'passed','footprints':'passed','jump_landing':'passed','crystallise':'passed (appearance requires screenshot inspection)','sweep':'passed (appearance requires screenshot inspection)','bloom_particles':'passed (appearance requires screenshot inspection)','ribbon_hold_release_blur':'passed (appearance requires screenshot inspection)','visual_audio_toggles':'passed','vortex':'passed (appearance requires screenshot inspection)','reset':'passed','footprints_after_walk':prints}
 
 
 def performance(base, session):

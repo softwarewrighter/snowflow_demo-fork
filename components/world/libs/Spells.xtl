@@ -1,3 +1,4 @@
+"vortex:" u_se< "Vortex.xtl"
 ## Spells: X_eTaL chooses components, controls dispatch, queries and render resources.
 ## State: (bindings ice sweep bloom ribbon cache pendingQueries).
 ## Reference: library-reference.html#spells
@@ -8,7 +9,7 @@
 l:s_tart := { keys ->
   empty := 0 3 3 r_eshape 0.0
   (keys, ice:s_tart @, sweep:s_tart @, bloom:s_tart @, ribbon:s_tart @,
-    ((0, empty), (0, empty), (0, empty), (0, 0 6 r_eshape 0.0)), (0, 0))
+    ((0, empty), (0, empty), (0, empty), (0, 0 6 r_eshape 0.0)), (0, 0), vortex:s_tart @)
 }
 h:s_weep := { (serial, time, _, _) -> (serial > 0) * (time < 2.4) }
 h:c_olumn := { state -> (serial, _, _, _) := state; (serial > 0) * ((bloom:a_ge state) < 1.75) }
@@ -18,9 +19,9 @@ h:i_ce := { (before, after) (rev, mesh) ->
   ((ice:g_rowing before) + ice:g_rowing after) > 0 ? (rev + 1, ice:m_esh after)
   (rev, mesh)
 }
-h:w_et := { ((s0, b0), (s1, b1)) (rev, mesh) ->
-  (s0, b0) m_atch (s1, b1) ? (rev, mesh)
-  ((h:s_weep s0) + (h:s_weep s1) + (h:c_olumn b0) + (h:c_olumn b1)) > 0 ? (rev + 1, (sweep:m_esh s1) c_at bloom:m_esh b1)
+h:w_et := { ((s0, b0, v0), (s1, b1, v1)) (rev, mesh) ->
+  (s0, b0, v0) m_atch (s1, b1, v1) ? (rev, mesh)
+  ((h:s_weep s0) + (h:s_weep s1) + (h:c_olumn b0) + (h:c_olumn b1) + (vortex:a_ctive v0) + (vortex:a_ctive v1)) > 0 ? (rev + 1, (sweep:m_esh s1) c_at (bloom:m_esh b1) c_at vortex:m_esh v1)
   (rev, mesh)
 }
 h:r_ib := { (before, after) (rev, mesh) ->
@@ -28,66 +29,67 @@ h:r_ib := { (before, after) (rev, mesh) ->
   ((f_irst ribbon:s_tatus before) + f_irst ribbon:s_tatus after) > 0 ? (rev + 1, ribbon:m_esh after)
   (rev, mesh)
 }
-h:p_articles := { (before, after) (rev, rows) ->
-  before m_atch after ? (rev, rows)
-  ((h:f_allout before) + h:f_allout after) > 0 ? (rev + 1, bloom:p_articles after)
+h:p_articles := { ((b0, v0), (b1, v1)) (rev, rows) ->
+  (b0, v0) m_atch (b1, v1) ? (rev, rows)
+  ((h:f_allout b0) + (h:f_allout b1) + (vortex:a_ctive v0) + (vortex:a_ctive v1)) > 0 ? (rev + 1, (bloom:p_articles b1) c_at vortex:p_articles v1)
   (rev, rows)
 }
-h:f_inish := { ((i, s, b, r), pending) state ->
-  (keys, i0, s0, b0, r0, cache, _) := state
+h:f_inish := { ((i, s, b, r, v), pending) state ->
+  (keys, i0, s0, b0, r0, cache, _, v0) := state
   (ci, cw, cr, cp) := cache
-  next := ((i0, i) h:i_ce ci, ((s0, b0), (s, b)) h:w_et cw, (r0, r) h:r_ib cr, (b0, b) h:p_articles cp)
-  (keys, i, s, b, r, next, pending)
+  next := ((i0, i) h:i_ce ci, ((s0, b0, v0), (s, b, v)) h:w_et cw, (r0, r) h:r_ib cr, ((b0, v0), (b, v)) h:p_articles cp)
+  (keys, i, s, b, r, next, pending, v)
 }
 l:t_ick := { (dt, pose) state ->
-  (keys, i, s, b, r, cache, (ray, _)) := state
+  (keys, i, s, b, r, cache, (ray, _), v) := state
   (position, aim, _, _) := pose
   rr := dt ribbon:t_ick ((position, aim) ribbon:p_ose r)
-  ((dt ice:t_ick i, dt sweep:t_ick s, dt bloom:t_ick b, rr), (ray, f_irst ribbon:p_robe rr)) h:f_inish state
+  ((dt ice:t_ick i, dt sweep:t_ick s, dt bloom:t_ick b, rr, (dt, pose) vortex:t_ick v), (ray, f_irst ribbon:p_robe rr)) h:f_inish state
 }
 l:i_nput := { (key, pressed, pose) state ->
-  (keys, i, s, b, r, cache, (ray, ground)) := state
+  (keys, i, s, b, r, cache, (ray, ground), v) := state
   (position, aim, _, _) := pose
   point := 1 3 s_elect position
   yaw := f_irst aim
   (key m_atch (d_isclose (2 s_elect keys))) ? { @ ->
     current := (position, aim) ribbon:p_ose r
     next := { @ -> pressed = 1 ? (position, aim) ribbon:p_ress current; ribbon:r_elease current } @
-    ((i, s, b, next), (ray, ground)) h:f_inish state
+    ((i, s, b, next, v), (ray, ground)) h:f_inish state
   } @
   pressed = 0 ? state
-  (key m_atch (d_isclose (1 s_elect keys))) ? (((i, (point, yaw) sweep:c_ast s, b, r), (ray, ground)) h:f_inish state)
-  (key m_atch (d_isclose (3 s_elect keys))) ? (keys, i, s, b, r, cache, (1, ground))
-  (key m_atch (d_isclose (4 s_elect keys))) ? ((((point, yaw) ice:c_ast i, s, b, r), (ray, ground)) h:f_inish state)
+  (key m_atch (d_isclose (1 s_elect keys))) ? (((i, (point, yaw) sweep:c_ast s, b, r, v), (ray, ground)) h:f_inish state)
+  (key m_atch (d_isclose (3 s_elect keys))) ? (keys, i, s, b, r, cache, (1, ground), v)
+  (key m_atch (d_isclose (4 s_elect keys))) ? ((((point, yaw) ice:c_ast i, s, b, r, v), (ray, ground)) h:f_inish state)
+  (key m_atch (d_isclose (5 s_elect keys))) ? (((i, s, b, r, position vortex:c_ast v), (ray, ground)) h:f_inish state)
   state
 }
 l:r_esponse := { (id, found, point) state ->
-  (keys, i, s, b, r, cache, (ray, ground)) := state
+  (keys, i, s, b, r, cache, (ray, ground), v) := state
   id = 1 ? { @ ->
     next := { @ -> found = 1 ? point bloom:c_ast b; b } @
-    ((i, s, next, r), (0, ground)) h:f_inish state
+    ((i, s, next, r, v), (0, ground)) h:f_inish state
   } @
   id = 2 ? { @ ->
     next := { @ -> found = 1 ? (2 s_elect point) ribbon:c_ontact r; r } @
-    ((i, s, b, next), (ray, 0)) h:f_inish state
+    ((i, s, b, next, v), (ray, 0)) h:f_inish state
   } @
   state
 }
 l:b_lur := { pose state ->
-  (keys, _, _, _, _, _, _) := state
+  (keys, _, _, _, _, _, _, _) := state
   (d_isclose (2 s_elect keys), 0, pose) l:i_nput state
 }
 l:r_eset := { state ->
-  (keys, _, _, _, _, cache, _) := state
+  (keys, _, _, _, _, cache, _, _) := state
   ((a, _), (b, _), (c, _), (d, _)) := cache
-  (k, i, s, bb, r, _, p) := l:s_tart keys
+  (k, i, s, bb, r, _, p, v) := l:s_tart keys
   empty := 0 3 3 r_eshape 0.0
-  (k, i, s, bb, r, ((a + 1, empty), (b + 1, empty), (c + 1, empty), (d + 1, 0 6 r_eshape 0.0)), p)
+  (k, i, s, bb, r, ((a + 1, empty), (b + 1, empty), (c + 1, empty), (d + 1, 0 6 r_eshape 0.0)), p, v)
 }
-l:c_ommands := { (_, _, s, b, r, _, _) -> (sweep:c_ommand s, bloom:c_ommand b, ribbon:c_ommand r) }
-l:r_esources := { (_, _, _, _, _, ((a, i), (b, s), (c, r), _), _) -> (("ice", "ice", a, i), ("slush", "slush", b, s), ("water", "water", c, r)) }
-l:p_articles := { (_, _, _, _, _, (_, _, _, particles), _) -> particles }
-l:q_ueries := { pose (_, _, _, _, r, _, (ray, ground)) ->
+l:c_ommands := { (_, _, s, b, r, _, _, v) -> (sweep:c_ommand s, bloom:c_ommand b, ribbon:c_ommand r, vortex:c_ommand v) }
+l:r_esources := { (_, _, _, _, _, ((a, i), (b, s), (c, r), _), _, _) -> (("ice", "ice", a, i), ("slush", "slush", b, s), ("water", "water", c, r)) }
+l:p_articles := { (_, _, _, _, _, (_, _, _, particles), _, _) -> particles }
+l:q_ueries := { pose (_, _, _, _, r, _, (ray, ground), _) ->
   (position, aim, _, _) := pose
   yaw := f_irst aim
   pitch := 2 s_elect aim
@@ -99,19 +101,20 @@ l:q_ueries := { pose (_, _, _, _, r, _, (ray, ground)) ->
   rays c_at 1 10 r_eshape 2.0 2.0 c_at (1 d_rop probe) c_at 0.0 0.0 0.0 0.0 0.0
 }
 h:l_abel := { (key, held) -> held = 1 ? key c_at ": Release Ribbon"; key c_at ": Ribbon" }
-l:b_uttons := { (keys, _, _, _, r, _, _) ->
+l:b_uttons := { (keys, _, _, _, r, _, _, _) ->
   held := (f_irst ribbon:s_tatus r) = 1
   (("sweep", d_isclose (1 s_elect keys), (d_isclose (1 s_elect keys)) c_at ": Sweep", 0, 0),
    ("ribbon", d_isclose (2 s_elect keys), h:l_abel (d_isclose (2 s_elect keys), held), 1, held),
    ("bloom", d_isclose (3 s_elect keys), (d_isclose (3 s_elect keys)) c_at ": Bloom", 0, 0),
-   ("crystallise", d_isclose (4 s_elect keys), (d_isclose (4 s_elect keys)) c_at ": Crystallise", 0, 0))
+   ("crystallise", d_isclose (4 s_elect keys), (d_isclose (4 s_elect keys)) c_at ": Crystallise", 0, 0),
+   ("vortex", d_isclose (5 s_elect keys), (d_isclose (5 s_elect keys)) c_at ": Vortex", 0, 0))
 }
-l:s_tats := { (_, i, s, b, r, (_, (_, wet), (_, water), (_, particles)), _) ->
+l:s_tats := { (_, i, s, b, r, (_, (_, wet), (_, water), (_, particles)), _, v) ->
   (_, casts) := i
   status := ribbon:s_tatus r
   mode := f_irst status
   samples := 2 s_elect status
-  (("sweep", 384 * h:s_weep s), ("bloom", 480 * h:c_olumn b),
+  (("vortex", 1536 * ((vortex:s_trength v) >= 0.000001)), ("sweep", 384 * h:s_weep s), ("bloom", 480 * h:c_olumn b),
    ("ribbon", f_irst s_hape water), ("crystals", 12 * f_irst s_hape casts), ("ribbon-mode", mode),
    ("ribbon-samples", samples), ("slush-triangles", f_irst s_hape wet),
    ("water-triangles", f_irst s_hape water), ("particles", f_irst s_hape particles))

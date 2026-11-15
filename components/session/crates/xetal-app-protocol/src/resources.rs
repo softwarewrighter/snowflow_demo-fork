@@ -63,7 +63,8 @@ impl Cache {
         let Value::Array(a) = v else {
             return Err("expected triangle array".into());
         };
-        if a.data().len() > 864 * 9 {
+        let limit = if material == "slush" { 2400 } else { 864 };
+        if a.data().len() > limit * 9 {
             return Err("triangle budget exceeded".into());
         }
         let values = a.data().iter().map(number).collect::<Result<Vec<_>, _>>()?;

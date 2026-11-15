@@ -1,7 +1,7 @@
 # Single application composition
 
 The live application is [App.xtl](../components/world/demos/App.xtl). It imports
-[Spells.xtl](../components/world/libs/Spells.xtl), which selects the four existing
+[Spells.xtl](../components/world/libs/Spells.xtl), which selects the five existing
 spell libraries and dispatches configured input bindings. The native application
 contains one Session, no per-spell constructors or key dispatcher. Its production
 Cargo dependencies no longer include the individual spell runner crates.
@@ -13,7 +13,7 @@ from input to drawing. The [library cross-reference](libraries.md) links real
 modules, public APIs, native capabilities and tests. The generated live reference
 includes all imported composition libraries and links from colored source calls.
 Controls and source panels come from the typed X_eTaL publication. Buttons retain
-numeric order 1, 2, 3, 4. All panels use the existing JuliaMono and syntax palette.
+numeric order 1, 2, 3, 4, 5. All panels use the existing JuliaMono and syntax palette.
 
 Resource revisions are monotonic across reset. Rust reuses decoded publications
 and unchanged mesh buffers. Spells skips mesh generation for unchanged state.
@@ -22,7 +22,7 @@ builds replacement resident chunks before committing their combined mesh to
 rendering and physics; eviction retains the X_eTaL edit histories.
 
 Current capability limits remain explicit: one bounded resource slot per material
-(ice, slush, water), 864 triangles per slot, 1,024 particles, 256 footprints,
+(ice, slush, water), 864 triangles for ice/water and 2,400 for slush, 1,024 particles, 256 footprints,
 16 physics requests, 25 resident chunks and 64 dirty rectangles. Overflowing dirty
 rectangle history conservatively invalidates the resident cache. Brush histories
 retain their existing limits. New shaders, query kinds or larger resource budgets

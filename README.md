@@ -105,3 +105,10 @@ for a simple Ribbon walkthrough and links to the actual call sites.
 
 See [application composition and CPU evidence](docs/app-composition.md) for the
 current host contract, verification and measured overhead.
+
+## Vortex
+
+Press 5 or click Vortex for three rotating snow helices and tangential grains.
+The spell follows the player, lifts a ring of surface snow and lets it settle
+back. All five spell buttons are ordered numerically. The [Vortex library and
+parity notes](docs/vortex.md) describe this bounded procedural implementation.
